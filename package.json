@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matt1028/usc_webpage.git"
+    "url": "git+https://github.com/Singularity2050/SunyKorea_USC.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/matt1028/usc_webpage/issues"
+    "url": "https://github.com/Singularity2050/SunyKorea_USC/issues"
   },
-  "homepage": "https://github.com/matt1028/usc_webpage#readme",
+  "homepage": "https://github.com/Singularity2050/SunyKorea_USC#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
@@ -28,7 +28,6 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "express-mysql-session": "^2.1.5",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
     "hoek": "^4.2.1",
@@ -37,8 +36,6 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
-    "node-mailer": "^0.1.1",
-    "nunjucks": "^3.2.2",
     "passport": "^0.4.1",
     "passport-google": "^0.3.0",
     "passport-google-oauth20": "^2.0.0",
@@ -49,7 +46,6 @@
     "sequelize": "^6.4.0",
     "sequelize-cli": "^6.2.0",
     "serve-static": "^1.14.1",
-    "session-file-store": "^1.5.0",
     "summernote-nodejs": "^1.0.4",
     "winston": "^3.3.0"
   },
