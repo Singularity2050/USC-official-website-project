@@ -1,0 +1,24 @@
+<%- include('header.ejs') %>
+        <section class="main">
+            <div class = "Clubs">
+                <div class="content-container">
+                 <p class="tabs">Clubs</p>
+                <% for(var i in club) { %>
+                <% if(i % 4 === 0 && i > 0) { %> 
+                    </div>
+                <% } %>
+                <% if(i % 4 === 0 || i === 0) { %> 
+                    <div class="content-container" style="margin-left: 0;">
+                    <% }%>
+                 <div class="board clubBoard">  
+                 <a href="#"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
+                <a href="#"><h3 class="boardContent"><%= club[i].main%></h3></a>
+                <h4 class="boardContent"><%= club[i].description%></h4>
+                <% for(var j in club[i].notice) { %>
+                 <a href="#"><p class="boardContent clubPostBorder"><%= club[i].notice[j]%></p></a>
+                <% } %>   
+                 </div>
+                <% } %>
+                </div>
+            </div>
+<%- include('header.ejs') %>

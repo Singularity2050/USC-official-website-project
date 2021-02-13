@@ -1,0 +1,149 @@
+<%- include('header.ejs') %>
+    <!-- Main -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/announcement.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/public/css/selectBox.css" type="text/css" media="all" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style>
+      .nav-bar{
+        box-sizing: unset;
+      }
+      .nav-bar * {
+        box-sizing: unset;
+      }
+    </style>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img class="warning" src="\public\img\emoji_warning.png" alt="">
+        <h5 class="modal-title" id="exampleModalLabel">Access is Denied</h5>
+      </div>
+      <div class="modal-body">
+        You do not have sufficient privilege to write.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="ok" data-dismiss="modal">Okay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <div class="content-container" style="margin-bottom: 0; width: 1000px;">
+      <% if(category == 'lostandfound') {%>
+        <div class="form-content">
+          <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+          <img src="/public/img/PostMark.png" class="form-label">
+          <label for="Club" class="form-label" id="nameLabel">Lost and Found</label>
+      </div>
+        <form action="/search" id="search-form">
+          <input type='hidden' name = 'category' value='<%= category %>' >
+        <div class="form-content">
+          <div class="form custom-select">
+            <select id="type" name="subcategory">
+                <option value="">Select type</option>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+            </select>
+        </div>
+          <input placeholder="search here.." name='text'class="form form-align" style="width: 68%; margin-left: 2%;"><button onclick="save()" type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Search</button>
+        </div>
+      </form>
+    <%} else if(category == 'announcement'){%>
+      <div class="form-content">
+        <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+        <img src="/public/img/PostMark.png" class="form-label">
+        <label for="Club" class="form-label" id="nameLabel">USC Announcement</label>
+    </div>
+    <form action="/search" id="search-form">
+      <input type='hidden' name = 'category' value='<%= category %>' >
+    <div class="form-content">
+      <div class="form custom-select">
+          <select id="importance" name="subcategory">
+              <option value="">Select type</option>
+              <option value="normal">Normal</option>
+              <option value="important">Important</option>
+              <option value="urgent">Urgent</option>
+          </select>
+      </div>
+      <input placeholder="search here.." name='text' class="form form-align" style="width: 68%; margin-left: 2%;"><button onclick="save()" type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Search</button>
+    </div>
+  </form>
+      <%} else { %>
+      <div class="form-content">
+        <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+        <img src="/public/img/PostMark.png" class="form-label">
+        <label for="Club" class="form-label" id="nameLabel"><% var label = category%><%= label.charAt(0).toUpperCase()+label.substring(1)%></label>
+    </div>
+      <form id="search-form" action="/search">
+        <input type='hidden' name='category' value='<%= category%>'>
+      <div class="form-content" style="text-align: center;">
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">AMS</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">CSE</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">MEC</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">TSM</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">BUS</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">FIT</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">FBM</button>
+        <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">Other</button>
+      </div>
+      <div class="form-content">
+        <input placeholder="search here.." name='text'class="form form-align" style="width: 85%; margin-left: 0;"><button onclick="save()" type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Search</button>
+      </div>
+    </form>
+      <% } %>
+      </div>
+    <hr>
+    <div class="middle-list">
+      <% for(var i = 0; i < board.length; i++) {%>
+
+        <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
+            <img class="list-img" src="/public/img/announcement-list-img.png" alt="">
+            <div class="count"><%= board[i].number_of_comment %></div>
+        </div>
+      <% }%>
+        <div class="bottom-button">
+          <% var page_number = Math.ceil(board.length/10) %>
+          <% var i = 1 %>
+          <div class="page_numbers">
+              <% while (i < page_number+1){ %>
+              <a href= "/<%=category%>/<%=i%>" class="page-item"><%= i %></a>
+                  <% i ++%>
+              <% } %>
+          </div>
+
+            <% if(category == 'announcement' && privileged==0) { %>
+            <a><button class="bottom-right-button form-align form-post-button write-button" data-toggle="modal" data-target="#myModal"> + New</button></a>
+            <% } else { %>
+           <a href="/<%= board[0].category %>/post"><button class="bottom-right-button form-align form-post-button write-button"> + New</button></a>
+              <% } %>
+          </div>
+
+    </div>
+    <script>
+    function courseSelected(button){
+        if(button.classList.contains("form-course-selected")==true){
+            button.classList.remove("form-course-selected");
+        }
+        else{
+            button.classList.add("form-course-selected");
+        }
+    }
+    $("#search-form").submit(function(eventObj){
+    var selected = document.getElementsByClassName("form-course-selected");
+    for(var i = 0; i < selected.length; i++){
+    $("<input/>").attr("type", "text")
+          .attr("name", "subcategory")
+          .attr("value",selected[i].innerHTML)
+          .appendTo(this);
+        }return true;
+    })
+    </script>
+    <script src="/public/javascript/selectBox.js"></script>
+    <%- include('footer.ejs') %>

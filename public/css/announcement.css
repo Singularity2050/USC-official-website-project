@@ -1,0 +1,94 @@
+.top-announcement {
+
+    display: inline-block;
+}
+.top-div{
+    width: fit-content;
+    margin: auto;
+}
+.top-announce {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    position: relative;
+    left: 6px;
+}
+
+.banner-img {
+    position: relative;
+    top: 8px;
+}
+
+hr {
+    height: 12px;
+    width: 1000px;
+    border-radius: 12px;
+    border-color: rgba(139, 0, 0, 0.1);
+    background-color: rgba(139, 0, 0, 0.1);
+    margin: auto;
+    margin-top: 30px;
+}
+
+.search-bar {
+    margin: auto;
+    text-align: center;
+}
+
+.search-box {
+    border-radius: 10px;
+    border: solid 1.5px;
+    width: 840px;
+    height: 25px;
+}
+
+button {
+    height: 35px;
+    width: 140px;
+    border-radius: 10px;
+    background-color: #303030;
+    color: white;
+}
+
+.middle-list {
+    width: fit-content;
+    margin: auto;
+}
+ 
+.list {
+    margin: 0 auto;
+    width: 980px;
+    border-bottom: 1px solid rgba(151, 47, 47, 0.4);   
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.bottom-button {
+    display: flex;
+    text-align: right;
+    position: relative;
+}
+
+.bottom-right-button {
+    margin-top: 1%;
+    width: 12.5%;
+    position: absolute;
+    right: 0;
+}
+
+.list-img {
+    position: absolute;
+    right: 50px;
+    height: 18px;
+}
+.list a{
+    color: black;
+    text-decoration: none;
+}
+.count {
+    display: inline;
+    position: absolute;
+    right: 33px;
+}

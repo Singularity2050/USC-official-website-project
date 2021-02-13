@@ -1,0 +1,112 @@
+<%- include('header.ejs') %>
+    <!--Main-->
+    <link rel="stylesheet" href="/public/css/selectBox.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/public/css/myAccount.css" type="text/css" media="all" />
+    <div class="myAccount-content-container">
+        <div class="myAccount-left-div">
+            <div class="myAccount-left-div-contents">
+                <div style="display: flex; margin-right: 5%;">
+                    <img src="/public/img/PostMark.png" class="form-label" style="height: auto;">
+                    <label class="form-label" id="nameLabel" style="height: auto; margin-left: 5%;">My Account</label>
+                </div>
+                <div class="profile-content-container" style="margin-right: 5%;">
+                    <div class="profile-circle">
+                        <img src="/public/img/StonybrookLogo.png">
+                    </div>
+                    <div class="profile-nametag">
+                        <span><%= user.user_name%></span>
+                        <span>@<%= user.univ%></span>
+
+                    </div>
+                </div>
+                
+                <div class="myAccount-menu-table">
+                    <ul>
+                        <li id="post" onclick="changeMenu(this);">
+                            <span>My Posts</span>
+                        </li>
+                        <li id="comment" onclick="changeMenu(this);">
+                            <span>My Comments</span>
+                        </li>
+                        <% if(user.privileged==9) { %>
+                        <li id="users" onclick="changeMenu(this);">
+                          <span>ALL User</span>
+                        </li>
+                        <%}%>
+                        <li id="logout" onclick="changeMenu(this);">
+                            <span>Logout</span>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        <div class="myAccount-right-div">
+
+            <div class="search-bar" style="margin-top: 5%;">
+              <form action='/mysearch' style="max-width: 1000px; margin: auto;">
+                <div class="custom-select" style="width:15%;">
+                    <select id="type" name="type" style="width:27.5%" required>
+                        <option value="">Category</option>
+                        <option value="post">Post</option>
+                        <option value="comment">Comment</option>
+                        <% if(user.privileged == 9){ %>
+                        <option value="user">User</option>
+                        <% } %>
+                    </select>
+                    </div><input type="text" name='text'class="search-box" placeholder="search here..." style="width: 65%; margin-left: 1%; margin-right: 1%;"><button type="submit" style="width: 15%;">Search</button>
+              </form>
+            </div>
+
+            <hr>
+
+            <div class="middle-list">
+
+            </div>  
+        </div>
+        <div>
+        </div>
+    </div>
+    <script>
+
+
+      
+        '<% if( type == "post") { %>'
+        
+        document.getElementById('post').classList.add("myAccount-current-menu");
+         document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = post.length; %><%if(post.length > 9){length = 9;}else{length=post.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <a href='/read/<%= post[i].category %>/<%= post[i].subcategory%>/<%=post[i].id%>'>[<%= post[i].category%>]&nbsp;<%= post[i].post_title%> </a> <img class='list-img' src='/public/img/announcement-list-img.png' alt=''> <div class='count'> <%= post[i].number_of_comment %> </div> </div> <% } %><div class 'bottom-button'><% var page_number = Math.ceil(total/9) %><% var i = 1 %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/post/<%= i %>/<%= total%>' id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div>"
+         '<% }else if (type == "comment") { %>'
+
+         
+         document.getElementById('comment').classList.add("myAccount-current-menu");
+         document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = comments.length; if(comments.length > 9){length = 9;}else{length= comments.length} for(var j=0; j < length; j++){ %> <div class='list'> <a href='/read/<%= comments[j].category %>/<%= comments[j].subcategory%>/<%=comments[j].PostId%>'> [<%= comments[j].category %>] <%= comments[j].comment_content.substring(0,100); %> </a> <img class='list-img' src='/public/img/announcement-list-img.png' alt=''> <div class='count'>0</div> </div> <% } %> <div class 'bottom-button'><% var page_number = Math.ceil(ctotal/9) %><% var i = 1 %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/comment/<%= i %>/<%= ctotal%>'id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div> "
+         '<% }else if (type == "users") { %>'
+         
+         document.getElementById('users').classList.add("myAccount-current-menu");
+         document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = users.length; %><%if(users.length > 9){length = 9;}else{length= users.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <%= users[i].user_email%> <div class='count'> <% if(users[i].privileged>0){ %>Level:<%= users[i].privileged %> privileged <% } %> </div> </div> <% } %> <div class 'bottom-button'><% var page_number = Math.ceil(utotal/9) %><% var i = 1 %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/users/<%= i %>/<%= utotal%>'id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div> "
+         '<% } %>'
+         
+         function changeMenu(menu) {
+          console.log(menu);
+            if (document.getElementsByClassName("myAccount-current-menu").length > 0) {
+                document.getElementsByClassName("myAccount-current-menu")[0].classList.remove("myAccount-current-menu");
+            }
+            menu.classList.add("myAccount-current-menu");
+            if(menu.id == "post"){
+                
+                document.getElementsByClassName("middle-list")[0].innerHTML = "<%var length = post.length; %><%if(length > 9){length = 9;}else{length=post.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <a href='/read/<%= post[i].category %>/<%= post[i].subcategory%>/<%=post[i].id%>'> [<%= post[i].category%>]&nbsp;<%= post[i].post_title%> </a> <img class='list-img' src='/public/img/announcement-list-img.png' alt=''> <div class='count'> <%= post[i].number_of_comment %> </div> </div> <% } %><div class 'bottom-button'><% var i = 1 %><% var page_number = Math.ceil(total/9) %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/post/<%= i %>/<%= total%>' id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div> "
+            }else if( menu.id =="comment"){
+                
+              document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = comments.length; %><%if(length > 9){length = 9;}else{length=comments.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <a href='/read/<%= comments[i].category %>/<%= comments[i].subcategory%>/<%=comments[i].PostId%>'>[<%= comments[i].category%>] <%= comments[i].comment_content.substring(0,100);%> </a> <img class='list-img' src='/public/img/announcement-list-img.png' alt=''> <div class='count'>0</div> </div> <% } %> <div class 'bottom-button'><% var i = 1 %><% var page_number = Math.ceil(ctotal/9) %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/comment/<%= i %>/<%= ctotal %>'id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div>"
+            }else if( menu.id =="users"){
+                
+              document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = users.length; %><%if(length > 9){length = 9;}else{length=users.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <%= users[i].user_email%> <div class='count'> <% if(users[i].privileged>0){ %> Level:<%= users[i].privileged %> privileged <% } %> </div> </div> <% } %> <div class 'bottom-button'> <% var page_number = Math.ceil(utotal/9) %> <% var i = 1 %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/users/<%= i %>/<%= utotal %>'id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div> "
+            }else{
+              window.location.href='./auth/logout';
+            }
+        }
+         
+         
+    </script>
+    <script src="/public/javascript/selectBox.js"></script>
+    <%- include('footer.ejs') %>

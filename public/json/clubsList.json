@@ -1,0 +1,38 @@
+[
+                {
+                        "name": "CO;Ders",
+                        "main": "CO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                },
+                {
+                        "name": "coders",
+                        "main": "CO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                },
+                {
+                        "name": "oders",
+                        "main": "OO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                },
+                {
+                        "name": "noders",
+                        "main": "NO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                },
+                {
+                        "name": "noders",
+                        "main": "NO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                },
+                                {
+                        "name": "noders",
+                        "main": "NO;Ders",
+                        "description": "Coding Education Club",
+                        "pic_url": "/public/img/coders.png"
+                }
+        ]

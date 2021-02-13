@@ -1,0 +1,222 @@
+<%- include('header.ejs') %>
+
+<!-- Main -->
+<section class="main">
+    <div class = "usc">
+        <img class="uscSlideArrow leftArrow" src="/public/img/SlideLeft.png" style="cursor:pointer;">
+        <div class="uscHiddenSlide">
+        <div class="content-container" style="width: 67.3rem;">
+         <a href="/announcement/1"><p class="tabs">USC</p></a>
+         <div class="uscSlide" style="transform: translate(0rem);">
+        <% var length = usc.length %>
+        <% if(length > 4){length = 4} %>
+          <% for (var i = 0; i <= length; i++) { %>
+              <div class="board uscBoard" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
+            <a href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>'  class="uscPostImage"> </a>
+              <div>
+                <h3 class="boardContent uscPostDescription" style="font-size: 15pt; height: 10%;"><%= usc[i].post_title%></h3>
+                <h4 class="boardContent uscPostDescription content" style="height: 90%; font-size: 13pt;"></h4>   
+            </div>
+        </div>
+        <% } %>
+      </div>
+        </div>
+        </div>
+        <img class="uscSlideArrow rightArrow" src="/public/img/SlideRight.png" style="cursor: pointer;">
+    </div>
+    <% var day = new Date(); %>
+    <% day = day.getDate(); %>
+    <div class = "Community">
+        <div class="content-container">
+         <p class="tabs">Community</p>
+        <div class="board communityBoard">
+            <a href="/course/1"><h3 class="boardContent">Courses</h3></a>
+            <% for(var i in courses) { %>
+                <%var str = toString(courses[i].post_title) %>
+                <% if (str.length > 40) {%>
+                <% str = str.substring(0,40) + "..."; %>
+                <% } %>
+                <% if(day-courses[i].createdAt==1||day-courses[i].createdAt==0){ %>
+                    <span class="blinkEle">New</span>
+                <% } else { %>
+                    <span >&nbsp</span>
+                <% } %>
+                <a href="/read/<%=courses[i].category%>/<%=courses[i].subcategory%>/<%=courses[i].id%>">[<%=courses[i].subcategory.toUpperCase()%>] <%= courses[i].post_title %></a>
+          <% } %>
+          <a href="/course/1" style="text-align: right;">more..</a>
+        </div>
+        <div class="board communityBoard">
+            <a href="/event/1"> <h3 class="boardContent">Events</h3></a>
+            <% for(var i in events) { %>
+                <%var str = toString(events[i].post_content); %>
+                <% if (str.length > 40) {%>
+                <% str = str.substring(0,40) + "..."; %>
+                <% } %>
+                <% if(day-events[i].createdAt==1||day-events[i].createdAt==0){ %>
+                    <span class="blinkEle">New</span>
+                <% } else { %>
+                    <span >&nbsp</span>
+                <% } %><a href="/read/<%=events[i].category%>/<%=events[i].subcategory%>/<%=events[i].id%>">[<%=events[i].subcategory.toUpperCase()%>] <%= events[i].post_title %></a>
+          <% } %>
+          <a href="/event/1" style="text-align: right;">more..</a>
+        </div>
+        <div class="board communityBoard">
+            <a href="/tutoring/1" style="overflow: visible;"><h3 class="boardContent">Private Tutoring</h3></a>
+            <% for(var i in tutoring) { %>
+                <%var str = toString(tutoring[i].post_content); %>
+                <% if (str.length > 40) {%>
+                <% str = str.substring(0,40) + "..."; %>
+                <% } %>
+                <% if(day-tutoring[i].createdAt==1||day-tutoring[i].createdAt==0){ %>
+                    <span class="blinkEle">New</span>
+                <% } else { %>
+                    <span >&nbsp</span>
+                <% } %><a href="/read/<%=tutoring[i].category%>/<%=tutoring[i].subcategory%>/<%=tutoring[i].id%>">[<%=tutoring[i].subcategory.toUpperCase()%>] <%= tutoring[i].post_title %></a>
+          <% } %>
+          <a href="/tutoring/1" style="text-align: right;">more..</a>
+        </div>
+        </div>
+    </div>
+    </section><section class="main">
+        <div class = "Clubs">
+            <div class="content-container">
+             <a href="./club"><p class="tabs">Clubs</p></a>
+            <% for(var i in club) { %>
+                <% var count = 0 %>
+                <% if(i < 4) { %>
+            <div class="board clubBoard">
+             <a href="/club/<%= club[i].name %>/1"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
+            <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent"><%= club[i].main%></h3></a>
+            <h4 class="boardContent"><%= club[i].description%></h4>
+            <% for(var j = 0; j < club_post.length && count < 3; j++) { %>
+                <% if(club_post[j].subcategory == club[i].name){ %>
+             <a href="/read/club/<%=club[i].name%>/<%=club_post[j].id%>"><p class="boardContent clubPostBorder"><%= club_post[j].post_title%></p></a>
+             <% count++ %>
+             <% } %>
+            <% } %>    
+            </div>
+            <% } %>
+            <% } %>
+            </div>
+        </div>
+</section>
+<script>
+  
+     var usctext1 = "<%= usc[0].post_content %>";
+     var usctext2 = "<%= usc[1].post_content %>";
+     var usctext3 = "<%= usc[2].post_content %>";
+     var usctext4 = "<%= usc[3].post_content %>";
+     var usctext5 = "<%= usc[4].post_content %>";
+
+     var dom1 = new DOMParser().parseFromString(usctext1,'text/html');
+     var dom2 = new DOMParser().parseFromString(usctext2,'text/html');
+     var dom3 = new DOMParser().parseFromString(usctext3,'text/html');
+     var dom4 = new DOMParser().parseFromString(usctext4,'text/html');
+     var dom5 = new DOMParser().parseFromString(usctext5,'text/html');
+
+    var html1 = dom1.body.childNodes[0].data;
+    var html2 = dom2.body.childNodes[0].data;
+    var html3 = dom3.body.childNodes[0].data;
+    var html4 = dom4.body.childNodes[0].data;
+    var html5 = dom5.body.childNodes[0].data;
+    
+    html1 = html1.replaceAll("<br>","");
+    html2 = html2.replaceAll("<br>","");
+    html3 = html3.replaceAll("<br>","");
+    html4 = html4.replaceAll("<br>","");
+    html5 = html5.replaceAll("<br>","");
+    
+
+    document.getElementsByClassName("content")[0].innerHTML = html1;
+    document.getElementsByClassName("content")[1].innerHTML = html2;
+    document.getElementsByClassName("content")[2].innerHTML = html3;
+    document.getElementsByClassName("content")[3].innerHTML = html4;
+    document.getElementsByClassName("content")[4].innerHTML = html5;
+
+    var rawImg1 = $('img').html('')[3];
+    var rawImg2 = $('img').html('')[4];
+    var rawImg3 = $('img').html('')[5];
+    var rawImg4 = $('img').html('')[6];
+    var rawImg5 = $('img').html('')[7];
+
+    rawImg1.style.width= '';
+    rawImg2.style.width= '';
+    rawImg3.style.width= '';
+    rawImg4.style.width= '';
+    rawImg5.style.width= '';
+
+    var img1 = $(rawImg1).map(function(){return this.outerHTML;}).get().join('');
+    var img2 = $(rawImg2).map(function(){return this.outerHTML;}).get().join('');
+    var img3 = $(rawImg3).map(function(){return this.outerHTML;}).get().join('');
+    var img4 = $(rawImg4).map(function(){return this.outerHTML;}).get().join('');
+    var img5 = $(rawImg5).map(function(){return this.outerHTML;}).get().join('');
+
+
+    document.getElementsByClassName('uscPostImage')[0].innerHTML = img1;
+    document.getElementsByClassName('uscPostImage')[1].innerHTML = img2;
+    document.getElementsByClassName('uscPostImage')[2].innerHTML = img3;
+    document.getElementsByClassName('uscPostImage')[3].innerHTML = img4;
+    document.getElementsByClassName('uscPostImage')[4].innerHTML = img5;
+
+    rawImg1.remove();
+    rawImg2.remove();
+    rawImg3.remove();
+    rawImg4.remove();
+    rawImg5.remove();
+
+
+    var Interval;
+    var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
+function autoSlide(){
+    var calc = uscSlide.style.transform;
+    var maxTransform = (uscSlide.children.length-2) * -33.65;
+    calc = calc.replace(/[^-.0-9]/g,'');
+        calc = parseFloat(calc)-33.65;
+        if(calc >= maxTransform){
+        uscSlide.style.transform = 'translate(' + calc + 'rem)';
+    }
+    else{
+        uscSlide.style.transform = 'translate(0rem)';
+    }
+    Interval=setTimeout(autoSlide, 5000);
+}
+function stopSlide(){
+    clearTimeout(Interval);
+}
+autoSlide();
+this.document.getElementsByClassName("usc")[0].onmouseenter = function(){stopSlide()};
+this.document.getElementsByClassName("usc")[0].onmouseleave = function(){Interval=setTimeout(autoSlide, 5000)};
+
+this.window.onclick = function(event){
+var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
+    var calc = (uscSlide.style.transform);
+    var maxTransform = (uscSlide.children.length-2) * -33.65;
+    calc = calc.replace(/[^-.0-9]/g,'');
+    if(event.target.matches('.rightArrow')){
+        calc = parseFloat(calc)-33.65;
+        if(calc >= maxTransform){
+        uscSlide.style.transform = 'translate(' + calc + 'rem)';
+    }
+}
+else if(event.target.matches('.leftArrow')){
+        calc = parseFloat(calc)+33.65;
+        if(calc <= 0){
+        uscSlide.style.transform = 'translate(' + calc + 'rem)';
+        }
+    }
+}
+setInterval(newToggle, 500);
+
+function newToggle(){
+    var toToggle = document.getElementsByClassName('blinkEle');
+    for(var i = 0; i < toToggle.length; i++){
+        if(toToggle[i].innerHTML=="New"){
+            toToggle[i].innerHTML="&nbsp;";
+        }
+        else{
+            toToggle[i].innerHTML="New";
+        }
+    }
+}
+</script>
+<%- include('footer.ejs') %>

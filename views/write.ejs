@@ -1,0 +1,237 @@
+<%- include('header.ejs') %> 
+  
+<!-- include libraries(jQuery, bootstrap) -->
+  <link rel="stylesheet" href="/public/css/announcement_write.css" type="text/css" media="all" />
+  <link rel="stylesheet" href="/public/css/selectBox.css" type="text/css" media="all" />
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
+
+<!-- include summernote css/js-->
+  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+  <!-- Main -->
+  <style>
+    .nav-bar{
+      box-sizing: unset;
+    }
+    .nav-bar * {
+      box-sizing: unset;
+    }
+  </style>
+  <% if(type=="edit") { %>
+    <form action="/post/edit" method="post">
+      <input type ='hidden' name='id' value='<%=num%>'>
+      <% var text = editContent %> 
+      <% text = text.split("\"").join("\'"); %>
+      <% text = text.split("./uploads").join("/uploads"); %>
+    <%} else {%>
+      <form action="/post" method="post">
+      <% } %>
+
+
+      <% if( category == "announcement") { %>
+        <input type ='hidden' name='category' value='announcement'>
+
+  <div class="content-container" style="width: 80%; min-width: 1100px;">
+      <div class="form-content">
+          <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+          <img src="/public/img/PostMark.png" class="form-label">
+          <label for="Club" class="form-label" id="nameLabel">USC Announcement</label>
+      </div>
+      <div class="form-content">
+        <div class="form custom-select">
+
+            <select id="importance" name="subcategory" required>
+                <% if(type=="edit") {%>
+                <option value="<%=subcategory%>"><%= subcategory.charAt(0).toUpperCase()+subcategory.substring(1)%></option>
+                <% } else { %>
+                <option value="">Select type</option>
+                <% } %>
+                <option value="normal">Normal</option>
+                <option value="important">Important</option>
+                <option value="urgent">Urgent</option>
+            </select>
+        </div>
+        <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align" style="width: 68%; margin-left: 2%;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+      </div>
+        <% } else if(category == "lostandfound"){ %>
+            <input type='hidden' name='category' value='lostandfound'>
+            <div class="content-container" style="width: 80%; min-width: 1100px;">
+                <div class="form-content">
+                    <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+                    <img src="/public/img/PostMark.png" class="form-label">
+                    <label for="Club" class="form-label" id="nameLabel">Lost and found</label>
+                </div>
+                <div class="form-content">
+                <div class="custom-select" style="width: 35%">
+                <select id="subcategory" name="subcategory" required>
+                  <% if(type=="edit") {%>
+                    <option value="<%=subcategory%>"><%= subcategory.charAt(0).toUpperCase()+subcategory.substring(1)%></option>
+                    <% } else { %>
+                    <option value="">Select type</option>
+                    <% } %>
+                    <option value="lost" onclick=changePlaceholder(this.value)>Lost</option>
+                    <option value="found" onclick=changePlaceholder(this.value)>Found</option>
+                </select>
+                </div>
+                <% if(type=="edit") { %>
+                  <% if(subcategory=="lost") { %>
+                    <input class="form form-align" placeholder="Where did you lose it?" type="text" id="where" name="where" style="width:22.5%; margin-left: 2.5%;" value="<%=post.location%>"><input class="form form-align"  placeholder="When did you lose it?" type="text" id="when" name="when" style="width:22.5%; margin-left: 2.5%;" value="<%=post.when%>">
+                  <% } else if(subcategory=="found") { %>
+                    <input class="form form-align" placeholder="Where did you find it?" type="text" id="where" name="where" style="width:22.5%; margin-left: 2.5%;" value="<%=post.location%>"><input class="form form-align"  placeholder="When did you find it?" type="text" id="when" name="when" style="width:22.5%; margin-left: 2.5%;" value="<%=post.when%>">
+                  <% } %> 
+                  <% } else { %>
+                <input class="form form-align" placeholder="Please choose the type" type="text" id="where" name="where" style="width:22.5%; margin-left: 2.5%;"><input class="form form-align"  placeholder="Please choose the type" type="text" id="when" name="when" style="width:22.5%; margin-left: 2.5%;">
+                  <% } %>
+                <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);">
+                  <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
+                </div>
+                <div class="form-content">
+                  <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button> 
+                </div>
+                <script>
+                  window.onload = function() {
+                          var anchors = document.getElementsByClassName('select-items')[0].children;
+                          for(var i = 0; i < anchors.length; i++) {
+                              var anchor = anchors[i];
+                              if(anchor.innerText=="Lost"){
+                              anchor.onclick = function() {
+                                  document.getElementById('where').placeholder = "Where did you lose it?"
+                                  document.getElementById('when').placeholder = "When did you lose it?"
+                              }
+                          }
+                          else if(anchor.innerText=="Found"){
+                              anchor.onclick = function() {
+                                  document.getElementById('where').placeholder = "Where did you find it?"
+                                  document.getElementById('when').placeholder = "When did you find it?"
+                              }
+                          }
+                          
+                          }
+                      }
+                  </script>
+        <% } else if(category == 'course' || category == 'event' || category == 'tutoring') { %>
+               
+          <div class="content-container" style="width: 80%; min-width: 1100px;">
+            <div class="form-content">
+                <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+                <img src="/public/img/PostMark.png" class="form-label">
+                <label for="Club" class="form-label" id="nameLabel"><% var label = category%><%= label.charAt(0).toUpperCase()+label.substring(1)%></label>
+            </div>
+            <div class="form-content">
+            <div class="custom-select" style="width: 50%">
+            <select id="category" name="category" required>
+              <% if(type=="edit") {%>
+                <option value="<%=category%>"><%= category.charAt(0).toUpperCase()+category.substring(1) %></option>
+                <% } else { %>
+                <option value="">Select the Category</option>
+                <% } %>
+                <option value="course">Course</option>
+                <option value="event">Event</option>
+                <option value="tutoring">Private Tutoring</option>
+            </select>
+            </div>
+            <div class="custom-select" style="width:32.5%; margin-left: 2.5%;">
+              <select id="subcategory" name="subcategory" style="width:27.5%" required>
+                  <% if(type=="edit") {%>
+                <option value="<%=subcategory%>"><%= subcategory.toUpperCase()%></option>
+                <% } else { %>
+                <option value="">Subcategory</option>
+                <% } %>
+                  <option value="ams">AMS</option>
+                  <option value="bus">BUS</option>
+                  <option value="cse">CSE</option>
+                  <option value="tsm">TSM</option>
+                  <option value="mec">MEC</option>
+                  <option value="fbm">FBM</option>
+                  <option value="fit">FIT</option>
+                  <option value="other">Other</option>
+              </select>
+              </div>
+              <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);">
+              <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
+            </div>
+            <div class="form-content">
+              <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+            </div>
+        <% }else{ %>
+          <div class="content-container" style="width: 80%; min-width: 1100px;">
+            <input type="hidden" name='category' value='club'>
+            <% if(type=="edit") {%>
+            <input type="hidden" name= 'subcategory' value='<%= subcategory %>'>
+            <% }else {%>
+            <input type="hidden" name= 'subcategory' value='<%= category %>'>
+            <% } %>
+              <div class="form-content" style="margin-top: 3rem;">
+                  <a id="goBack"><img src="/img/SlideLeft.png" class="form-label"></a>
+                  <img src="/img/PostMark.png" class="form-label">
+                  <% if(type=="edit") {%>
+                  <label for="Club" class="form-label" id="nameLabel" name="clubname"><%= subcategory %></label>
+                  <% }else {%>
+                  <label for="Club" class="form-label" id="nameLabel" name="clubname"><%= category %></label>
+                  <% } %>
+              </div>
+                <div class="form-content">
+                  <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>">
+                  <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
+              </div>
+              
+          <% } %>
+        <div style="width: 100%">
+            <textarea placeholder="<%= editContent %>"id="summernote"  name="mainText"></textarea>
+          </div>
+        </div>
+      </form>
+
+<script src="/public/javascript/selectBox.js"></script>
+<% if(type=="edit") { %>
+  <script>
+    $(document).ready(function() {
+    var dom = new DOMParser().parseFromString("<%= text %>",'text/html');
+  $('#summernote').summernote({
+    height: 500,
+    toolbar: [
+               // [groupName, [list of button]]
+               ['fontname', ['fontname']],
+               ['fontsize', ['fontsize']],
+               ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+               ['color', ['forecolor','color']],
+               ['table', ['table']],
+               ['para', ['ul', 'ol', 'paragraph']],
+               ['height', ['height']],
+               ['insert',['picture','link','video']],
+               ['view', ['fullscreen', 'help']]
+             ],
+           fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+           fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+  });
+  $('#summernote').summernote('code', dom.body.childNodes[0].data);
+  });
+  </script>
+<% }else {%>
+<script>
+  $(document).ready(function() {
+$('#summernote').summernote({
+  height: 500,
+  toolbar: [
+             // [groupName, [list of button]]
+             ['fontname', ['fontname']],
+             ['fontsize', ['fontsize']],
+             ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+             ['color', ['forecolor','color']],
+             ['table', ['table']],
+             ['para', ['ul', 'ol', 'paragraph']],
+             ['height', ['height']],
+             ['insert',['picture','link','video']],
+             ['view', ['fullscreen', 'help']]
+           ],
+         fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+         fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+});
+});
+</script>
+<% } %>
+<%- include('footer.ejs') %>

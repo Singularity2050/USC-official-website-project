@@ -1,0 +1,107 @@
+<%- include('header.ejs') %>
+  
+    <!-- Css-->
+    <style>
+      .content-table {
+        border-collapse: collapse;
+        margin: auto;
+        margin-bottom: 2.5%;
+        font-size: 0.9em;
+        max-width: 1000px;
+        width: 100%;
+        border-radius: 5px 5px 0 0;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0,0,0, 0.15);
+      } 
+
+      .content-table thead tr {
+        background-color: #800000;
+        color: #ffff; 
+        font-weight: bold;
+      }
+
+      .content-table th,
+      .content-table td {
+        padding: 12px 15px;
+        text-align: center;
+      }
+
+      .content-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+      }
+
+      .content-table tbody tr:last-of-type {
+        border-bottom: 2px solid #800000;
+      }
+    .nav-bar{
+      box-sizing: unset;
+    }
+    .nav-bar * {
+      box-sizing: unset;
+    }
+    </style>
+
+
+    <!-- Main -->
+        <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/announcement.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/public/css/selectBox.css" type="text/css" media="all" />
+  <div class="content-container" style="margin-bottom: 0; width: auto; max-width: 1000px;">
+      <div class="form-content">
+          <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
+          <img src="/public/img/PostMark.png" class="form-label">
+          <label for="Club" class="form-label" id="nameLabel">Contacts</label>
+      </div>
+      <form action="/contacts/search/1" id="search-form">
+        <div class="form-content">
+            <a href=""><button type="button" class="form-course-button" value="" style="width: 33%">Facility</button></a>
+            <a href=""><button type="button" class="form-course-button" value="" style="width: 33%">Email</button></a>
+            <a href=""><button type="button" class="form-course-button" value="" style="width: 33%">Phone Number</button></a>
+        </div>
+      <div class="form-content">
+        <input placeholder="search here.." name='text'class="form form-align" style="width: 85%;"><button onclick="save()" type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Search</button>
+      </div>
+    </form>
+      </div>
+
+      <table class="content-table">
+        <thead>
+          <tr>
+            <th>Facility</th>
+            <th>Email</th>
+            <th>Contact Number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var end = 10 * parseInt(pageNum); %>
+          <% var start = end-10; %>
+          <% if(end > contactData.length) {end = contactData.length} %>
+          <% for(var i = start; i < end; i++) { %>
+          <tr>
+            <td><%=contactData[i].facility %></td>
+            <td><a href="mailto:<%=contactData[i].email%>"><%=contactData[i].email %></a></td>
+            <td><%=contactData[i].number %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="bottom-button" style="width: auto; max-width: 1000px; margin: auto;">
+        <% var page_number = Math.ceil(contactData.length/10) %>
+        <% var i = 1 %>
+        <div class="page_numbers" style="margin-bottom: 5%">
+            <% while (i < page_number+1){ %>
+            <a href= "/contacts/<%=i%>" class="page-item"><%= i %></a>
+                <% i ++%>
+            <% } %>
+        </div>
+        <% if(privileged > 1 ) { %>
+        <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
+          Only JSON File Accepted
+        <input type='file' name = 'file' accept="json/*">
+        <button type='submit' class="bottom-right-button form-align form-post-button write-button"> + UPDATE</button>
+        </form>
+        <% }%>
+        </div>
+
+    <script src="/public/javascript/selectBox.js"></script>
+    <%- include('footer.ejs') %>

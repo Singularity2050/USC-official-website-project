@@ -1,0 +1,252 @@
+<%- include('header.ejs') %>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <% if(post.category=="club") {%> 
+            <% for(var i = 0; i < real_data.length; i++) {%>
+                <% if(real_data[i].name == post.subcategory) {%>
+                <div class="post-detail-main" style="background-image: url(<%=real_data[i].pic_url%>);">
+                <% } %>
+            <% } %>
+        <% } else {%>
+            <div class="post-detail-main">
+            <% } %>
+        <div class="container post-detail-contents">
+            <div class="post-title-line">
+                <span class="post-title">
+                    <% if(post.category == "lostandfound") { %>
+                    <%= post.post_title%><br>
+                    Place : <%= post.location%><br>
+                    Time :  <%= post.when%><br>
+                    <% } else { %>
+                    <%= post.post_title%>
+                    <% } %>
+                </span>
+            </div>
+            <div class="post-date">Date: <%= post.updatedAt %>
+            </div>
+            <div class="post-writer">
+                <% if(post.anonymous==1) { %>
+                    Anonymous
+                <%} else{ %>
+                    <%= post.post_writer%>
+                     <% } %>
+                </div>
+            <hr class="post-detail-hr">
+            <div class="post-text">
+                <p>
+                    
+                </p>
+            </div>
+            <div style="display: flex; margin-bottom: 2rem;">
+            <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
+            <button type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="dislike-color"><%= post.dislike %></span> Dislikes</button>
+            </div>
+        </div>
+    </div>
+    <% if(post.UserId == user.id) { %>
+    <div class="post-functions">
+        <a href="/edit/<%= post.category%>/<%= post.id %>"><button type="button" >Edit</button></a>
+        <a href="/post/delete/<%= post.id%>"><button type="button" style="margin-left: 2%;">Delete</button></a>
+    </div>
+    <% } else { %>
+    <script>
+        document.getElementsByClassName('post-detail-contents')[0].style.marginBottom="5rem";
+    </script>
+        <% } %>
+    <span class="comment-title">Comments</span>
+    <!--Main comment-->
+    <div style="margin-bottom:5%">
+        <div class="container my-comment-detail-contents">
+            <div class="comment-profile">
+                <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                <p>
+                    <%= user.user_name%>
+                </p>
+            </div>
+          
+            <div style="width: 90%;">
+                <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>' id="comment-form"
+                    method="post">
+                    <input type=hidden name='category' value='test'>
+                    <textarea class="my-comment-text" name='text'
+                        placeholder="Please do not write any swear words."></textarea>
+                    <div class="reply-button-display">
+
+                        <button type="button" class="comment-anonymous-button" id="0"
+                            onclick="anonymousMode(this.id, this);"><input type="hidden" name="anonymous"
+                                value="false" />Anonymous</button>
+                        <button class="comment-post-button" type='submit'>Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <% for(var i=0; i < comments.length; i++){ %>
+            <div class="commentIndex">
+                <div class="container comment-detail-contents">
+                    <div class="comment-profile">
+                        <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                        <% if(comments[i].anonymous){ %>
+                            <p>Anonymous</p>
+                            <% }else { %>
+                                <% var name=comments[i].writer;%>
+                                    <p>
+                                        <%= name %>
+                                    </p>
+                                    <% }%>
+                    </div>
+
+                    <div style="width: 90%;">
+                        <div class="comment-text">
+                            <p>
+                                <%= comments[i].comment_content %>
+                            </p>
+                        </div>
+                        <div class="comment-functions">
+                        <div class="comment-reply-button" id="<%=i%>" onclick="myReplyBox(this.id);"><img
+                                src="/public/img/replyIcon.png"><span>Reply</span></div>
+                                <% if(comments[i].writer == user.user_name) { %>
+                        <a href='/post/delete/comment/<%= comments[i].id %>'><div class="comment-delete-button"><span>Delete</span></div></a>
+                                <% } %>
+                        </div>
+                            </div>
+                        </div>
+                    <!-- My reply box -->
+                    <div class="container my-comment-reply-contents">
+                        <div class="comment-profile">
+                            <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                            <p><%= user.user_name%></p>
+                        </div>
+                        <div style="width: 100%;">
+                        <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>' id="reply-form<%=i%>" method="post">
+                                <textarea class="my-comment-text" placeholder="Please do not write any swear words."
+                                    name="text"></textarea>
+                                <div class="reply-button-display">
+                                    <button type="button" class="comment-anonymous-button" id="<%=i+1%>"onclick="anonymousMode(this.id, this);"><input type="hidden" name="anonymous" value="false" />Anonymous</button>
+                                    <button class="comment-post-button" id="<%=i%>" onclick="replySubmit(this.id);"
+                                        type='submit'>Post</button>
+                                </div>
+                        </form>
+                        </div>
+                    </div>
+                
+                
+
+                <!--Comment's replies-->
+                <% for(var j=0; j < replies.length; j++) {%>
+                    <% if (replies[j].group_id==comments[i].group_id) { %>
+                        <div class="container comment-reply-contents">
+                            <div class="comment-profile">
+                                <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                                <% var replyName=replies[j].writer %>
+                                    <p>
+                                        <%= replyName; %>
+                                    </p>
+                            </div>
+                            <div style="width: 90%;">
+                            <div class=" comment-text">
+                                <p>
+                                    <%= replies[j].comment_content;%>
+                                </p>
+                            </div>
+                            <div class="comment-functions">
+                                        <% if(comments[i].writer == user.user_name) { %>
+                                <a href='/post/delete/comment/<%= replies[j].id %>'  style="margin-left: auto;"><div class="comment-delete-button"><span>Delete</span></div></a>
+                                        <% } %>
+                            </div>
+                        </div>  
+                        </div>
+                        <% }else { %>
+
+                            <% } %>
+            <% } %>
+        </div>
+                <% } %>
+            </div>
+    <script>
+     var text = "<%= post.post_content %>";
+     var dom = new DOMParser().parseFromString(text,'text/html');
+     var html = dom.body.childNodes[0].data;
+     document.getElementsByClassName("post-text")[0].innerHTML = html;
+     var images = document.getElementsByClassName("post-text")[0].getElementsByTagName("img");
+     for(var i = 0; i < images.length; i++){
+         images[i].style.width = "";
+     }
+        function commentMargin() {
+            console.log("works");
+            marginLeft = window.getComputedStyle(document.getElementsByClassName('post-detail-contents')[0]).marginLeft;
+            marginRight = window.getComputedStyle(document.getElementsByClassName('post-detail-contents')[0]).marginRight;
+            document.getElementsByClassName('comment-title')[0].style.marginLeft = marginLeft;
+            if(document.getElementsByClassName('post-functions').length > 0){
+            document.getElementsByClassName('post-functions')[0].style.marginRight = marginRight;
+            }
+            if(document.getElementsByClassName('comment-detail-contents').length > 0){
+            var marginRight = window.getComputedStyle(document.getElementsByClassName('comment-detail-contents')[0]).marginRight;
+            var commentWidth = window.getComputedStyle(document.getElementsByClassName('comment-detail-contents')[0]).width;
+            var reply = document.getElementsByClassName('comment-reply-contents');
+            var myReply = document.getElementsByClassName('my-comment-reply-contents');
+            var i;  
+            for (i = 0; i < reply.length; i++) {
+                reply[i].style.width = 0.9 * parseFloat(commentWidth) + "px";
+                reply[i].style.marginRight = marginRight;
+            }
+            for (i = 0; i < myReply.length; i++) {
+                myReply[i].style.width = 0.9 * parseFloat(commentWidth) + "px";
+                myReply[i].style.marginRight = marginRight;
+            }
+        }
+        }
+        // my comment Box function
+        function myReplyBox(index) {
+            var checkDisplay = window.getComputedStyle(document.querySelectorAll('.my-comment-reply-contents')[index]).display;
+            if (checkDisplay === "flex") {
+                document.querySelectorAll('.my-comment-reply-contents')[index].style.display = "none";
+            }
+            else {
+                document.querySelectorAll('.my-comment-reply-contents')[index].style.display = "flex";
+            }
+        }
+
+        // my comment box anonymous button function
+        function anonymousMode(index, button) {
+            var checkMode = document.querySelectorAll('.comment-anonymous-button')[index].style.backgroundColor;
+            if (checkMode === "") {
+                document.getElementsByClassName('comment-anonymous-button')[index].style.backgroundColor = "rgba(46, 137, 255, 0.4)";
+                button.children.anonymous.value = "true";
+            }
+            else {
+                document.getElementsByClassName('comment-anonymous-button')[index].style.backgroundColor = "";
+                button.children.anonymous.value = "false";
+            }
+        }
+        window.addEventListener('resize', commentMargin);
+        window.onload = commentMargin();
+
+        // comment Post button data handling
+        $("#comment-form").submit(function (eventObj) {
+            $("<input/>").attr("type", "text")
+                .attr("name", "groupID")
+                .attr("value", document.getElementsByClassName("commentIndex").length)
+                .appendTo(this);
+            $("<input/>").attr("type", "text")
+                .attr("name", "replyID")
+                .attr("value", "0")
+                .appendTo(this);
+            return true;
+        })
+        function replySubmit(groupId) {
+            $("#reply-form" + groupId).submit(function (eventObj) {
+                $("<input/>").attr("type", "text")
+                    .attr("name", "groupID")
+                    .attr("value", groupId)
+                    .appendTo(this);
+                $("<input/>").attr("type", "text")
+                    .attr("name", "replyID")
+                    .attr("value", (document.getElementsByClassName("commentIndex")[groupId].getElementsByClassName("comment-reply-contents").length + 1))
+                    .appendTo(this);
+                return true;
+            })
+        }
+
+    </script>
+    <%- include('footer.ejs') %>

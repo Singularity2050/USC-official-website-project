@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" type="image/jpg" href="/public/img/favicon.jpg"/>
+    <link rel="stylesheet" href="/css/nav-footer.css" type="text/css" media="all" />
+    <title>SoonWeChat</title>
+    <!-- end of Header-->
+    <script src="/javascript/test.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body style="background-color: white; font-family: Arial;">
+
+
+    <!-- NAV BAR -->
+    <div class="nav-bar">
+            <ul class="nav-list">
+
+                <li class="nav-items"><a href="/" style="padding: 0"><img class="logo" src="/img/uscLogo.jpg" alt="uscLogo"></a>
+
+                </li>
+                <li class="nav-items"><a href="/about_us"><span>USC</span></a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="/about_us">About Us</a></li>
+                            <li><a href="/announcement/1">Announcement</a></li>
+                            <li><a href="/history">History</a></li>
+                            <li><a href="/locker">Apply for Locker</a></li>
+                            <li><a href="/lostandfound/1">Lost&amp;found</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-items"><a href="/club"><span>CLUB</span></a>
+                <li class="nav-items"><a href="/course/1"><span>Community</span></a>
+                    <div class="dropdown-content">
+                        <ul>
+                            <li><a href="/course/1">Courses</a></li>
+                            <li><a href="/event/1">Events</a></li>
+                            <li><a href="/tutoring/1">Private Tutoring</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-items"><a href="/contacts/1"><span>Contacts</span></a>
+                <li class="nav-items" style="width: fit-content;">
+            <% if(typeof(user) == "undefined") { %> 
+              <a href='/login'>&nbsp;<img id="login" src="/img/login.png" alt="Login"></a>
+                 <%} else { %>
+                    <img id="profile" src="/img/profile.png" alt="My Profile">
+            <div class="dropdown-content profile-dropdown">
+                <ul>
+                    <li><a href="/myAccount/post/1/0">My Account</a></li>
+                    <li><a href="/auth/logout">Logout</a></li>
+                </ul>
+            </div>
+                <% } %> 
+        </li>
+            </ul>
+    
+    </div>
