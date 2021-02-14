@@ -38,8 +38,8 @@
             </div>
             <div style="display: flex; margin-bottom: 2rem;">
               <% if(post.category=='petition') {%>  
-            <button style="margin: auto;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
-            <% } else { %>
+                <button style="margin: auto;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Agrees</button>
+                <% } else if(post.category=='course'||post.category=='event'||post.category=='tutoring') { %>
                 <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
                 <button type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="dislike-color"><%= post.dislike %></span> Dislikes</button>
             <% } %>

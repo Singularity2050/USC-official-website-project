@@ -53,6 +53,17 @@ router.get('/',async(req,res)=>{
     ],
     limit:3,
   });
+  var petition_post = await Post.findAll({
+    attributes:['post_title','post_content','category','subcategory','id','createdAt', 'like',
+    [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%d'),'createdAt']],
+    where:{
+      category:'petition'
+    },
+    order:[
+      ['createdAt','DESC'],
+    ],
+    limit:3,
+  });
   var announce_post = await Post.findAll({
     attributes:['post_title','post_content','category','subcategory','id'],
     where:{
@@ -60,13 +71,13 @@ router.get('/',async(req,res)=>{
     },
     order:[
       ['createdAt','DESC'],
-    ],
+    ],  
     limit:5,
   });
   if(announce_post.length<3){
     res.send('<script>alert("초기 홈페이지 개설을 위해 공지글을 3개이상 작성하십시요"); window.location.replace("/announcement/post")</script>');
   }else{
-    res.render('home_page',{ usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post } ); 
+    res.render('home_page',{ usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
   }     
     });
 
