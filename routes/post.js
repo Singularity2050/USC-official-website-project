@@ -159,8 +159,14 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         )
         res.redirect('back');  
 
-      }else if(love.like>0){
-        res.send('<script type="text/javascript"> alert("Your like is already applied");window.history.back();</script>');
+      }else if(love.like > 0){
+        await love.destroy();
+        await Post.update({
+          like: sequelize.literal('post.like - 1'),
+        },
+        {where:{id: req.params.post_id}}
+        )
+        res.redirect('back');
       }else{
           await Love.update({
             like: 1,
@@ -194,7 +200,13 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         )
         res.redirect('back');  
       }else if(love.like<0){
-        res.send('<script type="text/javascript"> alert("Your like is already applied");window.history.back();</script>');
+        await love.destroy();
+        await Post.update({
+          dislike: sequelize.literal('post.dislike - 1'),
+        },
+        {where:{id: req.params.post_id}}
+        )
+        res.redirect('back');
       }else if(love.like > 0){
           await Love.update({
             like: -1

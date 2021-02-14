@@ -48,7 +48,7 @@
     </div>
     <% if(post.UserId == user.id) { %>
     <div class="post-functions">
-        <a href="/edit/<%= post.category%>/<%= post.id %>"><button type="button" >Edit <%= mark%></button></a>
+        <a href="/edit/<%= post.category%>/<%= post.id %>"><button type="button" >Edit</button></a>
         <a href="/post/delete/<%= post.id%>"><button type="button" style="margin-left: 2%;">Delete</button></a>
     </div>
     <% } else { %>
