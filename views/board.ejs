@@ -125,15 +125,15 @@
 
         <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
           <div style="width: fit-content; margin-left: auto;">  
-          <img class="list-img" src="/public/img/announcement-list-img.png" alt="">
+            <span class="iconify" data-inline="false" data-icon="bx:bx-comment" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].number_of_comment %></div>
             <% if(category=='petition') {%>
-            <img class="list-img" src="/public/img/like.png" alt="">
+              <span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].like %></div>
             <% } else if(category=='course'||category=='event'||category=='tutoring') { %>
-            <img class="list-img" src="/public/img/like.png" alt="">
+              <span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].like %></div>
-            <img class="list-img" src="/public/img/dislike.png" alt="">
+            <span class="iconify" data-inline="false" data-icon="ant-design:dislike-outlined" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].dislike %></div>
             <% } %>
           </div>

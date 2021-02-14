@@ -3,11 +3,11 @@
 <!-- Main -->
 <section class="main">
     <div class = "usc">
-        <img class="uscSlideArrow leftArrow" src="/public/img/SlideLeft.png" style="cursor:pointer;">
+        <img class="uscSlideArrow" src="/public/img/SlideLeft.png" style="cursor:pointer;">
         <div class="uscHiddenSlide">
         <div class="content-container" style="width: 67.3rem;">
          <a href="/announcement/1"><p class="tabs">USC</p></a>
-         <div class="uscSlide" style="transform: translate(0rem);">
+         <div class="uscSslide" style="transform: translate(0rem);">
         <% var length = usc.length %>
         <% if(length > 4){length = 4} %>
           <% for (var i = 0; i <= length; i++) { %>
@@ -22,7 +22,7 @@
       </div>
         </div>
         </div>
-        <img class="uscSlideArrow rightArrow" src="/public/img/SlideRight.png" style="cursor: pointer;">
+        <img class="uscSlideArrow" src="/public/img/SlideRight.png" style="cursor: pointer;">
     </div>
     <% var day = new Date(); %>
     <% day = day.getDate(); %>
@@ -101,26 +101,33 @@
         </div>
 </section>
 <div class = "Petitions">
-    <img class="uscSlideArrow leftArrow" src="/public/img/SlideLeft.png" style="cursor:pointer;">
     <div class="uscHiddenSlide">
     <div class="content-container" style="width: 67.3rem;">
-     <a href="/petitions/1"><p class="tabs">Petitions</p></a>
+     <a href="/petition/1"><p class="tabs">Petitions</p></a>
      <div class="uscSlide" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
-    <% if(length > 4){length = 4} %>
       <% for (var i = 0; i < length; i++) { %>
-          <div class="board uscBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
-          <div style="width: 100%;">
-            <h3 class="boardContent uscPostDescription" style="font-size: 15pt; height: 40%;"><%= petition_post[i].post_title%></h3>
-            <h4 class="boardContent uscPostDescription content" style="height: 40%; font-size: 13pt;"><%= petition_post[i].post_content%></h4>
-            <div class="petitionStatus">2021.05.21 <%=petition_post[i].like%> Agree</div>   
-        </div>
+        <% if(petition_post[i].subcategory=='responded') {%>
+            <div style="border-top:15px solid rgba(0, 0, 0, 0.25);" class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+            <% } else if(petition_post[i].subcategory=='closed'){ %>
+            <div style="border-top:15px solid rgba(151, 47, 47, 0.4);" class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+            <% } else { %>
+            <div class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+          <% } %>
+            <div style="width: 100%;">
+            <h3 class="boardContent petitionPostDescription" style="font-size: 15pt; height: 40%;"><%= petition_post[i].post_title%></h3>
+            <h4 class="boardContent petitionPostDescription content" style="height: 40%; font-size: 13pt;"><%= petition_post[i].post_content%></h4>
+            <div class="petitionStatus">2021.05.21 <%=petition_post[i].like%> Agree</div>
+        </div>  
     </div>
     <% } %>
   </div>
+  <div class="slideArrow">
+    <span class="iconify leftArrow" data-icon="akar-icons:arrow-left" data-inline="false" style="font-size: 25pt;"></span> 
+    <span class="iconify rightArrow" data-icon="akar-icons:arrow-right" data-inline="false" style="font-size: 25pt;"></span> 
+</div>
     </div>
     </div>
-    <img class="uscSlideArrow rightArrow" src="/public/img/SlideRight.png" style="cursor: pointer;">
 </div>
 <script>
   
@@ -197,9 +204,10 @@
     var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
 function autoSlide(){
     var calc = uscSlide.style.transform;
-    var maxTransform = (uscSlide.children.length-2) * -33.65;
+    console.log(calc);
+    var maxTransform = (uscSlide.children.length-3) * -22.5;
     calc = calc.replace(/[^-.0-9]/g,'');
-        calc = parseFloat(calc)-33.65;
+        calc = parseFloat(calc)-22.5;
         if(calc >= maxTransform){
         uscSlide.style.transform = 'translate(' + calc + 'rem)';
     }
@@ -218,16 +226,16 @@ this.document.getElementsByClassName("usc")[0].onmouseleave = function(){Interva
 this.window.onclick = function(event){
 var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
     var calc = (uscSlide.style.transform);
-    var maxTransform = (uscSlide.children.length-2) * -33.65;
+    var maxTransform = (uscSlide.children.length-3) * -22.5;
     calc = calc.replace(/[^-.0-9]/g,'');
     if(event.target.matches('.rightArrow')){
-        calc = parseFloat(calc)-33.65;
+        calc = parseFloat(calc)-22.5;
         if(calc >= maxTransform){
         uscSlide.style.transform = 'translate(' + calc + 'rem)';
     }
 }
 else if(event.target.matches('.leftArrow')){
-        calc = parseFloat(calc)+33.65;
+        calc = parseFloat(calc)+22.5;  
         if(calc <= 0){
         uscSlide.style.transform = 'translate(' + calc + 'rem)';
         }

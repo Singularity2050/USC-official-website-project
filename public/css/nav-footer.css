@@ -265,13 +265,15 @@ h4 h5 {
 
 .uscBoard {
   display: inline-flex;
-  width: 31.15rem;
+  width: 18rem;
   height: 200px;
   overflow: hidden;
   border-top: 15px solid rgba(47, 151, 63, 0.4);
   border-radius: 12px 12px 0 0;
   margin-top: 1rem;
   box-shadow: 10px 10px 50px 3px rgba(39, 92, 141, 0.1);
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .uscPostImage img{
@@ -282,7 +284,6 @@ h4 h5 {
 .uscPostDescription {
   word-break: break-all;
   width: 100%;
-  margin-left: 5%;
 }
 .content span{
   font-size: 13pt !important;
@@ -330,9 +331,20 @@ h4 h5 {
 }
 
 .petitionBoard{
-  height: fit-content;
-  background: white;
-  width: 300px;
+  display: inline-flex;
+  width: 18rem;
+  height: 200px;
+  overflow: hidden;
+  border-top: 15px solid rgba(47, 151, 63, 0.4);
+  border-radius: 12px 12px 0 0;
+  margin-top: 1rem;
+  box-shadow: 10px 10px 50px 3px rgba(39, 92, 141, 0.1);
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.petitionPostDescription{
+  word-break: break-all;
+  width: 100%;
 }
 .petitionImage{
   width: 100%;
@@ -341,6 +353,12 @@ h4 h5 {
 .petitionStatus{
  width: 100%;
  text-align: center;
+}
+.slideArrow{
+  width: 67.3rem;
+  margin: auto;
+  margin-top: 1rem;
+  text-align: right;
 }
 .form-label {
   font-size: 18pt;
@@ -967,4 +985,7 @@ button:focus{
   color: darkgray;
   padding-left: 50px;
   text-align: left;
+}
+.iconify{
+  vertical-align: text-bottom;
 }
