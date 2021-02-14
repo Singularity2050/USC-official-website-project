@@ -1,7 +1,7 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const Sequelize = require('sequelize');
-const { User,Post,COMMENT}  = require('../models');
+const { User,Post,COMMENT,Love}  = require('../models');
 const { request } = require('http');
 
 
@@ -101,7 +101,15 @@ router.get('/',async(req,res)=>{
     router.get('/read/:category/:subcategory/:post_num',isLoggedIn,async(req,res,next)=>{
       try{
         let real_data = require('../public/json/clubsList.json');
-        const clubName = req.params.subcategory;
+
+        const love = await Love.findOne({
+          where:{ UserId: req.user.id, PostId: req.params.post_num}
+        })
+        var num = 0;
+        if(love){
+          num = love.like;
+        }
+        
         let post = await Post.findOne({
           attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','like','dislike','anonymous',
           [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%m-%d/%h:%i'),'updatedAt'],'UserId','location','when'],
@@ -124,7 +132,7 @@ router.get('/',async(req,res)=>{
             replies.push(rawComments[i]);
           }
         }
-        res.render('read', { post: post, comments: comments, user: req.user, replies: replies, back: req.headers.referer, real_data: real_data, like: post.like, dislike: post.dislike} );
+        res.render('read', { post: post, comments: comments, user: req.user, replies: replies, back: req.headers.referer, real_data: real_data, like: post.like, dislike: post.dislike,mark:num } );
       }catch(err){
         console.error(err);
         next(err);
