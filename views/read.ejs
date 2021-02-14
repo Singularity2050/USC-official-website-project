@@ -40,7 +40,7 @@
               <% if(post.category=='petition') {%>  
                 <button style="margin: auto;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Agrees</button>
                 <% } else if(post.category=='course'||post.category=='event'||post.category=='tutoring') { %>
-                <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
+                <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color" ><%= post.like %></span> Likes</button>
                 <button type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="dislike-color"><%= post.dislike %></span> Dislikes</button>
             <% } %>
         </div>
@@ -48,7 +48,7 @@
     </div>
     <% if(post.UserId == user.id) { %>
     <div class="post-functions">
-        <a href="/edit/<%= post.category%>/<%= post.id %>"><button type="button" >Edit</button></a>
+        <a href="/edit/<%= post.category%>/<%= post.id %>"><button type="button" >Edit <%= mark%></button></a>
         <a href="/post/delete/<%= post.id%>"><button type="button" style="margin-left: 2%;">Delete</button></a>
     </div>
     <% } else { %>
@@ -168,6 +168,11 @@
                 <% } %>
             </div>
     <script>
+     "<% if ( mark > 0) { %>"
+      document.getElementsByClassName('post-likes')[0].style.backgroundColor = "green";
+      "<% }else if( mark < 0) { %>"
+      document.getElementsByClassName('post-likes')[1].style.backgroundColor = "red";
+      "<% } %>"
      var text = "<%= post.post_content %>";
      var dom = new DOMParser().parseFromString(text,'text/html');
      var html = dom.body.childNodes[0].data;
