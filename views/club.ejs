@@ -13,8 +13,8 @@
                     <div class="content-container" style="margin-left: 0;">
                     <% }%>
                     <div class="board clubBoard">
-                        <a href="/club/<%= club[i].name %>"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
-                       <a href="/club/<%= club[i].name %>"><h3 class="boardContent"><%= club[i].main%></h3></a>
+                        <a href="/club/<%= club[i].name %>/1"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
+                       <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent"><%= club[i].main%></h3></a>
                        <h4 class="boardContent"><%= club[i].description%></h4>
                        <% for(var j = 0; j < club_post.length && count < 5; j++) { %>
                            <% if(club_post[j].subcategory == club[i].name){ %>
@@ -25,13 +25,6 @@
                        </div>
                 <% } %>
                 </div>
-                <% if(privileged > 1 ) { %>
-                  <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
-                    Only JSON File Accepted
-                  <input type='file' name = 'file' accept="json/*">
-                  <button type='submit' class="bottom-right-button form-align form-post-button write-button"> + UPDATE</button>
-                  </form>
-                  <% }%>
             </div>
 
 

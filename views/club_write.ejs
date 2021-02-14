@@ -1,0 +1,77 @@
+<%- include('header.ejs') %> 
+  
+  <!-- include libraries(jQuery, bootstrap) -->
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+    <style>
+      .nav-bar{
+        box-sizing: unset;
+      }
+      .nav-bar * {
+        box-sizing: unset;
+      }
+    </style>
+<!-- include summernote css/js-->
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.js"></script>
+
+    <!-- Main -->
+    <% if(type=="edit") { %>
+      <form action="/post/edit" method="post">
+        <input type ='hidden' name='id' value='<%=num%>'>
+      <%} else {%>
+        <form action="/post" method="post">
+        <% } %>
+    <div class="content-container" style="width: 80%;">
+      <input type="hidden" name='category' value='club'>
+      <input type="hidden" name= 'subcategory' value=<%= category %> >
+        <div class="form-content">
+            <a id="goBack"><img src="/img/SlideLeft.png" class="form-label"></a>
+            <img src="/img/PostMark.png" class="form-label">
+            <label for="Club" class="form-label" id="nameLabel" name="clubname"></label>
+        </div>
+          <div class="form-content">
+            <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;">
+            <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
+        </div>
+        <div style="width: 100%;">
+        <textarea id="summernote" name="mainText"></textarea>
+         </div>
+    </div>
+    
+    
+
+    
+<script>
+    $(document).ready(function() {
+  $('#summernote').summernote({
+    height: 500,
+    toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+  });
+});
+    var clubName = document.location.href.split("club/");
+    clubName = clubName[1].split("/")[0];
+    document.getElementById('nameLabel').innerHTML = clubName;
+    var goBack = document.location.href.split("/post");
+    document.getElementById('goBack').href = goBack[0];
+    var save = function() {
+    var markup = $('#summernote').summernote('code');
+    console.log(markup);
+    window.location.href = goBack[0];
+    };
+</script>
+<%- include('footer.ejs') %>

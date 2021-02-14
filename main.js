@@ -7,23 +7,9 @@ const express = require("express"),
     morgan = require('morgan'),
     session = require('express-session'),
     dotenv = require('dotenv'),
-    passport = require('passport'),
-    logger = require('./logger'),
-    helmet = require('helmet'),
-    hpp = require('hpp'),
-    RedisStore = require('connect-redis')(session),
-    redis = require('redis');
-
+    passport = require('passport');
+     
 dotenv.config(); 
-
-const redisPort = process.env.REDIS_PORT,
-      redisHost = process.env.REDIS_HOST,
-      redisPass = process.env.REDIS_PASSWORD,
-      redisClinet = redis.createClient(redisPort, redisHost),
-      redisConnectionResult = redisClinet.auth(redisPass, err => {if (err) console.log(err, " 에러 발생했습니다");});
-      
-      console.log("redis 연결 결과는? - ", redisConnectionResult);
-      
 
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
@@ -51,9 +37,7 @@ sequelize.sync({ force: false })
 
 
 if(process.env.NODE_ENV === 'production'){
-  app.use(morgan('combined'));
-  app.use(helmet());
-  app.use(hpp());
+
 }else{
   app.use(morgan('dev'));
 }
@@ -70,26 +54,16 @@ app.use(bodyParser.json());
 app.use("/public", express.static(path.join(__dirname, "public")));
 app.use('/uploads',express.static(path.join(__dirname,'uploads')));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-const sessionOption ={
+app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: process.env.COOKIE_SECRET,
   cookie: {
-    httpOnly: true,
+    httpOnly: false,
     secure: false,                                                                                                                                   
   },
-  store: new RedisStore({
-    client: redisClinet,
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    pass: process.env.REDIS_PASSWORD,
-    logErrors: true,
-  }),
-};
-if(process.env.NODE_ENV === 'production'){
-  sessionOption.proxy = true;
-}
-app.use(session(sessionOption));
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -100,8 +74,6 @@ app.use('/post',postRouter);
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
   error.status = 404;
-  logger.info('hello');
-  logger.error(err.message);
   next(error);
 });
 

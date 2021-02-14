@@ -63,6 +63,7 @@ button {
     padding-bottom: 20px;
     padding-left: 20px;
     position: relative;
+    display: flex;
 }
 
 .bottom-button {
@@ -79,8 +80,6 @@ button {
 }
 
 .list-img {
-    position: absolute;
-    right: 50px;
     height: 18px;
 }
 .list a{
@@ -88,7 +87,7 @@ button {
     text-decoration: none;
 }
 .count {
-    display: inline;
+    display: contents;
     position: absolute;
     right: 33px;
 }

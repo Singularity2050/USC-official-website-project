@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const multer = require('multer');
 const fs = require('fs');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const sequelize = require('sequelize');
@@ -17,7 +16,8 @@ try {
 
 
 router.post('/', async (req, res, next) => {
-    try {      
+    try {
+      
       var outputHtml = save(req.body.mainText,'uploads/img');
         const post = await Post.create({
             post_writer: req.user.user_name,
@@ -37,24 +37,7 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/json/')
-  },
-  filename: function (req, file, cb) {
-    if(req.headers.referer.includes('club')){
-      cb(null, 'clubsList.json')
-    }else{
-      cb(null, 'contacts.json')
-    }
-  }
-})
- 
-var upload = multer({ storage: storage })
 
-router.post('/json',upload.single('file'),(req,res,next)=>{
-  res.redirect('back');
-})
 router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
     try{
       let comment;

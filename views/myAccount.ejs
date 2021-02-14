@@ -2,6 +2,11 @@
     <!--Main-->
     <link rel="stylesheet" href="/public/css/selectBox.css" type="text/css" media="all" />
     <link rel="stylesheet" href="/public/css/myAccount.css" type="text/css" media="all" />
+    <style>
+        .select-selected{
+            padding: 6.5px 16px;
+        }
+    </style>
     <div class="myAccount-content-container">
         <div class="myAccount-left-div">
             <div class="myAccount-left-div-contents">
@@ -46,7 +51,7 @@
             <div class="search-bar" style="margin-top: 5%;">
               <form action='/mysearch' style="max-width: 1000px; margin: auto;">
                 <div class="custom-select" style="width:15%;">
-                    <select id="type" name="type" style="width:27.5%" required>
+                    <select id="type" name="type" style="width:27.5%;" required>
                         <option value="">Category</option>
                         <option value="post">Post</option>
                         <option value="comment">Comment</option>

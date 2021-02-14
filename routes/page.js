@@ -82,11 +82,7 @@ router.get('/',async(req,res)=>{
             ['createdAt','DESC'],
           ]
         });
-        if(req.user){
-          res.render('club', {club: real_data, privileged: req.user.privileged, user: req.user, club_post: club_post});
-        }else{
-          res.render('club', {club: real_data, privileged: null,user: req.user, club_post: club_post});
-        }
+        res.render('club', {club: real_data, user: req.user, club_post: club_post});
     });
 
 
@@ -143,7 +139,7 @@ router.get('/',async(req,res)=>{
 //course
     router.get('/course/:pagenum',async(req,res)=>{
       var course_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment'],
+        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
         where:{
           category:'course'
         },
@@ -167,7 +163,7 @@ router.get('/',async(req,res)=>{
 //event
     router.get('/event/:pagenum',async(req,res)=>{
       var event_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment'],
+        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
         where:{
           category:'event'
         },
@@ -191,7 +187,7 @@ router.get('/',async(req,res)=>{
 //tutoring
     router.get('/tutoring/:pagenum',async(req,res)=>{
       var tutoring_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment'],
+        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
         where:{
           category:'tutoring'
         },
@@ -234,6 +230,25 @@ router.get('/',async(req,res)=>{
           var privileged = 0;
         }
         res.render('board',{board:announce_post,category: announce_post[0].category, user: req.user, pageNum: req.params.pagenum, privileged : privileged});
+      }
+    });
+    // USC petition 
+    router.get('/petition/:pagenum',async(req,res)=>{
+      var petition_post = await Post.findAll({
+        attributes:['post_title','category','subcategory','id','number_of_comment', 'like'],
+        where:{
+          category:'petition'
+        },
+        order:[
+          ['createdAt','DESC'],
+        ],
+        offset:((req.params.pagenum-1)*15),
+        limit : 15,
+      })
+      if(petition_post.length<1){
+        res.send('<script>alert("글이 없습니다!!"); window.location.replace("/petition/post")</script>');
+      }else{
+        res.render('board',{board:petition_post,category: petition_post[0].category, user: req.user, pageNum: req.params.pagenum});
       }
     });
     //lostandfound
@@ -367,39 +382,76 @@ try{
   router.get('/read/:category/:subcategory/uploads/img/:id',(req,res)=>{
     console.log(req.params);
     res.redirect('/uploads/img/'+ req.params.id);
-    });
+  });
     router.route('/404').get(function(req,res){
         res.render('404_page',{user: req.user});
     });
+
+    router.route('/alert').get(function(req,res){
+        res.render('alert');
+    });
+
+    router.route('/alert2').get(function(req,res){
+        res.render('alert2');
+    });
+
     router.get('/about_us',async(req,res)=>{
       res.render('about_us',{user: req.user});
-    });
+  });
+
+    
+
     router.get('/login',isNotLoggedIn,(req,res,next)=>{
+
       res.render('login');
     });
-    router.route('/locker').get(function(req,res){
+    router.route('/application').get(function(req,res){
         res.render('application',{user: req.user});
     });
-    router.route('/contacts/:pageNum').get(function(req,res){
-      let contactData = require('../public/json/contacts.json');
-      if(req.user){
-        res.render('contacts',{user: req.user, privileged : req.user.privileged, contactData: contactData, pageNum:req.params.pageNum});
-      }else{
-        res.render('contacts',{user: req.user, privileged : null, contactData: contactData, pageNum:req.params.pageNum});
-      }
-      
-    });
+//contacts search
+router.get('/contacts/search/:pageNum',(req,res,next) =>{
+
+  let contacts = require('../public/json/contacts.json');
+  let newData = Array();
+  
+  for(var i in contacts){
+    if(contacts[i].facility.includes(req.query.text)){
+      newData.push(contacts[i]);
+    }
+  }
+  
+  if(req.user){
+    res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
+  }else{
+  res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
+  }
+})
+//contacts
+router.route('/contacts/:pageNum').get(function(req,res){
+  let contactData = require('../public/json/contacts.json');
+  if(req.user){
+    res.render('contacts',{user: req.user, privileged : req.user.privileged, contactData: contactData, pageNum:req.params.pageNum});
+  }else{
+    res.render('contacts',{user: req.user, privileged : null, contactData: contactData, pageNum:req.params.pageNum});
+  }
+  
+});
     router.route('/history').get(function(req,res){
       res.render('history',{user: req.user});
-    });
+  });
     router.route('/club_details').get(function(req,res){
         res.render('club_details',{user: req.user});
     });
+
+
     router.route('/club_postDetails').get(function(req,res){
       res.render('club_postDetails', {user: req.user});
     });
 //-----------------------------------------------------search-------------------------------------------
   router.get('/mysearch',async(req,res) =>{
+    console.log('hi');
+    console.log(req.query);
+    console.log('hi');
     if(req.query.type == 'post'){
       let post = await Post.findAll({
         where:{ post_title: {[Op.like]:"%"+req.query.text+"%"} }
@@ -487,25 +539,6 @@ try{
         res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged});
       }
   })
-  //contacts search
-  router.get('/contacts/search/:pageNum',(req,res,next) =>{
-
-    let contacts = require('../public/json/contacts.json');
-    let newData = Array();
-    
-    for(var i in contacts){
-      if(contacts[i].facility.includes(req.query.text)){
-        newData.push(contacts[i]);
-      }
-    }
-    console.log(newData);
-    if(req.user){
-      res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
-    }else{
-    res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
-    }
-  })
-  //-------------------------------------------------------------------
   router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
     const edit = await Post.findOne({where: { id: req.params.id}});
     

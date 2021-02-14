@@ -35,7 +35,7 @@
       <% if( category == "announcement") { %>
         <input type ='hidden' name='category' value='announcement'>
 
-  <div class="content-container" style="width: 80%; min-width: 1100px;">
+  <div class="content-container" style="min-width:120vh;">
       <div class="form-content">
           <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
           <img src="/public/img/PostMark.png" class="form-label">
@@ -59,7 +59,7 @@
       </div>
         <% } else if(category == "lostandfound"){ %>
             <input type='hidden' name='category' value='lostandfound'>
-            <div class="content-container" style="width: 80%; min-width: 1100px;">
+            <div class="content-container" style="min-width:120vh;">
                 <div class="form-content">
                     <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
                     <img src="/public/img/PostMark.png" class="form-label">
@@ -115,7 +115,7 @@
                   </script>
         <% } else if(category == 'course' || category == 'event' || category == 'tutoring') { %>
                
-          <div class="content-container" style="width: 80%; min-width: 1100px;">
+          <div class="content-container" style="min-width:120vh;">
             <div class="form-content">
                 <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
                 <img src="/public/img/PostMark.png" class="form-label">
@@ -157,8 +157,21 @@
             <div class="form-content">
               <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
             </div>
+            <% }else if(category=="petition"){ %>
+              <div class="content-container" style="min-width:120vh;">
+                <input type="hidden" name='category' value='petition'>
+                <input type="hidden" name='subcategory' value='ongoing'>
+                  <div class="form-content" style="margin-top: 3rem;">
+                      <a id="goBack"><img src="/img/SlideLeft.png" class="form-label"></a>
+                      <img src="/img/PostMark.png" class="form-label">
+                      <label for="Petition" class="form-label" id="nameLabel" name="Petition"><%= category.charAt(0).toUpperCase()+category.substring(1) %></label>
+                  </div>
+                    <div class="form-content">
+                      <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>">
+                      <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
+                  </div>
         <% }else{ %>
-          <div class="content-container" style="width: 80%; min-width: 1100px;">
+          <div class="content-container" style="min-width:120vh;">
             <input type="hidden" name='category' value='club'>
             <% if(type=="edit") {%>
             <input type="hidden" name= 'subcategory' value='<%= subcategory %>'>

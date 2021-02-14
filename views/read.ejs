@@ -37,9 +37,13 @@
                 </p>
             </div>
             <div style="display: flex; margin-bottom: 2rem;">
-            <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
-            <button type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="dislike-color"><%= post.dislike %></span> Dislikes</button>
-            </div>
+              <% if(post.category=='petition') {%>  
+            <button style="margin: auto;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
+            <% } else { %>
+                <button type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="like-color"><%= post.like %></span> Likes</button>
+                <button type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="dislike-color"><%= post.dislike %></span> Dislikes</button>
+            <% } %>
+        </div>
         </div>
     </div>
     <% if(post.UserId == user.id) { %>
@@ -170,10 +174,11 @@
      document.getElementsByClassName("post-text")[0].innerHTML = html;
      var images = document.getElementsByClassName("post-text")[0].getElementsByTagName("img");
      for(var i = 0; i < images.length; i++){
-         images[i].style.width = "";
+         if(parseInt(images[i].style.width.split("px")[0])>950){
+            images[i].style.width = "";
+         }
      }
         function commentMargin() {
-            console.log("works");
             marginLeft = window.getComputedStyle(document.getElementsByClassName('post-detail-contents')[0]).marginLeft;
             marginRight = window.getComputedStyle(document.getElementsByClassName('post-detail-contents')[0]).marginRight;
             document.getElementsByClassName('comment-title')[0].style.marginLeft = marginLeft;

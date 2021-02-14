@@ -100,6 +100,20 @@
             </div>
         </div>
 </section>
+<div class = "Petitions">
+    <div class="content-container" style="text-align: center;">
+     <a href="./club"><p class="tabs">Petitions </p></a>
+    <% for(var i in club) { %>
+        <% var count = 0 %>
+        <% if(i < 3) { %>
+    <div class="board petitionBoard">
+    <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent"><%= club[i].main%></h3></a>
+    <p class="boardContent"><%= club[i].description%></p>
+    </div>
+    <% } %>
+    <% } %>
+    </div>
+</div>
 <script>
   
      var usctext1 = "<%= usc[0].post_content %>";
@@ -144,6 +158,12 @@
     rawImg3.style.width= '';
     rawImg4.style.width= '';
     rawImg5.style.width= '';
+
+    rawImg1.style.height= '';
+    rawImg2.style.height= '';
+    rawImg3.style.height= '';
+    rawImg4.style.height= '';
+    rawImg5.style.height= '';
 
     var img1 = $(rawImg1).map(function(){return this.outerHTML;}).get().join('');
     var img2 = $(rawImg2).map(function(){return this.outerHTML;}).get().join('');
