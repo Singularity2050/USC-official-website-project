@@ -102,7 +102,7 @@
 </section>
 <div class = "Petitions">
     <div class="uscHiddenSlide">
-    <div class="content-container" style="width: 67.3rem;">
+    <div class="content-container petitionSlide" style="width: 67.3rem;">
      <a href="/petition/1"><p class="tabs">Petitions</p></a>
      <div class="uscSlide" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
@@ -123,8 +123,8 @@
     <% } %>
   </div>
   <div class="slideArrow">
-    <span class="iconify leftArrow" data-icon="akar-icons:arrow-left" data-inline="false" style="font-size: 25pt;"></span> 
-    <span class="iconify rightArrow" data-icon="akar-icons:arrow-right" data-inline="false" style="font-size: 25pt;"></span> 
+    <span class="iconify leftArrow" data-icon="akar-icons:arrow-left" data-inline="false" style="font-size: 25pt;" onclick="leftSlide()"></span> 
+    <span class="iconify rightArrow" data-icon="akar-icons:arrow-right" data-inline="false" style="font-size: 25pt;" onclick="rightSlide()"></span> 
 </div>
     </div>
     </div>
@@ -220,25 +220,27 @@ function stopSlide(){
     clearTimeout(Interval);
 }
 autoSlide();
-this.document.getElementsByClassName("usc")[0].onmouseenter = function(){stopSlide()};
-this.document.getElementsByClassName("usc")[0].onmouseleave = function(){Interval=setTimeout(autoSlide, 5000)};
+this.document.getElementsByClassName("petitionSlide")[0].onmouseenter = function(){stopSlide()};
+this.document.getElementsByClassName("petitionSlide")[0].onmouseleave = function(){Interval=setTimeout(autoSlide, 5000)};
 
-this.window.onclick = function(event){
-var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
+function leftSlide(){
+    var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
     var calc = (uscSlide.style.transform);
     var maxTransform = (uscSlide.children.length-3) * -22.5;
     calc = calc.replace(/[^-.0-9]/g,'');
-    if(event.target.matches('.rightArrow')){
-        calc = parseFloat(calc)-22.5;
-        if(calc >= maxTransform){
-        uscSlide.style.transform = 'translate(' + calc + 'rem)';
-    }
-}
-else if(event.target.matches('.leftArrow')){
         calc = parseFloat(calc)+22.5;  
         if(calc <= 0){
         uscSlide.style.transform = 'translate(' + calc + 'rem)';
         }
+}
+function rightSlide(){
+    var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
+    var calc = (uscSlide.style.transform);
+    var maxTransform = (uscSlide.children.length-3) * -22.5;
+    calc = calc.replace(/[^-.0-9]/g,'');
+        calc = parseFloat(calc)-22.5;
+        if(calc >= maxTransform){
+        uscSlide.style.transform = 'translate(' + calc + 'rem)';
     }
 }
 setInterval(newToggle, 500);
