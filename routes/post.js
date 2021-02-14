@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const multer = require('multer');
 const fs = require('fs');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const sequelize = require('sequelize');
@@ -37,7 +38,24 @@ router.post('/', async (req, res, next) => {
     next(error);
   }
 });
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/json/')
+  },
+  filename: function (req, file, cb) {
+    if(req.headers.referer.includes('club')){
+      cb(null, 'clubsList.json')
+    }else{
+      cb(null, 'contacts.json')
+    }
+  }
+})
+ 
+var upload = multer({ storage: storage })
 
+router.post('/json',upload.single('file'),(req,res,next)=>{
+  res.redirect('back');
+})
 router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
     try{
       let comment;

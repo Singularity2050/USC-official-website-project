@@ -70,21 +70,23 @@ router.get('/',async(req,res)=>{
   }     
     });
 
-
     router.get('/club', async(req,res) => {
-        let real_data = require('../public/json/clubsList.json');
-        var club_post = await Post.findAll({
-          attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','updatedAt','UserId'],
-          where:{
-            category: "club"
-          },
-          order:[
-            ['createdAt','DESC'],
-          ]
-        });
-        res.render('club', {club: real_data, user: req.user, club_post: club_post});
-    });
-
+      let real_data = require('../public/json/clubsList.json');
+      var club_post = await Post.findAll({
+        attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','updatedAt','UserId'],
+        where:{
+          category: "club"
+        },
+        order:[
+          ['createdAt','DESC'],
+        ]
+      });
+      if(req.user){
+        res.render('club', {club: real_data, privileged: req.user.privileged, user: req.user, club_post: club_post});
+      }else{
+        res.render('club', {club: real_data, privileged: null,user: req.user, club_post: club_post});
+      }
+  });
 
     router.get('/read/:category/:subcategory/:post_num',isLoggedIn,async(req,res,next)=>{
       try{
