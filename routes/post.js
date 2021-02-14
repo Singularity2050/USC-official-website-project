@@ -126,7 +126,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
-      console.log(love);
+      
       if(!love){
         await Love.create({
           user: req.user.user_name,

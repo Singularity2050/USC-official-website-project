@@ -289,7 +289,7 @@ router.get('/',async(req,res)=>{
       ],
       offset:((req.params.pageNum-1)*10)
     })
-    console.log(club_post.length);
+    
     var clubData;
     for(var i in raw_data){
       if(raw_data[i].name==req.params.club_name){
@@ -345,12 +345,12 @@ try{
       },
       offset:((req.params.pageNum-1)*9),
     });
-    console.log(comment[0].comment_content);
+    
     if(req.user.privileged==9){
       let users = await User.findAll({
         attributes:['user_email','privileged','id'],
       })
-      console.log(comment[0].comment_content);
+      
       res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: req.params.total, utotal: users.length});
     }else{
       res.render('myAccount',{post:post, users: [], user:req.user, comments : comment, type:req.params.type, total:post.length,  ctotal: req.params.total, utotal: 0});
@@ -380,7 +380,7 @@ try{
 //----------------------------------------------------------else ----------------------------------------------------
 
   router.get('/read/:category/:subcategory/uploads/img/:id',(req,res)=>{
-    console.log(req.params);
+    
     res.redirect('/uploads/img/'+ req.params.id);
   });
     router.route('/404').get(function(req,res){
@@ -449,9 +449,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
     });
 //-----------------------------------------------------search-------------------------------------------
   router.get('/mysearch',async(req,res) =>{
-    console.log('hi');
-    console.log(req.query);
-    console.log('hi');
+    
     if(req.query.type == 'post'){
       let post = await Post.findAll({
         where:{ post_title: {[Op.like]:"%"+req.query.text+"%"} }
@@ -494,7 +492,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
     let empty_data = require('../public/json/board.json');
     
     var lost_post;
-    console.log(req.query);
+    
       if(req.query.subcategory && typeof req.query.text  != 'undefined'){
         lost_post = await Post.findAll({
           attributes:['post_title','category','subcategory','id','number_of_comment'],
@@ -527,7 +525,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
         limit : 10,
         })
       }
-      console.log(lost_post);
+      
       if(req.user){
         var privileged = req.user.privileged;
       }else{
