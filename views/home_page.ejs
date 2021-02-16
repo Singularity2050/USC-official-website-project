@@ -2,27 +2,33 @@
 
 <!-- Main -->
 <section class="main">
+    <div class="content-container" style="width: 67.3rem; display: flex;">
+            <div id="player"></div>
+        <div class="uscAnnouncements" style="height: fit-content;">
+            <h3><%= usc[0].post_title%></h3>
+            <h4 class="mainAnnouncementContent"><%= usc[0].post_content%></h4>
+        </div>
+    </div>
     <div class = "usc">
-        <img class="uscSlideArrow" src="/public/img/SlideLeft.png" style="cursor:pointer;">
         <div class="uscHiddenSlide">
         <div class="content-container" style="width: 67.3rem;">
          <a href="/announcement/1"><p class="tabs">USC</p></a>
-         <div class="uscSslide" style="transform: translate(0rem);">
+         <div style="display: flex;">
+        <img src="/public/img/uscLogo2.jpg" style="height: 230px;">
+        <div class="uscAnnouncements">
         <% var length = usc.length %>
         <% if(length > 4){length = 4} %>
           <% for (var i = 0; i <= length; i++) { %>
               <div class="board uscBoard" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
-            <a href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>'  class="uscPostImage"> </a>
               <div>
-                <h3 class="boardContent uscPostDescription" style="font-size: 15pt; height: 10%;"><%= usc[i].post_title%></h3>
-                <h4 class="boardContent uscPostDescription content" style="height: 90%; font-size: 13pt;"></h4>   
+                <h4 class="boardContent uscPostDescription" style="font-size: 15pt; height: 10%;">[<%=usc[i].subcategory.toUpperCase()%>] <%= usc[i].post_title%></h4>
             </div>
         </div>
         <% } %>
+        </div>
       </div>
         </div>
         </div>
-        <img class="uscSlideArrow" src="/public/img/SlideRight.png" style="cursor: pointer;">
     </div>
     <% var day = new Date(); %>
     <% day = day.getDate(); %>
@@ -30,7 +36,7 @@
         <div class="content-container">
          <p class="tabs">Community</p>
         <div class="board communityBoard">
-            <a href="/course/1"><h3 class="boardContent">Courses</h3></a>
+            <a href="/course/1" class="miniTabs" style="margin-left: 0; height: fit-content;"><h3 class="boardContent">Courses</h3></a>
             <% for(var i in courses) { %>
                 <%var str = toString(courses[i].post_title) %>
                 <% if (str.length > 40) {%>
@@ -46,7 +52,7 @@
           <a href="/course/1" style="text-align: right;">more..</a>
         </div>
         <div class="board communityBoard">
-            <a href="/event/1"> <h3 class="boardContent">Events</h3></a>
+            <a class="miniTabs" href="/event/1" style="margin-left: 0; height: fit-content;"> <h3 class="boardContent">Events</h3></a>
             <% for(var i in events) { %>
                 <%var str = toString(events[i].post_content); %>
                 <% if (str.length > 40) {%>
@@ -61,7 +67,7 @@
           <a href="/event/1" style="text-align: right;">more..</a>
         </div>
         <div class="board communityBoard">
-            <a href="/tutoring/1" style="overflow: visible;"><h3 class="boardContent">Private Tutoring</h3></a>
+            <a class="miniTabs" href="/tutoring/1" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Private Tutoring</h3></a>
             <% for(var i in tutoring) { %>
                 <%var str = toString(tutoring[i].post_content); %>
                 <% if (str.length > 40) {%>
@@ -86,8 +92,8 @@
                 <% if(i < 4) { %>
             <div class="board clubBoard">
              <a href="/club/<%= club[i].name %>/1"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
-            <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent"><%= club[i].main%></h3></a>
-            <h4 class="boardContent"><%= club[i].description%></h4>
+            <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent" style="margin-left: 30px;"><%= club[i].main%></h3></a>
+            <h4 class="boardContent" style="margin-left: 30px;"><%= club[i].description%></h4>
             <% for(var j = 0; j < club_post.length && count < 3; j++) { %>
                 <% if(club_post[j].subcategory == club[i].name){ %>
              <a href="/read/club/<%=club[i].name%>/<%=club_post[j].id%>"><p class="boardContent clubPostBorder"><%= club_post[j].post_title%></p></a>
@@ -116,8 +122,15 @@
           <% } %>
             <div style="width: 100%;">
             <h3 class="boardContent petitionPostDescription" style="font-size: 15pt; height: 40%;"><%= petition_post[i].post_title%></h3>
-            <h4 class="boardContent petitionPostDescription content" style="height: 40%; font-size: 13pt;"><%= petition_post[i].post_content%></h4>
-            <div class="petitionStatus">2021.05.21 <%=petition_post[i].like%> Agree</div>
+            <h4 class="boardContent petitionPostDescription petitionContent content" style="height: 40%; font-size: 13pt;"></h4>
+            <script>
+                var petitionText = "<%= petition_post[i].post_content %>";
+                var petitionDom = new DOMParser().parseFromString(petitionText,'text/html');
+                var petitionHTML = petitionDom.body.childNodes[0].data;
+                petitionHTML = petitionHTML.replaceAll("<br>","");
+                document.getElementsByClassName("petitionContent")[parseInt("<%=i%>")].innerHTML = petitionHTML;
+            </script>
+              <div class="petitionStatus"><img style="vertical-align: top; margin-left:auto; margin-right: 10px;"src="/public/img/Calender.png">2021.05.21 <img style="vertical-align: top;  margin-left: auto;margin-right: 10px;"src="/public/img/Agree.png"><%=petition_post[i].like%> </div>
         </div>  
     </div>
     <% } %>
@@ -131,7 +144,7 @@
 </div>
 <script>
   
-     var usctext1 = "<%= usc[0].post_content %>";
+ /*    var usctext1 = "<%= usc[0].post_content %>";
      var usctext2 = "<%= usc[1].post_content %>";
      var usctext3 = "<%= usc[2].post_content %>";
      var usctext4 = "<%= usc[3].post_content %>";
@@ -198,7 +211,12 @@
     rawImg3.remove();
     rawImg4.remove();
     rawImg5.remove();
-
+*/
+    var usctext1 = "<%= usc[0].post_content %>";
+    var dom1 = new DOMParser().parseFromString(usctext1,'text/html');
+    var html1 = dom1.body.childNodes[0].data;
+    html1 = html1.replaceAll("<br>","");
+    document.getElementsByClassName("mainAnnouncementContent")[0].innerHTML = html1;
 
     var Interval;
     var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
@@ -256,5 +274,35 @@ function newToggle(){
         }
     }
 }
+
+// Youtube volume handler
+var tag = document.createElement('script');
+
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '1000',
+          videoId: 'p5S4kGO-3V8',
+          events: {
+            'onReady': onPlayerReady
+          }
+        });
+      }
+     // 4. The API will call this function when the video player is ready.
+        function onPlayerReady(event) {
+        event.target.playVideo();
+        event.target.setVolume(0);
+      }
+
+$(document).on('mouseover', '#player', function() {
+  player.setVolume(70);
+});
+$(document).on('mouseout', '#player', function() {
+    player.setVolume(0);
+});
 </script>
 <%- include('footer.ejs') %>

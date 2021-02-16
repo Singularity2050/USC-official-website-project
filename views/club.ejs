@@ -14,8 +14,8 @@
                     <% }%>
                     <div class="board clubBoard">
                         <a href="/club/<%= club[i].name %>/1"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
-                       <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent"><%= club[i].main%></h3></a>
-                       <h4 class="boardContent"><%= club[i].description%></h4>
+                       <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent" style="margin-left: 30px;"><%= club[i].main%></h3></a>
+                       <h4 class="boardContent" style="margin-left: 30px;"><%= club[i].description%></h4>
                        <% for(var j = 0; j < club_post.length && count < 5; j++) { %>
                            <% if(club_post[j].subcategory == club[i].name){ %>
                         <a href="/read/club/<%=club[i].name%>/<%=club_post[j].id%>"><p class="boardContent clubPostBorder"><%= club_post[j].post_title%></p></a>
