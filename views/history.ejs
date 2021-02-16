@@ -1,196 +1,37 @@
 <%- include('header.ejs') %>
 <div class="main">
 <ul class="history-container">
+  <% for (var i in usc) { %>
     <li class="year-box">
         <dl>
-            <dt class="year">2018<br>3rd USC</dt>
+            <dt class="year"><%= usc[i].detail[0].year %><br><%= usc[i].cardinalNum %></dt>
             <dd class="history-text-container">
                 <dl class="history-month-list">
-            <dt class="month">September</dt>
+        <% for (var j in usc[i].detail[0].monthDetail) { %>
+            <dt class="month"><%= usc[i].detail[0].monthDetail[j].month %></dt>
+            <% for (var k in usc[i].detail[0].monthDetail[j].task) { %>
             <dd class="history-text">
-            <p>3rd Office Term of USC Begin</p>
+            <p><%= usc[i].detail[0].monthDetail[j].task[k] %></p>
             </dd>
-            <dt class="month">October</dt>
-            <dd class="history-text">
-            <p>Opened USC Facebook & Instagram</p>
-            <p>Increased Printing Quota to 400</p>
-            <p>Halloween Treat Event</p>
-            <p>Scholarship Apply Qualification Appeasement (From CUM GPA to TERM GPA 3.5)</p>
-            <p>USC x Uber Eats Promotion</p>
-            <p>IGC Music Festival (Host: SUNY Korea USC)</p>
-            </dd>
-            <dt class="month">November</dt>
-            <dd class="history-text">
-            <p>SUNY Korea USC Joined Incheon Youth Cultural Network</p>
-            <p>Year End Party</p>
-            </dd>
-            <dt class="month">December</dt>
-            <dd class="history-text">
-            <p>USC Open Info Session</p>
-            <p>USC Food Truck</p>
-            <p>RC Final Presentation (USC Progress Report)</p>
-            <p>Installed New WIfi at SUNY Korea Library</p>
-            <p>Luggage Storage Pick-Up Company Service</p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
+            <% } %>
+            <% } %>
+          </li>
     <li class="year-box">
-        <dl>
-            <dt class="year">2019</dt>
-            <dd class="history-text-container">
-                <dl class="history-month-list">
-            <dt class="month">January</dt>
-            <dd class="history-text">
-            <p>SBU Admitted Student Day (2019 Spring)</p>   
-            </dd>
-            <dt class="month">February</dt>
-            <dd class="history-text">
-            <p>New Student Welcome Week: 2019 Spring USC Game Night</p>
-            <p>2nd USC Party: Welcoming Party (for new students)</p>
-            </dd>
-            <dt class="month">March</dt>
-            <dd class="history-text">
-            <p>Be Yourself: Club Expo & Be Yourself Mirror Event</p>
-            <p>Incheon Youth Cultural Network Opening Ceremony</p>
-            <p>Be Creative: Make Your Own Cup</p>
-            </dd>
-            <dt class="month">April</dt>
-            <dd class="history-text">
-            <p>Be Cultural: World Map & Food Event</p>
-            <p>Incheon Youth Cultural Network Opening Ceremony</p>
-            <p>Installed Extra Wifi Access Point in Academic C Building</p>
-            </dd>
-            <dt class="month">May</dt>
-            <dd class="history-text">
-            <p>USC Lounge Decoration & Reformation</p>
-            <p>2019 IGC Sport Tournament</p>
-            <p>RC Final Presentation (USC Term Report)</p>
-            <p>FIT Admitted Student Day</p>
-            <p>Be Dynamic: 2019 Spring Festival</p>
-            </dd>
-            <dt class="month">June</dt>
-            <dd class="history-text">
-            <p>3rd USC Party: The Giving USC</p>
-            <p>Partnership with Eatogether (나너먹자)</p>
-            <p>Cafeteria Survey & Twosome Place Coupon Give Out</p>
-            <p>Partnership with Weatly</p>
-            <p>SBU Admitted Student Day (2019 Fall)</p>
-            </dd>
-            <dt class="month">July</dt>
-            <dd class="history-text">
-            <p>USC Constitution Amendment</p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
-    <li class="year-box">
-        <dl>
-            <dt class="year">2019<br>4th USC</dt>
-            <dd class="history-text-container">
-                <dl class="history-month-list">
-            <dt class="month">September</dt>
-            <dd class="history-text">
-            <p>Start of 4th USC</p>
-            <p>Organization of USC communication channel</p>   
-            </dd>
-            <dt class="month">October</dt>
-            <dd class="history-text">
-            <p>USC Souvenir Funding & Selling</p>
-            <p>Halloween Event</p>
-            <p>Midnight Music Concert</p>
-            </dd>
-            <dt class="month">November</dt>
-            <dd class="history-text">
-            <p>Weatly Restaurants Expansion to Tripple Street (Songdo)</p>
-            <p>Weatly Mobile Application Promotion Event</p>
-            <p>Student Club Funding Preparation & Renewal</p>
-            <p>Merchandising Society Club & SUNY Student Government Association Fall Sale</p>
-            <p>Department Facility Renewal</p>
-            </dd>
-            <dt class="month">December</dt>
-            <dd class="history-text">
-            <p>Holiday Flea Market</p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
-    <li class="year-box">
-        <dl>
-            <dt class="year">2020</dt>
-            <dd class="history-text-container">
-                <dl class="history-month-list">
-            <dt class="month">March</dt>
-            <dd class="history-text">
-            <p>Covid-19 Virus Donation Campaign</p> 
-            <p>Gift Draw Events & Covid-19 Prevention</p> 
-            </dd>
-            <dt class="month">May</dt>
-            <dd class="history-text">
-            <p>KF80 Masks & USC Wet Tissue Providation</p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
-    <li class="year-box">
-        <dl>
-            <dt class="year">2020<br>5th USC</dt>
-            <dd class="history-text-container">
-                <dl class="history-month-list">
-            <dt class="month">August</dt>
-            <dd class="history-text">
-            <p>Renewed the “Weatly” Contract</p>
-            </dd>
-            <dt class="month">September</dt>
-            <dd class="history-text">
-            <p>5th USC Starts</p>
-            <p>Made USC Kakao Channel</p>
-            </dd>
-            <dt class="month">October</dt>
-            <dd class="history-text">
-            <p>Program Fee Refund</p>
-            <p>Made 50+ Students’ Classes Conduct on Online</p>
-            </dd>
-            <dt class="month">November</dt>
-            <dd class="history-text">
-            <p>Open USC Q&A Session Regarding Hybrid Classes Survey</p>
-            <p>Donut and MoguMogu Event</p>
-            <p>Installed Phone Chargers in Department Lounges as well as the Library</p>
-            </dd>
-            <dt class="month">December</dt>
-            <dd class="history-text">
-            <p>SUNY K-connect</p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
-    <li class="year-box">
-        <dl>
-            <dt class="year">2021</dt>
-            <dd class="history-text-container">
-            <dl class="history-month-list">
-            <dt class="month">January</dt>
-            <dd class="history-text">
-            <p>The Week& Resort X USC Promotion</p>
-            </dd>
-            <dt class="month">February</dt>
-            <dd class="history-text">
-            <p>Designed and Sold USC Merchandise</p>
-            <p>Installed Lockers and Made Rules Regarding Managing Lockers</p>
-            <p>Made USC Official Website, SoonWeChat</p>
-            <p>Made USC Official Website</p>
-            <p>Lost and Found Service on Official Website</p>
-            <p>Installed Feminine Care Product Vending Machines </p>
-            </dd>
-                </dl>
-            </dd>
-        </dl>
-    </li>
+      <dl>
+          <dt class="year"><%= usc[i].detail[1].year %></dt>
+          <dd class="history-text-container">
+              <dl class="history-month-list">
+      <% for (var j in usc[i].detail[1].monthDetail) { %>
+          <dt class="month"><%= usc[i].detail[1].monthDetail[j].month %></dt>
+          <% for (var k in usc[i].detail[1].monthDetail[j].task) { %>
+          <dd class="history-text">
+          <p><%= usc[i].detail[1].monthDetail[j].task[k] %></p>
+          </dd>
+          <% } %>
+          <% } %>
+        </li>
+  <% } %>
+            
 </ul>
 </div>
 

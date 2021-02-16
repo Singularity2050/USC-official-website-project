@@ -1,11 +1,46 @@
-[
-  {
-    "year":"2018",
-    "cardinal Num":"3",
-    "month":["September","October","November","December"],
-    "task1":["3rd Office Term of USC Begin"],
-    "task2":["Opened USC Facebook & Instagram","Increased Printing Quota to 400","Halloween Treat Event","Scholarship Apply Qualification Appeasement (From CUM GPA to TERM GPA 3.5)","USC x Uber Eats Promotion","IGC Music Festival (Host: SUNY Korea USC)"],
-    "task3":["SUNY Korea USC Joined Incheon Youth Cultural Network","Year End Party"],
-    "task4":["USC Open Info Session","USC Food Truck","RC Final Presentation (USC Progress Report)","Installed New WIfi at SUNY Korea Library","Luggage Storage Pick-Up Company Service"]
-  }
-]
+{"usc":[
+  {"cardinalNum":"3rd USC",
+    "detail":[
+              {"year":"2018",
+               "monthDetail":[{"month":"September", "task":["3rd Office Term of USC Begin"]},
+                              {"month":"October", "task":["Opened USC Facebook & Instagram","Increased Printing Quota to 400","Halloween Treat Event","Scholarship Apply Qualification Appeasement (From CUM GPA to TERM GPA 3.5)","USC x Uber Eats Promotion","IGC Music Festival (Host: SUNY Korea USC)"]},
+                              {"month": "November","task":["SUNY Korea USC Joined Incheon Youth Cultural Network","Year End Party"]},
+                              {"month":"December", "task":["USC Open Info Session","USC Food Truck","RC Final Presentation (USC Progress Report)","Installed New WIfi at SUNY Korea Library","Luggage Storage Pick-Up Company Service"]}]
+              },
+              {"year":"2019",
+                "monthDetail":[{"month":"January","task":["SBU Admitted Student Day (2019 Spring)"]},
+                               {"month":"February","task":["New Student Welcome Week: 2019 Spring USC Game Night","2nd USC Party: Welcoming Party (for new students)"]},
+                               {"month":"March","task":["Be Yourself: Club Expo & Be Yourself Mirror Event","Incheon Youth Cultural Network Opening Ceremony","Be Creative: Make Your Own Cup"]},
+                               {"month":"April","task":["Be Cultural: World Map & Food Event","Incheon Youth Cultural Network Opening Ceremony","Installed Extra Wifi Access Point in Academic C Building"]},
+                               {"month":"May","task":["USC Lounge Decoration & Reformation","2019 IGC Sport Tournament","RC Final Presentation (USC Term Report)","FIT Admitted Student Day","Be Dynamic: 2019 Spring Festival"]},
+                               {"month":"June","task":["3rd USC Party: The Giving USC","Partnership with Eatogether (나너먹자)","Cafeteria Survey & Twosome Place Coupon Give Out","Partnership with Weatly","SBU Admitted Student Day (2019 Fall)"]},
+                               {"month":"July","task":["USC Constitution Amendment"]}
+                              ]
+              }]},
+  {"cardinalNum":"4th USC",
+    "detail":[
+              {"year":"2019",
+                "monthDetail":[{"month":"September", "task":["Start of 4th USC","Organization of USC communication channel"]},
+                              {"month":"October", "task":["USC Souvenir Funding & Selling","Halloween Event","Midnight Music Concert"]},
+                              {"month": "November","task":["Weatly Restaurants Expansion to Tripple Street (Songdo)","Weatly Mobile Application Promotion Event","Student Club Funding Preparation & Renewal","Merchandising Society Club & SUNY Student Government Association Fall Sale","Department Facility Renewal"]},
+                              {"month":"December", "task":["Holiday Flea Market"]}]
+              },
+              {"year":"2020",
+                "monthDetail":[{"month":"March","task":["Covid-19 Virus Donation Campaign","Gift Draw Events & Covid-19 Prevention"]},
+                                {"month":"May","task":["KF80 Masks & USC Wet Tissue Providation"]}]
+              }]},
+  {"cardinalNum":"5th USC",
+    "detail":[
+              {"year":"2020",
+                "monthDetail":[{"month":"August","task":["Renewed the “Weatly” Contract"]},
+                              {"month":"September", "task":["5th USC Starts","Made USC Kakao Channel"]},
+                              {"month":"October", "task":["Program Fee Refund","Made 50+ Students’ Classes Conduct on Online"]},
+                              {"month": "November","task":["Open USC Q&A Session Regarding Hybrid Classes Survey","Donut and MoguMogu Event","Installed Phone Chargers in Department Lounges as well as the Library"]},
+                              {"month":"December", "task":["SUNY K-connect"]}]
+              },
+              {"year":"2021",
+                "monthDetail":[{"month":"January","task":["The Week& Resort X USC Promotion"]},
+                                {"month":"February","task":["Designed and Sold USC Merchandise","Installed Lockers and Made Rules Regarding Managing Lockers","Made USC Official Website, SoonWeChat","Made USC Official Website","Lost and Found Service on Official Website","Installed Feminine Care Product Vending Machines"]}]
+              }]}
+]}
+    

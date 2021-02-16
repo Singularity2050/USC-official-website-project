@@ -457,7 +457,8 @@ router.route('/contacts/:pageNum').get(function(req,res){
   
 });
     router.route('/history').get(function(req,res){
-      res.render('history',{user: req.user});
+      let historyData = require('../public/json/history.json');
+      res.render('history',{user: req.user ,usc: historyData.usc});
   });
     router.route('/club_details').get(function(req,res){
         res.render('club_details',{user: req.user});

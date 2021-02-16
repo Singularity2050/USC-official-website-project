@@ -990,6 +990,7 @@ button:focus{
   float: left;
   font-size: 15pt;
   line-height: 13pt;
+  position: absolute;
 }
 .history-text-container{
   overflow: hidden;
@@ -1005,6 +1006,7 @@ button:focus{
 }
 .history-text p{
   margin: 0;
+  margin-left: 100px;
   margin-bottom: 0.5rem;
   color: darkgray;
   padding-left: 50px;
