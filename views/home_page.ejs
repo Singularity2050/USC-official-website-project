@@ -2,11 +2,10 @@
 
 <!-- Main -->
 <section class="main">
-    <div class="content-container" style="width: 67.3rem; margin-top: 100px;">
+    <div class="content-container" style="width: 67.3rem;">
         <div id="player"></div>
         <div class="uscAnnouncements" style="height: fit-content;">
             <h3><%= usc[0].post_title%></h3>
-            <h4 class="mainAnnouncementContent"><%= usc[0].post_content%></h4>
         </div>
     </div>
     <div class = "usc">
@@ -211,12 +210,12 @@
     rawImg3.remove();
     rawImg4.remove();
     rawImg5.remove();
-*/
+
     var usctext1 = "<%= usc[0].post_content %>";
     var dom1 = new DOMParser().parseFromString(usctext1,'text/html');
     var html1 = dom1.body.childNodes[0].data;
     html1 = html1.replaceAll("<br>","");
-    document.getElementsByClassName("mainAnnouncementContent")[0].innerHTML = html1;
+    document.getElementsByClassName("mainAnnouncementContent")[0].innerHTML = html1;*/
 
     var Interval;
     var uscSlide = this.document.getElementsByClassName("uscSlide")[0];

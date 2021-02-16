@@ -80,6 +80,7 @@
       <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
       <img src="/public/img/PostMark.png" class="form-label">
       <label for="name" class="form-label" id="nameLabel">USC Petition</label>
+      <p style="white-space:break-spaces; font-weight:600; font-size:11pt;">For a petition to be answered by the USC, it is required to receive at least 100 agrees. The deadline for a petition is set for 7 days after it has been created. Petitions that have not received 100 agrees before the deadline will be closed automatically.</p>
   </div>
   <form action="/search" id="search-form">
     <input type='hidden' name = 'category' value='<%= category %>' >
@@ -103,7 +104,7 @@
     </div>
       <form id="search-form" action="/search">
         <input type='hidden' name='category' value='<%= category%>'>
-      <div class="form-content" style="text-align: center;">
+      <div class="form-content">
         <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">AMS</button>
         <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">CSE</button>
         <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">MEC</button>
@@ -123,18 +124,30 @@
     <div class="middle-list">
       <% for(var i = 0; i < board.length; i++) {%>
 
-        <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
-          <div style="width: fit-content; margin-left: auto;">  
-            <span class="iconify" data-inline="false" data-icon="bx:bx-comment" style="font-size: 17px;"></span>
-            <div class="count"><%= board[i].number_of_comment %></div>
+        <!-- different border colors depend on the petition subcategory -->
             <% if(category=='petition') {%>
-              <span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px;"></span>
+              <% if(board[i].subcategory=='ongoing') { %>
+                <div class="list" style="border-left: 6px solid rgba(47, 151, 63, 0.4);"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'><span class="petitionTag"><%= board[i].subcategory.charAt(0).toUpperCase()+board[i].subcategory.substring(1) %></span> <%= board[i].post_title%></a>
+              <% } else if(board[i].subcategory=='responded') { %>
+                <div class="list" style="border-left: 6px solid rgba(151, 47, 47, 0.4);"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'><span class="petitionTag"><%= board[i].subcategory.charAt(0).toUpperCase()+board[i].subcategory.substring(1) %></span> <%= board[i].post_title%></a>
+              <% } else if(board[i].subcategory=='closed') { %>
+                <div class="list" style="border-left: 6px solid rgba(0, 0, 0, 0.25);"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'><span class="petitionTag"><%= board[i].subcategory.charAt(0).toUpperCase()+board[i].subcategory.substring(1) %></span> <%= board[i].post_title%></a>
+              <% } %>
+               <div class="postAttribute">  
+              <img src="/public/img/Agree.png" style="height: 17px; width: 17px;">
             <div class="count"><%= board[i].like %></div>
             <% } else if(category=='course'||category=='event'||category=='tutoring') { %>
+              <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
+              <div class="postAttribute">  
+              <span class="iconify" data-inline="false" data-icon="bx:bx-comment" style="font-size: 17px;"></span>
+              <div class="count"><%= board[i].number_of_comment %></div>
               <span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].like %></div>
             <span class="iconify" data-inline="false" data-icon="ant-design:dislike-outlined" style="font-size: 17px;"></span>
             <div class="count"><%= board[i].dislike %></div>
+            <% }else{ %>
+              <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
+              <div class="postAttribute">  
             <% } %>
           </div>
         </div>

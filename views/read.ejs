@@ -11,26 +11,46 @@
             <% } %>
         <div class="container post-detail-contents">
             <div class="post-title-line">
-                <span class="post-title">
                     <% if(post.category == "lostandfound") { %>
+                    <span class="post-title">
                     <%= post.post_title%><br>
                     Place : <%= post.location%><br>
                     Time :  <%= post.when%><br>
+                    </span>
                     <% } else { %>
+                    <span class="post-title">
                     <%= post.post_title%>
+                    </span>
                     <% } %>
-                </span>
+                
             </div>
             <div class="post-date">Date: <%= post.updatedAt %>
             </div>
-            <div class="post-writer">
                 <% if(post.anonymous==1) { %>
+                    <div class="post-writer">
                     Anonymous
-                <%} else{ %>
+                    </div>
+                <%} else if(post.category =='petition'){ %>
+                    <div class="post-writer" style="margin-left: 2rem; display: flex;">
+                    <span class="petitionTag" style="margin-right: auto;"><%=post.subcategory.charAt(0).toUpperCase()+post.subcategory.substring(1) %></span>
                     <%= post.post_writer%>
-                     <% } %>
-                </div>
+                    </div>
+                     <% } else {%>
+                        <div class="post-writer">
+                            <%= post.post_writer%>
+                            </div>
+                    <% } %>
+            <% if(post.category=='petition') { %>
+            <% if(post.subcategory=='ongoing') { %> 
+            <hr class="post-detail-hr" style="background-color:rgba(47, 151, 63, 0.4);">
+            <% }else if(post.subcategory=='responded') { %>
+            <hr class="post-detail-hr" style="background-color:rgba(151, 47, 47, 0.4);">
+            <% } else if(post.subcategory=='closed') { %>
+            <hr class="post-detail-hr" style="background-color:rgba(0, 0, 0, 0.25);">
+            <% } %>
+            <% } else {%>
             <hr class="post-detail-hr">
+            <% } %>
             <div class="post-text">
                 <p>
                     
@@ -38,7 +58,7 @@
             </div>
             <div style="display: flex; margin-bottom: 2rem;">
               <% if(post.category=='petition') {%>  
-                <button style="margin: auto; cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px; color: #3F9648; margin-right: 5px;"></span><%= post.like %></button>
+                <button style="margin: auto; cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><img src="/public/img/Agree.png" style="width: 17px;height: 17px; margin-right: 5px; vertical-align: text-bottom;"><%= post.like %></button>
                 <% } else if(post.category=='course'||post.category=='event'||post.category=='tutoring') { %>
                 <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px; color: #3F9648; margin-right: 5px;"></span><%= post.like %></button>
                 <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="iconify" data-inline="false" data-icon="ant-design:dislike-outlined" style="font-size: 17px; color: #8B0000; margin-right: 5px;"></span><%= post.dislike %></button>
@@ -59,6 +79,7 @@
     <span class="comment-title">Comments</span>
     <!--Main comment-->
     <div style="margin-bottom:5%">
+        <% if(post.category!='petition' || user.privileged > 5) { %>
         <div class="container my-comment-detail-contents">
             <div class="comment-profile">
                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
@@ -83,7 +104,7 @@
                 </form>
             </div>
         </div>
-
+        <% } %>
 
         <% for(var i=0; i < comments.length; i++){ %>
             <div class="commentIndex">
@@ -169,12 +190,15 @@
             </div>
     <script>
      "<% if ( mark > 0) { %>"
+     
      document.getElementsByClassName('post-likes')[0].style.backgroundColor = "#3F9648";
       document.getElementsByClassName('post-likes')[0].style.color = "white";
       document.getElementsByClassName('post-likes')[0].children[0].style.color = "white";
+      "<% if(post.category !='petition'){ %>"
       document.getElementsByClassName('post-likes')[1].style.backgroundColor = "white";
       document.getElementsByClassName('post-likes')[1].style.color = "#8B0000";
       document.getElementsByClassName('post-likes')[1].children[0].style.color = "#8B0000";
+      "<% } %>"
       "<% }else if( mark < 0) { %>"
       document.getElementsByClassName('post-likes')[0].style.backgroundColor = "white";
       document.getElementsByClassName('post-likes')[0].style.color = "#3F9648";
