@@ -114,7 +114,7 @@ body {
   background-color: #303030;
   width: 15%;
   max-width: 140px;
-  z-index: 100;
+  z-index: 9999;
   border: 2px solid lightgray;
 }
 
@@ -179,6 +179,7 @@ body {
   width: 100%;
   min-width: 1200px;
   padding-top: 0px;
+  z-index: 9999;
 }
 
 img.logo {
@@ -375,6 +376,31 @@ h4 h5 {
  width: 100%;
  text-align: center;
  line-height: 30px;
+}
+.petitionTag{
+  width:100px;
+  border-radius: 12px;
+  padding: 4px 10px 4px 10px;
+  color: white;
+  background-color: black;
+  font-size: 12pt;
+  margin-right: 1rem;
+  text-align: center;
+}
+.petitionAgreement{
+  white-space:break-spaces;
+  display: grid;
+  padding: 20px;
+  border: 2px solid #a9a9a9;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}
+.petitionAgreementContent{
+  background-color: #E5E5E5;
+  border-radius: 10px;
+  overflow-y: scroll;
+  padding:10px;
+  height: 300px;
 }
 .slideArrow{
   width: 67.3rem;
@@ -949,9 +975,11 @@ button:focus{
   border-left: 2px solid #9E9E9E;
 }
 .list a{
+  font-size: 13pt;
   color: black;
   text-decoration: none;
   display:flex;
+  place-items: center;
 }
 .blinkEle{
   position: relative;
@@ -1019,4 +1047,11 @@ button:focus{
   padding-left: 20px;
   height: fit-content;
   border-left: 6px solid cornflowerblue;
+}
+.postAttribute{
+  width: fit-content; 
+  margin-left: auto; 
+  place-items: center; 
+  margin-top: auto; 
+  margin-bottom: auto;
 }

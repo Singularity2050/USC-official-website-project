@@ -516,7 +516,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
     
       if(req.query.subcategory && typeof req.query.text  != 'undefined'){
         lost_post = await Post.findAll({
-          attributes:['post_title','category','subcategory','id','number_of_comment'],
+          attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
           where:{
             category:req.query.category,
             subcategory:req.query.subcategory,
@@ -527,7 +527,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
         })
       }else if(req.query.subcategory){
         lost_post = await Post.findAll({
-          attributes:['post_title','category','subcategory','id','number_of_comment'],
+          attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
           where:{
             category:req.query.category,
             subcategory:req.query.subcategory,
@@ -537,7 +537,7 @@ router.route('/contacts/:pageNum').get(function(req,res){
         })
       }else{
         lost_post = await Post.findAll({
-          attributes:['post_title','category','subcategory','id','number_of_comment'],
+          attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
           where:{
             category:req.query.category,
             post_title: {[Op.like]:"%"+req.query.text+"%"}

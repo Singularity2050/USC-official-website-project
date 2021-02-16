@@ -55,7 +55,7 @@
                 <option value="urgent">Urgent</option>
             </select>
         </div>
-        <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align" style="width: 68%; margin-left: 2%;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+        <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align" style="width: 68%; margin-left: 2%;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
       </div>
         <% } else if(category == "lostandfound"){ %>
             <input type='hidden' name='category' value='lostandfound'>
@@ -90,7 +90,7 @@
                   <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
                 </div>
                 <div class="form-content">
-                  <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button> 
+                  <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button> 
                 </div>
                 <script>
                   window.onload = function() {
@@ -155,20 +155,34 @@
               <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
             </div>
             <div class="form-content">
-              <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;"><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+              <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
             </div>
             <% }else if(category=="petition"){ %>
               <div class="content-container" style="min-width:120vh;">
                 <input type="hidden" name='category' value='petition'>
                 <input type="hidden" name='subcategory' value='ongoing'>
-                  <div class="form-content" style="margin-top: 3rem;">
+                  <div class="form-content" style="margin-top: 3rem; margin-bottom: 0;">
                       <a id="goBack"><img src="/img/SlideLeft.png" class="form-label"></a>
                       <img src="/img/PostMark.png" class="form-label">
                       <label for="Petition" class="form-label" id="nameLabel" name="Petition"><%= category.charAt(0).toUpperCase()+category.substring(1) %></label>
                   </div>
                     <div class="form-content">
-                      <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>">
-                      <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
+                      <div class="petitionAgreement">
+                        <div class="petitionAgreementContent" style="background-color: #E5E5E5;"><p>(1) Such petitions can be deleted without any notice.
+                          i) Petitions using swear words and slang.
+                          ii) Petitions containing harmful content, such as violent, sexual, or hateful expressions against a particular group.
+                          iii) Petitions containing personal information, false information, or information that damages the reputation of others.
+                          iv) And other petitions deemed inappropriate by the manager.
+                         
+(2) Such petitions will not be answered.
+                          i) Petitions regarding the same issue.
+                          ii) Petitions that cannot be solved within the authority and responsibility of the university student council.
+                          iii) Petitions that have not gained 100 agrees before the deadline.
+                        </p></div>
+                          <div style="display: inline-block; margin-top: 10px;"><input type="checkbox" style="height: 20px; width: 20px;"required><label style="vertical-align: bottom; margin-left: 10px;">I understood and agree with the above terms.</label></div>
+                      </div>
+                      <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>" required>
+                      <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;" required></input>
                   </div>
         <% }else{ %>
           <div class="content-container" style="min-width:120vh;">
@@ -188,13 +202,13 @@
                   <% } %>
               </div>
                 <div class="form-content">
-                  <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>">
+                  <input maxlength="100" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>" required>
                   <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
               </div>
               
           <% } %>
         <div style="width: 100%">
-            <textarea placeholder="<%= editContent %>"id="summernote"  name="mainText"></textarea>
+            <textarea placeholder="<%= editContent %>"id="summernote"  name="mainText" required></textarea>
           </div>
         </div>
       </form>
