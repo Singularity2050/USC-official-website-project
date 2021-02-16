@@ -52,8 +52,8 @@ sequelize.sync({ force: false })
 
 if(process.env.NODE_ENV === 'production'){
   app.use(morgan('combined'));
-  //app.use(helmet());
-  app.use(hpp());
+   //app.use(helmet());
+   app.use(hpp());
 }else{
   app.use(morgan('dev'));
 }
@@ -86,9 +86,11 @@ const sessionOption ={
     logErrors: true,
   }),
 };
-//if(process.env.NODE_ENV === 'production'){
-//  sessionOption.proxy = true;
-//}
+
+//  if(process.env.NODE_ENV === 'production'){
+//    sessionOption.proxy = true;
+//  }
+
 app.use(session(sessionOption));
 app.use(passport.initialize());
 app.use(passport.session());
