@@ -18,16 +18,16 @@ passport.use(
         done(null, exUser);
       } else {
         
-        if(profile._json.hd =='stonybrook.edu'){
+        //if(profile._json.hd =='stonybrook.edu'){
           const newUser = await User.create({
             user_email: profile.emails[0].value,
             user_name: profile.displayName,
             univ:profile._json.hd,
           });
           done(null, newUser);
-        }else{
-          done(null,false);
-      }}
+        // }else{
+       //   done(null,false); }
+      }
     } catch (error) {
       console.error(error);
       done(error);

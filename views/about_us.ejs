@@ -1,14 +1,22 @@
 <%- include('header.ejs') %>
     <!-- Main -->
         <div class="main" style="text-align: center;">
-         <img class="Logo" style="height: 220px; width: 220px;" src="/img/uscLogo.jpg" alt="USC Image">
+         <img class="Logo" style="height: 220px; width: 220px;" src="<%= uscInfo.uscImage %>" alt="USC Image">
             <div style="max-width: 50%; margin: auto;">
-      <h3>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
-      <p>Ultricies massa consequat aliquam, in tortor pharetra ipsum.</p>
-      <p>Eu molestie ipsum accumsan ipsum nisl, ullamcorper quis habitasse. Quam praesent non sed risus tempus, sed non. Aliquam nulla ac adipiscing fames tempor varius phasellus aliquam facilisi. Sed arcu enim est pellentesque vulputate. Arcu porttitor at scelerisque blandit. Ut a pellentesque risus at amet volutpat blandit consequat. Ullamcorper molestie in amet, eu nullam nunc, viverra semper sapien. Scelerisque volutpat diam, facilisi consectetur malesuada sit at.</p>
+      <h3><%= uscInfo.title %></h3>
+      <p><%=uscInfo.midTitle %></p>
+      <p><%= uscInfo.content%></p>
            </div>
-      <img class="groupPhoto" style="height: 959px; width: 713px;" src="https://s3-alpha-sig.figma.com/img/f372/5cca/a8ed7d3db282381bdda40f46df94873c?Expires=1610323200&Signature=RW~dP61bIVCVvX7TgR-Ztf3ZN1iI02m3M4eqDVxvpmm1iHn7di5gVkTnW-z76LhA3XsldgGnuHPDxOj0qE-qrlhbGZ7q4888R~5F3F4DLgsVddjgBD3RT0Bo4UxNqBsyHKm46Hnq2vtjrzx1raRDhY8uRgEGw~hUHBOGYOkuLruptPFrk-2Kk3bJmFiBf6Fk~w8wZs1Py36XFTRUKU3wNgA~YiLxlKieo8Tkwyu2g1TFThmbHVNX~yyhbuhMEd58vOr2HKED3GhSbSany9TL7rv-tTaf3aywHy4AcQ2wuowynSvPPZz1UXkqyTjuIdhnHNj1O~x8VAd0OsIeDoa4Bw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA" alt="">
-      <img class="chart" style="height: 49.7%; width: 95%; margin-top: 50px; margin-bottom: 50px; white-space: nowrap;" src="/img/test1.png" alt="">
+      <img class="groupPhoto" style="height: 959px; width: 713px;" src="<%= uscInfo.mainImage %>" alt="">
+      <img class="chart" style="height: 49.7%; width: 95%; margin-top: 50px; margin-bottom: 50px; white-space: nowrap;" src="<%=uscInfo.organImage%>" alt="">
       <h4>usc@sunykorea.ac.kr</h4>
+      <% if(user.privileged > 1 ) { %>
+        <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
+          Only JSON File Accepted
+        <input type='file' name = 'file' accept="json/*">
+        <button type='submit' class="bottom-right-button form-align form-post-button write-button"> + UPDATE</button>
+        </form>
+        <% }%>
           </div>
+          
           <%- include('footer.ejs') %>

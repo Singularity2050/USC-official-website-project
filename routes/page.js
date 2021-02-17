@@ -416,7 +416,8 @@ try{
     });
 
     router.get('/about_us',async(req,res)=>{
-      res.render('about_us',{user: req.user});
+      const uscInfo = require('../public/json/about.json')
+      res.render('about_us',{user: req.user, uscInfo:uscInfo});
   });
 
     
