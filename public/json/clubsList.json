@@ -1,38 +1,17 @@
-[
-                {
-                        "name": "CO;Ders",
-                        "main": "CO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                },
-                {
-                        "name": "coders",
-                        "main": "CO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                },
-                {
-                        "name": "oders",
-                        "main": "OO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                },
-                {
-                        "name": "noders",
-                        "main": "NO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                },
-                {
-                        "name": "noders",
-                        "main": "NO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                },
-                                {
-                        "name": "noders",
-                        "main": "NO;Ders",
-                        "description": "Coding Education Club",
-                        "pic_url": "/public/img/coders.png"
-                }
-        ]
+[ {"name":"CO;Ders at SUNY Korea","main":"CO;Ders","description":"Academics / Management","pic_url":"/public/img/coders.jpg"},
+  {"name":"Decompiler","main":"Decompiler","description":"White-hacking","pic_url":"/public/img/Decompiler.jpg"},
+  {"name":"CO;Ders in Robotics","main":"CO;Ders in Robotics","description":"Academics / Management","pic_url":"/public/img/Robotics.jpg"},
+  {"name":"SUNY Korea Startup Club (SKSC)","main":"SKSC","description":"Startup","pic_url":"/public/img/SKSC.png"},
+  {"name":"ASME Student Section at SUNY Korea","main":"ASME","description":"Engineering Social","pic_url":"/public/img/ASME.jpg"},
+  {"name":"SUNY Korea Computing Society","main":"SKCS","description":"Pre-professional (CS)","pic_url":"/public/img/SKCS.jpg"},
+  {"name":"Add:it","main":"Add:it","description":"Media (Editing)","pic_url":"/public/img/Addit.jpg"},
+  {"name":"62^nd of SUNY Korea","main":"62nd","description":"Media & Advocacy (Filming)","pic_url":"/public/img/62nd.jpg"},
+  {"name":"Be it at SUNY Korea","main":"Be it","description":"Music (Pop Band)","pic_url":"/public/img/Beit.jpg"},
+  {"name":"Emeis ","main":"Emeis","description":"Dance","pic_url":"/public/img/Emeis.jpg"},
+  {"name":"International Christian Club","main":"ICC","description":"Religion (Christian)","pic_url":"/public/img/ICC.jpg"},
+  {"name":"International Students' Association","main":"ISA","description":"International","pic_url":"/public/img/ISA.jpg"},
+  {"name":"IVY Magazine Club","main":"IVY","description":"Fashion Magazine","pic_url":"/public/img/IVY.png"},
+  {"name":"JERMES Education","main":"JERMES","description":"Academics / Management","pic_url":"/public/img/JERMES.jpg"},
+  {"name":"ROOKGROUND","main":"ROOKGROUND","description":"Music (Hip hop)","pic_url":"/public/img/ROOKGROUND.jpg"},
+  {"name":"SUNY Korea KAIROS","main":"Kairos","description":"Music (Worship)","pic_url":"/public/img/Kairos.jpg"},
+  {"name":"The Merchandising Society at SUNY Korea","main":"Merchandising Society","description":"Pre-professional (FBM)","pic_url":"/public/img/Merchandising Society.jpg"}]
