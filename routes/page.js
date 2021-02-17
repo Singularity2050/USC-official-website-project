@@ -406,15 +406,6 @@ try{
     router.route('/404').get(function(req,res){
         res.render('404_page',{user: req.user});
     });
-
-    router.route('/alert').get(function(req,res){
-        res.render('alert');
-    });
-
-    router.route('/alert2').get(function(req,res){
-        res.render('alert2');
-    });
-
     router.get('/about_us',async(req,res)=>{
       const uscInfo = require('../public/json/about.json')
       res.render('about_us',{user: req.user, uscInfo:uscInfo});
@@ -426,7 +417,7 @@ try{
 
       res.render('login');
     });
-    router.route('/application').get(function(req,res){
+    router.route('/locker').get(function(req,res){
         res.render('application',{user: req.user});
     });
 //contacts search
