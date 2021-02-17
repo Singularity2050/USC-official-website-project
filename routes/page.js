@@ -408,7 +408,12 @@ try{
     });
     router.get('/about_us',async(req,res)=>{
       const uscInfo = require('../public/json/about.json')
-      res.render('about_us',{user: req.user, uscInfo:uscInfo});
+      if(req.user){
+        res.render('about_us',{user: req.user, privileged: req.user.privileged,uscInfo:uscInfo});
+      }else{
+        res.render('about_us',{user: req.user, privileged: null ,uscInfo:uscInfo});
+      }
+      
   });
 
     
@@ -450,7 +455,11 @@ router.route('/contacts/:pageNum').get(function(req,res){
 });
     router.route('/history').get(function(req,res){
       let historyData = require('../public/json/history.json');
-      res.render('history',{user: req.user ,usc: historyData.usc});
+      if(req.user){
+        res.render('history',{user: req.user ,privileged: req.user.privileged,usc: historyData.usc});
+      }else{
+        res.render('history',{user: req.user,privileged:null ,usc: historyData.usc});
+      }
   });
     router.route('/club_details').get(function(req,res){
         res.render('club_details',{user: req.user});

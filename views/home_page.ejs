@@ -32,9 +32,9 @@
     <% var day = new Date(); %>
     <% day = day.getDate(); %>
     <div class = "Community">
-        <div class="content-container">
+        <div class="content-container box-wrap">
          <p class="tabs">Community</p>
-        <div class="board communityBoard">
+        <div class="board communityBoard box">
             <a href="/course/1" class="miniTabs" style="margin-left: 0; height: fit-content;"><h3 class="boardContent">Courses</h3></a>
             <% for(var i in courses) { %>
                 <%var str = toString(courses[i].post_title) %>
@@ -50,7 +50,7 @@
           <% } %>
           <a href="/course/1" style="text-align: right;">more..</a>
         </div>
-        <div class="board communityBoard">
+        <div class="board communityBoard box">
             <a class="miniTabs" href="/event/1" style="margin-left: 0; height: fit-content;"> <h3 class="boardContent">Events</h3></a>
             <% for(var i in events) { %>
                 <%var str = toString(events[i].post_content); %>
@@ -65,7 +65,7 @@
           <% } %>
           <a href="/event/1" style="text-align: right;">more..</a>
         </div>
-        <div class="board communityBoard">
+        <div class="board communityBoard box">
             <a class="miniTabs" href="/tutoring/1" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Private Tutoring</h3></a>
             <% for(var i in tutoring) { %>
                 <%var str = toString(tutoring[i].post_content); %>
@@ -84,12 +84,12 @@
     </div>
     </section><section class="main">
         <div class = "Clubs">
-            <div class="content-container">
+            <div class="content-container box-wrap">
              <a href="./club"><p class="tabs">Clubs</p></a>
             <% for(var i in club) { %>
                 <% var count = 0 %>
                 <% if(i < 4) { %>
-            <div class="board clubBoard">
+            <div class="board clubBoard box">
              <a href="/club/<%= club[i].name %>/1"><img class="boardContent clubImage" src="<%=club[i].pic_url%>"></a>
             <a href="/club/<%= club[i].name %>/1"><h3 class="boardContent" style="margin-left: 30px;"><%= club[i].main%></h3></a>
             <h4 class="boardContent" style="margin-left: 30px;"><%= club[i].description%></h4>
@@ -107,17 +107,17 @@
 </section>
 <div class = "Petitions">
     <div class="uscHiddenSlide">
-    <div class="content-container petitionSlide" style="width: 67.3rem;">
+    <div class="content-container petitionSlide box-wrap" style="width: 67.3rem;">
      <a href="/petition/1"><p class="tabs">Petitions</p></a>
      <div class="uscSlide" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
       <% for (var i = 0; i < length; i++) { %>
         <% if(petition_post[i].subcategory=='responded') {%>
-            <div style="border-top:15px solid rgba(0, 0, 0, 0.25);" class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+            <div style="border-top:15px solid rgba(0, 0, 0, 0.25);" class="board box petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
             <% } else if(petition_post[i].subcategory=='closed'){ %>
-            <div style="border-top:15px solid rgba(151, 47, 47, 0.4);" class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+            <div style="border-top:15px solid rgba(151, 47, 47, 0.4);" class="board box petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
             <% } else { %>
-            <div class="board petitionBoard" onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
+            <div class="board box petitionBoard"  onclick="location.href='/read/<%= petition_post[i].category %>/<%= petition_post[i].subcategory%>/<%=petition_post[i].id%>';" style="cursor: pointer;">
           <% } %>
             <div style="width: 100%;">
             <h3 class="boardContent petitionPostDescription" style="font-size: 15pt; height: 40%;"><%= petition_post[i].post_title%></h3>
