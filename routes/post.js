@@ -43,15 +43,17 @@ var storage = multer.diskStorage({
     cb(null, 'public/json/')
   },
   filename: function (req, file, cb) {
-    console.log(req.headers.referer);
+    console.log(file);
     if(req.headers.referer.includes('club')){
       cb(null, 'clubsList.json')
     }else if(req.headers.referer.includes('history')){
       cb(null, 'history.json')
     }else if(req.headers.referer.includes('about_us')){
       cb(null, 'about_us.json')
-    }else{
+    }else if(req.headers.referer.includes('contacts')){
       cb(null, 'contacts.json')
+    }else{
+      cb(null, file.originalname)
     }
   }
 })

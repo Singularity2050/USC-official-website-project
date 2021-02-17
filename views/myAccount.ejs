@@ -68,9 +68,19 @@
             <div class="middle-list">
 
             </div>  
+            
         </div>
         <div>
         </div>
+    </div>
+    <div style='text-align: center;'>
+    <% if(user.privileged == 9 ) { %>
+      <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
+        Only JSON File Accepted
+      <input type='file' name = 'file' accept="json/*">
+      <button type='submit' class="bottom-right-button form-align form-post-button write-button"> + UPDATE</button>
+      </form>
+      <% }%>
     </div>
     <script>
 
