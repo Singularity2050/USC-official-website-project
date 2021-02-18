@@ -7,7 +7,7 @@ module.exports = {
     password: "soonwechat36",
     database: "usc",
     host: "database-1.csicbi1sqrpx.ap-northeast-2.rds.amazonaws.com",
-    dialect: "mysql"  
+    dialect: "mysql"
     },
     production: {
     username: "sunykorea",

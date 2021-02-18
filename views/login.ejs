@@ -1,35 +1,51 @@
 <%- include('header.ejs') %>
-   <link rel="stylesheet" href="/public/css/login.css" type="text/css" media="all" />
-    <div class="container">
-      <script type="text/"></script>
+  <link rel="stylesheet" href="/public/css/login.css" type="text/css" media="all" />
+  <div class="container">
+    <script type="text/"></script>
+    <style>
+      .policy {
+        text-decoration: none !important;
+        color: inherit !important;
+      }
 
-      <div class="left">
-        <img class="login-pic"src="/img/login-image.png" alt="">
-      </div>
+      .policy:visited {
+        color: inherit !important;
+      }
+    </style>
 
-      <div class="right">
-        <h1>Welcome!</h1>
-        <p>Login with your school account to gain access to news of the</p>
-        <p style="margin-top: 0;">University Student Council !</p>
-          <a href="/auth/google">
-            <div class="banner-stony banner">
-              <img class="banner-img" src="/public/img/login-stonylogo.png" alt="">
-              <p class="text">Login with Stony Brook</p>
-            </div>
-          </a>
-          <a href="/auth/google">
-            <div class="banner-FIT banner">
-              <img class="banner-img"src="/public/img/login-FITlogo.png" alt="">
-              <p class="text">Login with FIT</p>
-            </div>
-          </a>
-          <a href="/auth/google">
-            <div class="banner-SUNY banner">
-              <img class="banner-img suny-img"src="/public/img/login-SUNYlogo.png" alt="">
-              <p class="text t">Login with SUNY Korea</p>
-            </div>
-          </a>
-      </div>
+
+
+    <div class="left">
+      <img class="login-pic" src="/img/login-image.png" alt="">
     </div>
 
-    <%- include('footer.ejs') %>
+    <div class="right">
+      <h1>Welcome!</h1>
+      <p>Login with your school account to gain access to news of the</p>
+      <p style="margin-top: 0;">University Student Council !</p>
+      <a href="/auth/google">
+        <div class="banner-stony banner">
+          <img class="banner-img" src="/public/img/login-stonylogo.png" alt="">
+          <p class="text">Login with Stony Brook</p>
+        </div>
+      </a>
+      <a href="/auth/google">
+        <div class="banner-FIT banner">
+          <img class="banner-img" src="/public/img/login-FITlogo.png" alt="">
+          <p class="text">Login with FIT</p>
+        </div>
+      </a>
+      <a href="/auth/google">
+        <div class="banner-SUNY banner">
+          <img class="banner-img suny-img" src="/public/img/login-SUNYlogo.png" alt="">
+          <p class="text t">Login with SUNY Korea</p>
+        </div>
+      </a>
+      <div style="display: flex; width: 100%;">
+        <a class="policy" href="/PrivacyPolicy" style="margin-left: 10px; margin-right: auto; ">Privacy Policy(개인정보 처리방침)</a>
+        <a class="policy" href="/TermsofService" style="margin-right: 10px; margin-left: auto; ">Terms of Service(이용 약관)</a>
+      </div>
+    </div>
+  </div>
+
+  <%- include('footer.ejs') %>

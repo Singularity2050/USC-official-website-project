@@ -409,6 +409,12 @@ try{
     router.route('/404').get(function(req,res){
         res.render('404_page',{user: req.user});
     });
+    router.route('/TermsofService').get(function(req,res){
+      res.render('termsofService',{user: req.user});
+  });
+  router.route('/PrivacyPolicy').get(function(req,res){
+    res.render('privacyPolicy',{user: req.user});
+  });
     router.get('/about_us',async(req,res)=>{
       const uscInfo = require('../public/json/about.json')
       if(req.user){
