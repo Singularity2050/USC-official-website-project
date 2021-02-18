@@ -8,7 +8,7 @@
             <% if(privileged >= 9) { %>
                 <p>Enter Youtube video URL: </p>
                 <input type="text" id="videoUrl" placeholder="Youtube video URL" style="width: 400px;">
-               <button onclick="showVideo()">Check</button>
+               <button onclick="showVideo()">Check</button> 
               <% } %>
             <h3><%= usc[0].post_title%></h3>
         </div>
@@ -71,7 +71,7 @@
           <a href="/event/1" style="text-align: right;">more..</a>
         </div>
         <div class="board communityBoard box">
-            <a class="miniTabs" href="/tutoring/1" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Private Tutoring</h3></a>
+            <a class="miniTabs" href="/tutoring/1" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Study Group</h3></a>
             <% for(var i in tutoring) { %>
                 <%var str = toString(tutoring[i].post_content); %>
                 <% if (str.length > 40) {%>
@@ -314,14 +314,12 @@ function showVideo() {
         var jsonData = JSON.stringify(data);
         var file = "youtube.json";
         sendPost(jsonData);
-        
 }
 function youtube_parser(url){
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
     var match = url.match(regExp);
     return (match&&match[7].length==11)? match[7] : false;
 }
-
 function sendPost(json) {
 var form = document.createElement('form');
 form.setAttribute('method', 'post');

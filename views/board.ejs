@@ -100,7 +100,11 @@
       <div class="form-content">
         <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
         <img src="/public/img/PostMark.png" class="form-label">
+        <% if(category=='tutoring') { %>
+        <label for="Club" class="form-label" id="nameLabel">Study Group</label>
+        <% } else { %>
         <label for="Club" class="form-label" id="nameLabel"><% var label = category%><%= label.charAt(0).toUpperCase()+label.substring(1)%></label>
+        <% } %>
     </div>
       <form id="search-form" action="/search">
         <input type='hidden' name='category' value='<%= category%>'>

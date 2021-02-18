@@ -119,7 +119,11 @@
             <div class="form-content">
                 <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
                 <img src="/public/img/PostMark.png" class="form-label">
+                <% if(category=='tutoring') { %>
+                  <label for="Club" class="form-label" id="nameLabel">Study Group</label>
+                <% } else { %>
                 <label for="Club" class="form-label" id="nameLabel"><% var label = category%><%= label.charAt(0).toUpperCase()+label.substring(1)%></label>
+                  <% } %>
             </div>
             <div class="form-content">
             <div class="custom-select" style="width: 50%">
@@ -131,7 +135,7 @@
                 <% } %>
                 <option value="course">Course</option>
                 <option value="event">Event</option>
-                <option value="tutoring">Private Tutoring</option>
+                <option value="tutoring">Study Group</option>
             </select>
             </div>
             <div class="custom-select" style="width:32.5%; margin-left: 2.5%;">
