@@ -63,6 +63,22 @@ var upload = multer({ storage: storage })
 router.post('/json',upload.single('file'),(req,res,next)=>{
   res.redirect('back');
 })
+router.post('/json/youtube',(req,res,next) =>{
+  function youtube_parser(url){
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
+  }
+  var fs = require('fs');
+  var youtube_id = { "id" : youtube_parser(req.body.youtube_id) };
+  console.log(youtube_id);
+  // fs.writeFile("./public/json/youtube.json",JSON.stringify(youtube_id),(err) =>{
+  //   if(err) throw err;
+  //   console.log('The file has been saved!');
+  // });
+  upload.single(youtube_id);
+  res.redirect('back');
+})
 router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
     try{
       let comment;

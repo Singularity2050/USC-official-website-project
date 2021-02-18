@@ -41,6 +41,7 @@
     "path": "^0.12.7",
     "pm2": "^4.5.4",
     "redis": "^3.0.2",
+    "self-reload-json": "^0.4.0",
     "sequelize": "^6.4.0",
     "sequelize-cli": "^6.2.0",
     "serve-static": "^1.14.1",
