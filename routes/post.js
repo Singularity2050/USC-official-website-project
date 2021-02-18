@@ -71,11 +71,7 @@ router.post('/json/youtube',(req,res,next) =>{
   }
   var fs = require('fs');
   var youtube_id = { "id" : youtube_parser(req.body.youtube_id) };
-  console.log(youtube_id);
-  // fs.writeFile("./public/json/youtube.json",JSON.stringify(youtube_id),(err) =>{
-  //   if(err) throw err;
-  //   console.log('The file has been saved!');
-  // });
+  
   upload.single(youtube_id);
   res.redirect('back');
 })
@@ -176,7 +172,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           UserId: req.user.id
         })
         await Post.update({
-          like: sequelize.literal('post.like + 1')
+          like: sequelize.literal('Post.like + 1')
         },
         {where:{id: req.params.post_id}}
         )
@@ -185,7 +181,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       }else if(love.like > 0){
         await love.destroy();
         await Post.update({
-          like: sequelize.literal('post.like - 1'),
+          like: sequelize.literal('Post.like - 1'),
         },
         {where:{id: req.params.post_id}}
         )
@@ -197,8 +193,8 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           {where: {UserId: req.user.id}}
           )
           await Post.update({
-            like: sequelize.literal('post.like + 1'),
-            dislike: sequelize.literal('post.dislike - 1')
+            like: sequelize.literal('Post.like + 1'),
+            dislike: sequelize.literal('Post.dislike - 1')
           },
           {where:{id: req.params.post_id}}
           )
@@ -217,7 +213,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           UserId: req.user.id
         })
         await Post.update({
-          dislike: sequelize.literal('post.dislike + 1')
+          dislike: sequelize.literal('Post.dislike + 1')
         },
         {where:{id: req.params.post_id}}
         )
@@ -225,7 +221,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       }else if(love.like<0){
         await love.destroy();
         await Post.update({
-          dislike: sequelize.literal('post.dislike - 1'),
+          dislike: sequelize.literal('Post.dislike - 1'),
         },
         {where:{id: req.params.post_id}}
         )
@@ -237,8 +233,8 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           {where: {UserId: req.user.id}}
           )
           await Post.update({
-            like: sequelize.literal('post.like - 1'),
-            dislike: sequelize.literal('post.dislike +1')
+            like: sequelize.literal('Post.like - 1'),
+            dislike: sequelize.literal('Post.dislike +1')
           },
           {where:{id: req.params.post_id}}
           )
