@@ -211,7 +211,7 @@ h4 h5 {
   margin-top: 25px;
   margin-bottom: 0px;
   height: auto;
-  border-bottom: 1px solid #8B0000;
+  border-bottom: 3px solid #8B0000;
   border-left: 6px solid #8B0000;
   padding-left: 20px;
 }
@@ -341,9 +341,8 @@ h4 h5 {
   transition:.2s all; 
 }
 .box-wrap:hover .box{
-  filter:blur(3px);
-  opacity:.5;
-  transform: scale(.98);
+  opacity:1;
+  transform: scale(.95);
   box-shadow:none;
 }
 .box-wrap:hover .box:hover{
@@ -540,7 +539,7 @@ h4 h5 {
 .club-detail-main {
   height: 100%;
   width: 100%;
-  background-image: url('/public/img/bg-club-detail.jpeg');
+  background-position: top;
   background-size: 100% 20rem;
   background-repeat: no-repeat;
   position: relative;

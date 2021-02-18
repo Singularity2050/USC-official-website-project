@@ -207,7 +207,7 @@
       document.getElementsByClassName('post-likes')[1].style.color = "white";
       document.getElementsByClassName('post-likes')[1].children[0].style.color = "white";
       "<% } %>"
-     var text = "<%= post.post_content %>";
+     var text = "<%=post.post_content%>";
      var dom = new DOMParser().parseFromString(text,'text/html');
      var html = dom.body.childNodes[0].data;
      document.getElementsByClassName("post-text")[0].innerHTML = html;

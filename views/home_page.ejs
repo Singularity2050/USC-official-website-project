@@ -5,6 +5,11 @@
     <div class="content-container" style="width: 67.3rem;">
         <div id="player"></div>
         <div class="uscAnnouncements" style="height: fit-content;">
+            <% if(privileged >= 9) { %>
+                <p>Enter Youtube video URL: </p>
+                <input type="text" id="videoUrl" placeholder="Youtube video URL" style="width: 400px;">
+               <button onclick="showVideo()">Check</button>
+              <% } %>
             <h3><%= usc[0].post_title%></h3>
         </div>
     </div>
@@ -107,9 +112,9 @@
 </section>
 <div class = "Petitions">
     <div class="uscHiddenSlide">
-    <div class="content-container petitionSlide box-wrap" style="width: 67.3rem;">
+    <div class="content-container petitionSlide" style="width: 67.3rem;">
      <a href="/petition/1"><p class="tabs">Petitions</p></a>
-     <div class="uscSlide" style="transform: translate(0rem);">
+     <div class="uscSlide box-wrap" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
       <% for (var i = 0; i < length; i++) { %>
         <% if(petition_post[i].subcategory=='responded') {%>
@@ -285,7 +290,7 @@ var player;
         player = new YT.Player('player', {
           height: '390',
           width: '1000',
-          videoId: 'p5S4kGO-3V8',
+          videoId: '<%=youtube.id%>',
           events: {
             'onReady': onPlayerReady
           }
@@ -303,5 +308,28 @@ $(document).on('mouseover', '#player', function() {
 $(document).on('mouseout', '#player', function() {
     player.setVolume(0);
 });
+function showVideo() {
+        var data = new Object() ;
+        data.id = youtube_parser(document.getElementById('videoUrl').value);
+        var jsonData = JSON.stringify(data);
+        var file = "youtube.json";
+        sendPost(jsonData);
+        
+}
+function youtube_parser(url){
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
+}
+
+function sendPost(json) {
+var form = document.createElement('form');
+form.setAttribute('method', 'post');
+form.setAttribute('action', '/post/json');
+document.charset = "utf-8";
+form.appendChild(json);
+document.body.appendChild(form);
+form.submit();
+}
 </script>
 <%- include('footer.ejs') %>

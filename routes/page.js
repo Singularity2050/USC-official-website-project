@@ -11,6 +11,7 @@ const Op = Sequelize.Op;
 router.get('/',async(req,res)=>{
   
   let real_data = require('../public/json/clubsList.json');
+  let youtube = require('../public/json/youtube.json');
   var club_post = await Post.findAll({
     attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','updatedAt','UserId'],
     where:{
@@ -76,7 +77,11 @@ router.get('/',async(req,res)=>{
   if(announce_post.length<3){
     res.send('<script>alert("초기 홈페이지 개설을 위해 공지글을 3개이상 작성하십시요"); window.location.replace("/announcement/post")</script>');
   }else{
-    res.render('home_page',{ usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
+    if(req.user){
+     res.render('home_page',{privileged:user.privileged, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
+    }else{
+    res.render('home_page',{privileged:null, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
+    }
   }     
     });
 
@@ -426,7 +431,7 @@ try{
         res.render('application',{user: req.user});
     });
 //contacts search
-router.get('/contacts/search/:pageNum',(req,res,next) =>{
+router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
 
   let contacts = require('../public/json/contacts.json');
   let newData = Array();
