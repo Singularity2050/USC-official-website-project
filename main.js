@@ -8,8 +8,6 @@ const express = require("express"),
     session = require('express-session'),
     dotenv = require('dotenv'),
     passport = require('passport'),
-    logger = require('./logger'),
-    //helmet = require('helmet'),
     hpp = require('hpp'),
     RedisStore = require('connect-redis')(session),
     redis = require('redis');
@@ -52,7 +50,6 @@ sequelize.sync({ force: false })
 
 if(process.env.NODE_ENV === 'production'){
   app.use(morgan('combined'));
-   //app.use(helmet());
    app.use(hpp());
 }else{
   app.use(morgan('dev'));
