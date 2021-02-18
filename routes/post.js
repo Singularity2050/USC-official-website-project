@@ -7,6 +7,8 @@ const sequelize = require('sequelize');
 const { User,Post,COMMENT,Love} = require('../models');
 const router = express.Router();
 const save = require('summernote-nodejs');
+const { formatWithOptions } = require('util');
+const { throws } = require('assert');
 
 try {
     fs.readdirSync('uploads');
@@ -69,10 +71,13 @@ router.post('/json/youtube',(req,res,next) =>{
     var match = url.match(regExp);
     return (match&&match[7].length==11)? match[7] : false;
   }
-  var fs = require('fs');
   var youtube_id = { "id" : youtube_parser(req.body.youtube_id) };
+  var jsonyouTube = JSON.stringify(youtube_id);
+  fs.writeFile("./public/json/youtube.json",jsonyouTube,(err)=>{
+    if(err) throw err;
+    console.log("The file is saved");
+  });
   
-  upload.single(youtube_id);
   res.redirect('back');
 })
 router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
