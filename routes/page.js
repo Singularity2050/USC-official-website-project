@@ -452,9 +452,9 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
   res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
   }
 })
-//contacts
-router.route('/contacts/:pageNum').get(function(req,res){
-  let contactData = require('../public/json/contacts.json');
+  //contacts
+  router.get('/contacts/:pageNum',isLoggedIn,(req,res)=>{
+    let contactData = require('../public/json/contacts.json');
   if(req.user){
     res.render('contacts',{user: req.user, privileged : req.user.privileged, contactData: contactData, pageNum:req.params.pageNum});
   }else{
@@ -474,7 +474,9 @@ router.route('/contacts/:pageNum').get(function(req,res){
         res.render('club_details',{user: req.user});
     });
 
-
+    router.get('/ourTeam',(req,res) =>{
+      res.render('ourTeam');
+    })
     router.route('/club_postDetails').get(function(req,res){
       res.render('club_postDetails', {user: req.user});
     });
