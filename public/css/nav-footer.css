@@ -346,7 +346,7 @@ h4 h5 {
   margin:2%;
   background:white;
   border:1px solid #d6d6d6;
-  box-shadow:0 2px 3px 0px rgba(0,0,0,0.25);
+  
   border-radius:3px;
   transition:.2s all; 
 }

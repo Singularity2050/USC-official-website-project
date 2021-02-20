@@ -21,11 +21,11 @@
          <a href="/announcement/1"><p class="tabs">USC</p></a>
          <div style="display: flex;">
         <img src="/public/img/uscLogo2.jpg" style="height: 230px;">
-        <div class="uscAnnouncements">
+        <div class="uscAnnouncements box-wrap">
         <% var length = usc.length %>
         <% if(length > 4){length = 4} %>
           <% for (var i = 0; i <= length; i++) { %>
-              <div class="board uscBoard" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
+              <div class="board uscBoard box" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
               <div>
               <h4 class="boardContent uscPostDescription" style="height: 10%;"><% if(usc[i].subcategory == 'important') { %> <span style=" color:#19ce60 "><% } else if( usc[i].subcategory == 'urgent') { %> <span style=" color:red"><% } else { %> <span style="color: black;"> <% } %> [<%=usc[i].subcategory.toUpperCase()%>]</span> <%= usc[i].post_title%></h4>
             </div>
