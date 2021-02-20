@@ -27,7 +27,7 @@
           <% for (var i = 0; i <= length; i++) { %>
               <div class="board uscBoard" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
               <div>
-                <h4 class="boardContent uscPostDescription" style="font-size: 15pt; height: 10%;">[<%=usc[i].subcategory.toUpperCase()%>] <%= usc[i].post_title%></h4>
+              <h4 class="boardContent uscPostDescription" style="height: 10%;"><% if(usc[i].subcategory == 'important') { %> <span style=" color:#19ce60 "><% } else if( usc[i].subcategory == 'urgent') { %> <span style=" color:red"><% } else { %> <span style="color: black;"> <% } %> [<%=usc[i].subcategory.toUpperCase()%>]</span> <%= usc[i].post_title%></h4>
             </div>
         </div>
         <% } %>
@@ -150,80 +150,6 @@
 </div>
 <script>
   
- /*    var usctext1 = "<%= usc[0].post_content %>";
-     var usctext2 = "<%= usc[1].post_content %>";
-     var usctext3 = "<%= usc[2].post_content %>";
-     var usctext4 = "<%= usc[3].post_content %>";
-     var usctext5 = "<%= usc[4].post_content %>";
-
-     var dom1 = new DOMParser().parseFromString(usctext1,'text/html');
-     var dom2 = new DOMParser().parseFromString(usctext2,'text/html');
-     var dom3 = new DOMParser().parseFromString(usctext3,'text/html');
-     var dom4 = new DOMParser().parseFromString(usctext4,'text/html');
-     var dom5 = new DOMParser().parseFromString(usctext5,'text/html');
-
-    var html1 = dom1.body.childNodes[0].data;
-    var html2 = dom2.body.childNodes[0].data;
-    var html3 = dom3.body.childNodes[0].data;
-    var html4 = dom4.body.childNodes[0].data;
-    var html5 = dom5.body.childNodes[0].data;
-    
-    html1 = html1.replaceAll("<br>","");
-    html2 = html2.replaceAll("<br>","");
-    html3 = html3.replaceAll("<br>","");
-    html4 = html4.replaceAll("<br>","");
-    html5 = html5.replaceAll("<br>","");
-    
-
-    document.getElementsByClassName("content")[0].innerHTML = html1;
-    document.getElementsByClassName("content")[1].innerHTML = html2;
-    document.getElementsByClassName("content")[2].innerHTML = html3;
-    document.getElementsByClassName("content")[3].innerHTML = html4;
-    document.getElementsByClassName("content")[4].innerHTML = html5;
-
-    var rawImg1 = $('img').html('')[3];
-    var rawImg2 = $('img').html('')[4];
-    var rawImg3 = $('img').html('')[5];
-    var rawImg4 = $('img').html('')[6];
-    var rawImg5 = $('img').html('')[7];
-
-    rawImg1.style.width= '';
-    rawImg2.style.width= '';
-    rawImg3.style.width= '';
-    rawImg4.style.width= '';
-    rawImg5.style.width= '';
-
-    rawImg1.style.height= '';
-    rawImg2.style.height= '';
-    rawImg3.style.height= '';
-    rawImg4.style.height= '';
-    rawImg5.style.height= '';
-
-    var img1 = $(rawImg1).map(function(){return this.outerHTML;}).get().join('');
-    var img2 = $(rawImg2).map(function(){return this.outerHTML;}).get().join('');
-    var img3 = $(rawImg3).map(function(){return this.outerHTML;}).get().join('');
-    var img4 = $(rawImg4).map(function(){return this.outerHTML;}).get().join('');
-    var img5 = $(rawImg5).map(function(){return this.outerHTML;}).get().join('');
-
-
-    document.getElementsByClassName('uscPostImage')[0].innerHTML = img1;
-    document.getElementsByClassName('uscPostImage')[1].innerHTML = img2;
-    document.getElementsByClassName('uscPostImage')[2].innerHTML = img3;
-    document.getElementsByClassName('uscPostImage')[3].innerHTML = img4;
-    document.getElementsByClassName('uscPostImage')[4].innerHTML = img5;
-
-    rawImg1.remove();
-    rawImg2.remove();
-    rawImg3.remove();
-    rawImg4.remove();
-    rawImg5.remove();
-
-    var usctext1 = "<%= usc[0].post_content %>";
-    var dom1 = new DOMParser().parseFromString(usctext1,'text/html');
-    var html1 = dom1.body.childNodes[0].data;
-    html1 = html1.replaceAll("<br>","");
-    document.getElementsByClassName("mainAnnouncementContent")[0].innerHTML = html1;*/
-
     var Interval;
     var uscSlide = this.document.getElementsByClassName("uscSlide")[0];
 function autoSlide(){

@@ -151,7 +151,13 @@ body {
   list-style: none;
   height: 45px;
 }
-
+.dropdown-content li:hover{
+  list-style: none;
+  height: 45px;
+  opacity: 1;
+    transform: scale(1.2);
+    box-shadow: 10px 8px 20px 0px rgb(255 255 255 / 25%);
+}
 .dropdown-content li:nth-last-child(n+2) {
   border-bottom: 1px solid white;
 }
@@ -211,8 +217,8 @@ h4 h5 {
   margin-top: 25px;
   margin-bottom: 0px;
   height: auto;
-  border-bottom: 3px solid #8B0000;
-  border-left: 6px solid #8B0000;
+  border-bottom: 3px solid black;
+  border-left: 6px solid black;
   padding-left: 20px;
 }
 .main {
