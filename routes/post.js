@@ -21,11 +21,14 @@ try {
 router.post('/', async (req, res, next) => {
     try {
       
+      let p = String(req.body.mainText).replace('<p>','');
+      let p1 = String(p).replace('</p>','');
+      console.log(p1);
       var outputHtml = save(req.body.mainText,'uploads/img');
         const post = await Post.create({
             post_writer: req.user.user_name,
             post_title: req.body.title,
-            post_content: outputHtml,
+            post_content: p1 ,
             category: req.body.category,
             subcategory: req.body.subcategory,
             when: req.body.when,
