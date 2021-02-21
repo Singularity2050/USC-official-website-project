@@ -93,7 +93,7 @@
                     method="post">
                     <input type=hidden name='category' value='test'>
                     <textarea class="my-comment-text" name='text'
-                        placeholder="Please do not write any swear words."></textarea>
+                        placeholder="Comments including swear words may be removed without notice."></textarea>
                     <div class="reply-button-display">
 
                         <button type="button" class="comment-anonymous-button" id="0"
@@ -144,7 +144,7 @@
                         </div>
                         <div style="width: 100%;">
                         <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>' id="reply-form<%=i%>" method="post">
-                                <textarea class="my-comment-text" placeholder="Please do not write any swear words."
+                                <textarea class="my-comment-text" placeholder="Comments including swear words may be removed without notice."
                                     name="text"></textarea>
                                 <div class="reply-button-display">
                                     <button type="button" class="comment-anonymous-button" id="<%=i+1%>"onclick="anonymousMode(this.id, this);"><input type="hidden" name="anonymous" value="false" />Anonymous</button>
