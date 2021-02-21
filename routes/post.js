@@ -171,80 +171,49 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
       
+      var post_id = req.params.post_id;
       if(!love){
         await Love.create({
           user: req.user.user_name,
           like: 1, // if like is 1 then it is like, if it is -1 then it is dislike
-          PostId: req.params.post_id,
+          PostId: post_id,
           UserId: req.user.id
         })
-        await Post.update({
-          like: sequelize.literal('Post.like + 1')
-        },
-        {where:{id: req.params.post_id}}
-        )
+        await Post.increment({ like: 1 },{where:{id: post_id}} );
         res.redirect('back');  
-
       }else if(love.like > 0){
         await love.destroy();
-        await Post.update({
-          like: sequelize.literal('Post.like - 1'),
-        },
-        {where:{id: req.params.post_id}}
-        )
+        await Post.decrement({like: 1},{where:{id: req.params.post_id}})
         res.redirect('back');
       }else{
-          await Love.update({
-            like: 1,
-          },
-          {where: {UserId: req.user.id}}
-          )
-          await Post.update({
-            like: sequelize.literal('Post.like + 1'),
-            dislike: sequelize.literal('Post.dislike - 1')
-          },
-          {where:{id: req.params.post_id}}
-          )
+          await Love.update({like: 1,},{where: {UserId: req.user.id}})
+          await Post.increment({like: 1},{where:{id: req.params.post_id}})
+          await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
           res.redirect('back');  
         }
     });
+
     router.get('/dislike/:type/:post_id',isLoggedIn,async(req,res,next) =>{
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
-      if(!love){
+      if(!love){ //no previous value, user click dislike
         await Love.create({
           user: req.user.user_name,
           like: -1, // if like is 1 then it is like, if it is -1 then it is dislike
           PostId: req.params.post_id,
           UserId: req.user.id
         })
-        await Post.update({
-          dislike: sequelize.literal('Post.dislike + 1')
-        },
-        {where:{id: req.params.post_id}}
-        )
-        res.redirect('back');  
-      }else if(love.like<0){
-        await love.destroy();
-        await Post.update({
-          dislike: sequelize.literal('Post.dislike - 1'),
-        },
-        {where:{id: req.params.post_id}}
-        )
+        await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
         res.redirect('back');
-      }else if(love.like > 0){
-          await Love.update({
-            like: -1
-          },
-          {where: {UserId: req.user.id}}
-          )
-          await Post.update({
-            like: sequelize.literal('Post.like - 1'),
-            dislike: sequelize.literal('Post.dislike +1')
-          },
-          {where:{id: req.params.post_id}}
-          )
+      }else if(love.like<0){ // previous value is dislike, and user press dislike again
+        await love.destroy();
+        await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
+        res.redirect('back');
+      }else if(love.like > 0){ //previous value is like, and user press dislike
+          await Love.update({like: -1},{where: {UserId: req.user.id}})
+          await Post.decrement({like: 1},{where:{id: req.params.post_id}})
+          await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
           res.redirect('back');  
         }
     });
