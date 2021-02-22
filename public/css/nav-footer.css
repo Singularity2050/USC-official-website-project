@@ -396,8 +396,8 @@ h4 h5 {
   border-radius: 12px 12px 0 0;
   margin-top: 1rem;
   box-shadow: 10px 10px 50px 3px rgba(39, 92, 141, 0.1);
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .petitionPostDescription{
@@ -412,6 +412,9 @@ h4 h5 {
  width: 100%;
  text-align: center;
  line-height: 30px;
+}
+.petitionSlide{
+  overflow: hidden;
 }
 .petitionTag{
   width:100px;
@@ -794,7 +797,7 @@ margin-left: 2rem;
   height: 100%;
 }
 .comment-detail-contents{
-  margin: 5rem auto 0rem auto;
+  margin: 2rem auto 0rem auto;
   width: 60rem;
   position: relative;
   display: flex;
@@ -863,8 +866,8 @@ margin-left: 2rem;
   text-decoration: none;
 }
 .my-comment-detail-contents{
-  margin: 5rem auto 0rem auto;
-  width: 70rem;
+  margin: 2rem auto 0rem auto;
+  width: 110vh;
   position: relative;
   display: flex;
   background-color: #DDE3E9;
@@ -890,6 +893,7 @@ margin-left: 2rem;
   width: fill-available;
   min-width: 40rem;
   min-height: 5.5rem;
+  padding: 5px;
 }
 .my-comment-text:focus{
   outline: none;
