@@ -163,10 +163,13 @@
                         <div class="container comment-reply-contents">
                             <div class="comment-profile">
                                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
-                                <% var replyName=replies[j].writer %>
-                                    <p>
-                                        <%= replyName; %>
-                                    </p>
+                                <% if(replies[j].anonymous){ %>
+                                  <p>Anonymous</p>
+                                  <% }else { %>
+                                          <p>
+                                              <%= replies[j].writer %>
+                                          </p>
+                                          <% }%>
                             </div>
                             <div style="width: 90%;">
                             <div class=" comment-text">
