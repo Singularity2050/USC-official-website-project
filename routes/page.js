@@ -275,7 +275,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
 });
 
 //course
-    router.get('/:type/:pagenum/:total',async(req,res)=>{
+    router.get('/board/:type/:pagenum/:total',async(req,res)=>{
       var type = req.params.type;
       var total;
       if(req.params.total == 0){
