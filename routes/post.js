@@ -219,6 +219,9 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
     });
     router.get('/deleteAccount',async(req,res,next) =>{
       const user = await User.findOne({where: {id: req.user.id}});
+      res.clearCookie('connect.sid');
+      req.logout();
+      req.session.destroy();
       user.destroy();
       res.redirect('back');
     })
