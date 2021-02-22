@@ -474,7 +474,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
         res.render('club_details',{user: req.user});
     });
 
-    router.get('/ourTeam',isLoggedIn,(req,res) =>{
+    router.get('/ourTeam',(req,res) =>{
       res.render('ourTeam',{user:req.user});
     })
     router.route('/club_postDetails').get(function(req,res){

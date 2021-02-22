@@ -21,11 +21,11 @@
          <a href="/announcement/1"><p class="tabs">USC</p></a>
          <div style="display: flex;">
         <img src="/public/img/uscLogo2.png" style="height: 230px;">
-        <div class="uscAnnouncements">
+        <div class="uscAnnouncements box-wrap">
         <% var length = usc.length %>
         <% if(length > 4){length = 4} %>
           <% for (var i = 0; i <= length; i++) { %>
-              <div class="board uscBoard box" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer;">
+              <div class="board uscBoard box" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer; border:none">
               <div>
               <h4 class="boardContent uscPostDescription" style="height: 10%;"><% if(usc[i].subcategory == 'important') { %> <span style=" color:#19ce60 "><% } else if( usc[i].subcategory == 'urgent') { %> <span style=" color:red"><% } else { %> <span style="color: black;"> <% } %> [<%=usc[i].subcategory.toUpperCase()%>]</span> <%= usc[i].post_title%></h4>
             </div>
@@ -53,7 +53,7 @@
                 <% } else { %>
                     <span >&nbsp</span>
                 <% } %>
-                <a href="/read/<%=courses[i].category%>/<%=courses[i].subcategory%>/<%=courses[i].id%>">[<%=courses[i].subcategory.toUpperCase()%>] <%= courses[i].post_title %></a>
+                <a href="/read/<%=courses[i].category%>/<%=courses[i].subcategory%>/<%=courses[i].id%>"><span style="color:red">[<%=courses[i].subcategory.toUpperCase()%>]</span> <%= courses[i].post_title %></a>
           <% } %>
           <a href="/course/1" style="text-align: right;">more..</a>
         </div>
@@ -68,7 +68,7 @@
                     <span class="blinkEle">New</span>
                 <% } else { %>
                     <span >&nbsp</span>
-                <% } %><a href="/read/<%=events[i].category%>/<%=events[i].subcategory%>/<%=events[i].id%>">[<%=events[i].subcategory.toUpperCase()%>] <%= events[i].post_title %></a>
+                <% } %><a href="/read/<%=events[i].category%>/<%=events[i].subcategory%>/<%=events[i].id%>"><span style="color:blue">[<%=events[i].subcategory.toUpperCase()%>]</span> <%= events[i].post_title %></a>
           <% } %>
           <a href="/event/1" style="text-align: right;">more..</a>
         </div>
@@ -83,7 +83,7 @@
                     <span class="blinkEle">New</span>
                 <% } else { %>
                     <span >&nbsp</span>
-                <% } %><a href="/read/<%=tutoring[i].category%>/<%=tutoring[i].subcategory%>/<%=tutoring[i].id%>">[<%=tutoring[i].subcategory.toUpperCase()%>] <%= tutoring[i].post_title %></a>
+                <% } %><a href="/read/<%=tutoring[i].category%>/<%=tutoring[i].subcategory%>/<%=tutoring[i].id%>"><span style="color:#19ce60">[<%=tutoring[i].subcategory.toUpperCase()%>]</span> <%= tutoring[i].post_title %></a>
           <% } %>
           <a href="/tutoring/1" style="text-align: right;">more..</a>
         </div>
