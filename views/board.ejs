@@ -157,11 +157,11 @@
         </div>
       <% }%>
         <div class="bottom-button">
-          <% var page_number = Math.ceil(board.length/10) %>
+          <% var page_number = Math.ceil(total/15) %>
           <% var i = 1 %>
           <div class="page_numbers">
               <% while (i < page_number+1){ %>
-              <a href= "/<%=category%>/<%=i%>" class="page-item"><%= i %></a>
+              <a href= "/<%=category%>/<%=i%>/<%=total%>" class="page-item"><%= i %></a>
                   <% i ++%>
               <% } %>
           </div>

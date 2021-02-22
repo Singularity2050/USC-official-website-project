@@ -142,265 +142,7 @@ router.get('/',async(req,res)=>{
       }
     });
 
-    
-    //-------------------------------------------------------- writing-------------------------------------------------------- 
-//announcement
- router.get('/:category/post',isLoggedIn,async(req,res)=>{
-   if(req.params.category =="announcement"){
-    if(req.user.privileged > 0){
-      res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
-    }else{
-      res.send('<script type="text/javascript">alert("작성권한이 없습니다!!.");window.location.replace("/")</script>')
-    } 
-   }else{
-    res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
-   }
-}); 
-
-
-//--------------------------------------------------------board--------------------------------------------------------
-//course
-    router.get('/course/:pagenum',async(req,res)=>{
-      var course_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
-        where:{
-          category:'course'
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      });
-      if(req.user){
-        var privileged = req.user.privileged;
-      }else{
-        var privileged = 0;
-      }
-      if(course_post.length<1){
-        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/course/post")</script>');
-      }else{
-        res.render('board',{board: course_post,category:course_post[0].category, user: req.user ,privileged: privileged});  
-      }
-    });
-//event
-    router.get('/event/:pagenum',async(req,res)=>{
-      var event_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
-        where:{
-          category:'event'
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      })
-      if(req.user){
-        var privileged = req.user.privileged;
-      }else{
-        var privileged = 0;
-      }
-      if(event_post.length<1){
-        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/event/post")</script>');
-      }else{
-        res.render('board',{board: event_post,category:event_post[0].category, user: req.user,privileged: privileged});  
-      }
-    });
-//tutoring
-    router.get('/tutoring/:pagenum',async(req,res)=>{
-      var tutoring_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
-        where:{
-          category:'tutoring'
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      })
-      if(req.user){
-        var privileged = req.user.privileged;
-      }else{
-        var privileged = 0;
-      }
-      if(tutoring_post.length<1){
-        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/tutoring/post")</script>');
-      }else{
-        res.render('board',{board: tutoring_post,category:tutoring_post[0].category, user: req.user,privileged: privileged});  
-      }
-    });
-//announcement
-    router.get('/announcement/:pagenum',async(req,res)=>{
-      var announce_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment'],
-        where:{
-          category:'announcement'
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      })
-      if(announce_post.length<1){
-        res.send('<script>alert("글이 없습니다!!"); window.location.replace("/announcement/post")</script>');
-      }else{
-        if(req.user){
-          var privileged = req.user.privileged;
-        }else{
-          var privileged = 0;
-        }
-        res.render('board',{board:announce_post,category: announce_post[0].category, user: req.user, pageNum: req.params.pagenum, privileged : privileged});
-      }
-    });
-    // USC petition 
-    router.get('/petition/:pagenum',async(req,res)=>{
-      var petition_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment', 'like'],
-        where:{
-          category:'petition'
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      })
-      if(petition_post.length<1){
-        res.send('<script>alert("글이 없습니다!!"); window.location.replace("/petition/post")</script>');
-      }else{
-        res.render('board',{board:petition_post,category: petition_post[0].category, user: req.user, pageNum: req.params.pagenum});
-      }
-    });
-    //lostandfound
-    router.get('/lostandfound/:pagenum',async(req,res)=>{
-      var lost_post = await Post.findAll({
-        attributes:['post_title','category','subcategory','id','number_of_comment'],
-        where:{
-          category:['lostandfound']
-        },
-        order:[
-          ['createdAt','DESC'],
-        ],
-        offset:((req.params.pagenum-1)*15),
-        limit : 15,
-      })
-      
-      if(req.user){
-        var privileged = req.user.privileged;
-      }else{
-        var privileged = 0;
-      }
-      if(lost_post.length < 1){
-        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/lostandfound/post")</script>');
-      }else{
-        res.render('board',{board: lost_post,category:lost_post[0].category, user: req.user,privileged: privileged});  
-      }
-  });
-  //club
-  router.get('/club/:club_name/:pageNum',async(req,res)=>{
-    let raw_data = require('../public/json/clubsList.json');
-    var club_post = await Post.findAll({
-      attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','updatedAt','UserId'],
-      where:{
-        subcategory: req.params.club_name
-      },
-      order:[
-        ['createdAt','DESC'],
-      ],
-      offset:((req.params.pageNum-1)*10)
-    })
-    
-    var clubData;
-    for(var i in raw_data){
-      if(raw_data[i].name==req.params.club_name){
-        clubData = raw_data[i];
-      }
-    }
-    if(club_post){
-      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum});  
-    }else{
-      res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/club/'+req.params.club_name+'/post")</script>');
-    }
-    
-});
-
-//-------------------------------------------------------- my Account-----------------------------------------------
-
-
-router.get('/myAccount/:type/:pageNum/:total',isLoggedIn,async(req,res)=>{
-try{
-  if(req.params.type == 'post'){
-    let post = await Post.findAll({
-      where:{
-        UserId: req.user.id
-      },
-      offset:((req.params.pageNum-1)*9),
-    });
-    let comment = await COMMENT.findAll({
-      where:{
-        UserId: req.user.id 
-      },
-    });
-    var total = req.params.total;
-      if(total == 0){
-        total = post.length;
-      }
-    if(req.user.privileged == 9 ){
-      let users = await User.findAll({
-        attributes:['user_email','privileged','id'],
-      })
-      res.render('myAccount',{post:post, users: users, user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal: users.length});
-    }else{
-      res.render('myAccount',{post:post, users: [], user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal:0});
-    }
-  }else if(req.params.type =='comment'){
-    let post = await Post.findAll({
-      where:{
-        UserId: req.user.id
-      },
-    });
-    let comment = await COMMENT.findAll({
-      where:{
-        UserId: req.user.id 
-      },
-      offset:((req.params.pageNum-1)*9),
-    });
-    
-    if(req.user.privileged==9){
-      let users = await User.findAll({
-        attributes:['user_email','privileged','id'],
-      })
-      
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: req.params.total, utotal: users.length});
-    }else{
-      res.render('myAccount',{post:post, users: [], user:req.user, comments : comment, type:req.params.type, total:post.length,  ctotal: req.params.total, utotal: 0});
-    }
-  }else{
-    let post = await Post.findAll({
-      where:{
-        UserId: req.user.id
-      },
-    });
-    let comment = await COMMENT.findAll({
-      where:{
-        UserId: req.user.id 
-      },
-    });
-    let users = await User.findAll({
-      attributes:['user_email','privileged','id'],
-      offset:((req.params.pageNum-1)*9),
-    })
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: comment.length, utotal: req.params.total});
-    }
-  }catch(error){
-    res.error(error);
-  }
-});
-
-//----------------------------------------------------------else ----------------------------------------------------
+    //----------------------------------------------------------else ----------------------------------------------------
 
   router.get('/read/:category/:subcategory/uploads/img/:id',(req,res)=>{
     
@@ -480,6 +222,182 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
     router.route('/club_postDetails').get(function(req,res){
       res.render('club_postDetails', {user: req.user});
     });
+    //-------------------------------------------------------- writing-------------------------------------------------------- 
+//announcement
+ router.get('/:category/post',isLoggedIn,async(req,res)=>{
+   if(req.params.category =="announcement"){
+    if(req.user.privileged > 0){
+      res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
+    }else{
+      res.send('<script type="text/javascript">alert("작성권한이 없습니다!!.");window.location.replace("/")</script>')
+    } 
+   }else{
+    res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
+   }
+}); 
+
+
+//--------------------------------------------------------board--------------------------------------------------------
+//edit
+router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
+  const edit = await Post.findOne({where: { id: req.params.id}});
+  
+    res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, post: edit});  
+
+})
+  //club
+  router.get('/club/:club_name/:pageNum',async(req,res)=>{
+    let raw_data = require('../public/json/clubsList.json');
+    var club_post = await Post.findAll({
+      attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','updatedAt','UserId'],
+      where:{
+        subcategory: req.params.club_name
+      },
+      order:[
+        ['createdAt','DESC'],
+      ],
+      offset:((req.params.pageNum-1)*10)
+    })
+    
+    var clubData;
+    for(var i in raw_data){
+      if(raw_data[i].name==req.params.club_name){
+        clubData = raw_data[i];
+      }
+    }
+    if(club_post){
+      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum});  
+    }else{
+      res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/club/'+req.params.club_name+'/post")</script>');
+    }
+    
+});
+
+//course
+    router.get('/:type/:pagenum/:total',async(req,res)=>{
+      var type = req.params.type;
+      var total;
+      if(req.params.total == 0){
+        var course_post = await Post.findAll({
+          attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
+          where:{
+            category:type
+          },
+          order:[
+            ['createdAt','DESC'],
+          ],
+          offset:((req.params.pagenum-1)*15),
+          limit:15,
+        });
+        const count = await Post.count({
+          where: {
+              category: type
+          }
+        });
+        total = count;
+
+      }else{
+        var course_post = await Post.findAll({
+          attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
+          where:{
+            category:type
+          },
+          order:[
+            ['createdAt','DESC'],
+          ],
+          offset:((req.params.pagenum-1)*15),
+          limit : 15
+        });
+        total = req.params.total;
+      }
+      if(req.user){
+        var privileged = req.user.privileged;
+      }else{
+        var privileged = 0;
+      }
+      if(course_post.length<1){
+        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/course/post")</script>');
+      }else{
+        res.render('board',{board: course_post,category:course_post[0].category, user: req.user ,privileged: privileged, total:total});  
+      }
+    });
+
+
+
+//-------------------------------------------------------- my Account-----------------------------------------------
+
+
+router.get('/myAccount/:type/:pageNum/:total',isLoggedIn,async(req,res)=>{
+try{
+  if(req.params.type == 'post'){
+    let post = await Post.findAll({
+      where:{
+        UserId: req.user.id
+      },
+      offset:((req.params.pageNum-1)*9),
+    });
+    let comment = await COMMENT.findAll({
+      where:{
+        UserId: req.user.id 
+      },
+    });
+    var total = req.params.total;
+      if(total == 0){
+        total = post.length;
+      }
+    if(req.user.privileged == 9 ){
+      let users = await User.findAll({
+        attributes:['user_email','privileged','id'],
+      })
+      res.render('myAccount',{post:post, users: users, user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal: users.length});
+    }else{
+      res.render('myAccount',{post:post, users: [], user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal:0});
+    }
+  }else if(req.params.type =='comment'){
+    let post = await Post.findAll({
+      where:{
+        UserId: req.user.id
+      },
+    });
+    let comment = await COMMENT.findAll({
+      where:{
+        UserId: req.user.id 
+      },
+      offset:((req.params.pageNum-1)*9),
+    });
+    
+    if(req.user.privileged==9){
+      let users = await User.findAll({
+        attributes:['user_email','privileged','id'],
+      })
+      
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: req.params.total, utotal: users.length});
+    }else{
+      res.render('myAccount',{post:post, users: [], user:req.user, comments : comment, type:req.params.type, total:post.length,  ctotal: req.params.total, utotal: 0});
+    }
+  }else{
+    let post = await Post.findAll({
+      where:{
+        UserId: req.user.id
+      },
+    });
+    let comment = await COMMENT.findAll({
+      where:{
+        UserId: req.user.id 
+      },
+    });
+    let users = await User.findAll({
+      attributes:['user_email','privileged','id'],
+      offset:((req.params.pageNum-1)*9),
+    })
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: comment.length, utotal: req.params.total});
+    }
+  }catch(error){
+    res.error(error);
+  }
+});
+
+
 //-----------------------------------------------------search-------------------------------------------
   router.get('/mysearch',async(req,res) =>{
     
@@ -570,11 +488,6 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
         res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged});
       }
   })
-  router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
-    const edit = await Post.findOne({where: { id: req.params.id}});
-    
-      res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, post: edit});  
-
-  })
+  
 
     module.exports = router;

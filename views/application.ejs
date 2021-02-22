@@ -9,7 +9,10 @@
     }
     .text {
         position: relative;
-        bottom: 400px;
+        bottom: 50px;
+        width:500px;
+        text-align: left;
+        line-height: 50px;
     }
     .pic {
         display: inline;
@@ -18,16 +21,32 @@
         margin-top: 100px;
         margin-bottom: 100px;
     }
+    .button{
+      background-color: rgb(63, 150, 72);
+      color: white;
+      width: 120px;
+      height: 25px;
+      font-size: 12pt;
+      font-weight: 600 ;
+      box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+      border-radius: 10px;
+      border: 1px solid black;
+    }
 </style>
 
 
 <div class="container">
     <div class="left">
-        <h3 class="text">Sorry,</h3>
-        <h3 class="text">This is not the application period.</h3>
+        <h3 class="text">Hi! This is undergraduate student council🌟🌟🌟</h3>
+        <p class="text">We hope you had a great winter break!<br> Upon the  Locker Demand Survey, USC finally installed lockers for students who are commuting this semester. For those who want to apply for lockers, you can easily access it through the link provided.
+          <br>⭐️Form link: <a href="https://forms.gle/K8RHp2fxMMLEFHGM7"><button type='button' class='button' style='width:100px'> Apply </button></a>
+          <br>⭐️Form due: 2/22(Mon) 12PM
+          <br>The initial deposit is 15,000 won, but we will return 10,000 won at the end of the semester. Please remember that we will prioritize those who do not live in dorms and those who live far from school if there is a high demand for the lockers.
+          If you have any questions regarding the locker application, please contact <br> USC at usc@sunykorea.ac.kr. <br>Thank you</p>
+        
     </div>
-    <img class="pic" src="/public/img/Drawing.png" alt="">
+    <img class="pic" src="/public/img/Locker.png" alt="">
 </div>
 
 
-<%- include ('footer.ejs') %>
+<%- include ('footer.ejs') %>s\

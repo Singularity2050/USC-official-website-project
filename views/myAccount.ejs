@@ -88,7 +88,7 @@
       
         '<% if( type == "post") { %>'
         
-        document.getElementById('post').classList.add("myAccount-current-menu");
+         document.getElementById('post').classList.add("myAccount-current-menu");
          document.getElementsByClassName("middle-list")[0].innerHTML = "<% var length = post.length; %><%if(post.length > 9){length = 9;}else{length=post.length} %><% for(var i=0; i < length; i++){ %> <div class='list'> <a href='/read/<%= post[i].category %>/<%= post[i].subcategory%>/<%=post[i].id%>'>[<%= post[i].category%>]&nbsp;<%= post[i].post_title%> <img class='list-img' src='/public/img/announcement-list-img.png' alt=''> <div class='count'> <%= post[i].number_of_comment %> </div> </a>  </div> <% } %><div class 'bottom-button'><% var page_number = Math.ceil(total/9) %><% var i = 1 %><div class='page_numbers'><% while (i < page_number+1){ %><a href='/myAccount/post/<%= i %>/<%= total%>' id='<%= i%>' class='page-item'><%= i %></a><% i ++%><% } %></div></div>"
          '<% }else if (type == "comment") { %>'
 
