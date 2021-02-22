@@ -462,12 +462,12 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
   }
   
 });
-    router.route('/history').get(function(req,res){
+    router.route('/history/:pageNum').get(function(req,res){
       let historyData = require('../public/json/history.json');
       if(req.user){
-        res.render('history',{user: req.user ,privileged: req.user.privileged,usc: historyData.usc});
+        res.render('history',{user: req.user ,privileged: req.user.privileged,usc: historyData.usc, pageNum: req.params.pageNum});
       }else{
-        res.render('history',{user: req.user,privileged:null ,usc: historyData.usc});
+        res.render('history',{user: req.user,privileged:null ,usc: historyData.usc, pageNum: req.params.pageNum});
       }
   });
     router.route('/club_details').get(function(req,res){

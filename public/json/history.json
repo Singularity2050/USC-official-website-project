@@ -1,4 +1,14 @@
 {"usc":[
+  {"cardinalNum":"1st USC",                            
+    "detail":[
+              {"year":"2017",
+               "monthDetail":[{"month":"Spring", "task":["Made a USC Student Lounge","Provided Locker Service for Students’ Convenience.","Vacation Storage for SBU Students"]}]
+              }]},
+  {"cardinalNum":"2nd USC",
+    "detail":[
+              {"year":"2017",
+               "monthDetail":[{"month":"Fall", "task":["CSE Study Hall","CSE Movie Night","CSE Year End Party","CSE Tutoring Center","AMS Christmas Party","AMS Counseling Session with Department Chair","ACC210 Tutoring","Winter Storage for FB students","Extended Nanum café opening at 7AM during the semester","Final Week Cheer-Up Project","Q&A Session Regarding SBU Degree Issue"]}]
+              }]},
   {"cardinalNum":"3rd USC",
     "detail":[
               {"year":"2018",

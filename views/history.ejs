@@ -1,36 +1,68 @@
 <%- include('header.ejs') %>
-<div class="main">
+<style>
+    .menu a{
+        text-decoration: none;
+        color: black;
+    }
+    .menu a:visited{
+        color: inherit;
+    }
+    .menu li{
+        font-size: 20px;
+        border-bottom: 2px solid #8B0000;
+        width: 120px;
+        margin-bottom: 5%;
+    }
+</style>
+<div style="display:inline-flex; text-align: center; width: 100%;">
+<div class="menu" style="min-width: 10%; height: fit-content; margin-left: 10%;">
+        <li>
+        <a href="/history/1">
+            1st USC
+        </a>
+        </li>
+        <li>
+        <a href="/history/2">
+            2nd USC
+        </a>
+        </li>
+        <li>
+        <a href="/history/3">
+            3rd USC
+        </a>
+        </li>
+        <li>
+        <a href="/history/4">
+            4th USC
+        </a>
+        </li>
+        <li>
+        <a href="/history/5">
+            5th USC
+        </a>
+    </li>
+</div>
+<div class="main" style="min-width: 0px;">
 <ul class="history-container">
-  <% for (var i in usc) { %>
+  <% var i = pageNum-1; %>
     <li class="year-box">
         <dl>
-            <dt class="year"><%= usc[i].detail[0].year %><br><%= usc[i].cardinalNum %></dt>
+            <% for (var l in usc[i].detail) { %>
+            <dt class="year"><%= usc[i].detail[l].year %><br></dt>
             <dd class="history-text-container">
                 <dl class="history-month-list">
-        <% for (var j in usc[i].detail[0].monthDetail) { %>
-            <dt class="month"><%= usc[i].detail[0].monthDetail[j].month %></dt>
-            <% for (var k in usc[i].detail[0].monthDetail[j].task) { %>
+        <% for (var j in usc[i].detail[l].monthDetail) { %>
+            <dt class="month"><%= usc[i].detail[l].monthDetail[j].month %></dt>
+            <% for (var k in usc[i].detail[l].monthDetail[j].task) { %>
             <dd class="history-text">
-            <p><%= usc[i].detail[0].monthDetail[j].task[k] %></p>
+            <p><%= usc[i].detail[l].monthDetail[j].task[k] %></p>
             </dd>
             <% } %>
             <% } %>
-          </li>
-    <li class="year-box">
-      <dl>
-          <dt class="year"><%= usc[i].detail[1].year %></dt>
-          <dd class="history-text-container">
-              <dl class="history-month-list">
-      <% for (var j in usc[i].detail[1].monthDetail) { %>
-          <dt class="month"><%= usc[i].detail[1].monthDetail[j].month %></dt>
-          <% for (var k in usc[i].detail[1].monthDetail[j].task) { %>
-          <dd class="history-text">
-          <p><%= usc[i].detail[1].monthDetail[j].task[k] %></p>
-          </dd>
-          <% } %>
-          <% } %>
-        </li>
-  <% } %>    
+                </dl>
+            <% } %>
+        </dl>
+          </li>  
 </ul>
 <% if(privileged > 1 ) { %>
   <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
@@ -40,6 +72,10 @@
   </form>
   <% }%>
 </div>
-
-
+</div>
+<script>
+   var child = document.getElementsByClassName("menu")[0].children;
+   child[parseInt("<%= pageNum %>")-1].style.fontSize ="16pt";
+   child[parseInt("<%= pageNum %>")-1].style.fontWeight ="bold";
+</script>
 <%- include('footer.ejs') %>

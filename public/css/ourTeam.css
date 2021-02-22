@@ -1,9 +1,11 @@
 
 
 .top {
+  bottom: -50px;
+  position: relative;
   margin-left: 200px;
   margin-top: 95px;
-  font-family: 'Aladin', cursive;;
+  font-family: 'Aladin', cursive;
 }
 .line {
   position: absolute;
@@ -67,7 +69,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: auto;
+    width: 100%;
     height: auto;
     max-width: 200%;
     max-height: 200%;
