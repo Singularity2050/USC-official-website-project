@@ -4,8 +4,20 @@
         font-size: 15pt;
         font-weight: bold;
     }
+    .button {
+        text-align: center;
+    }
+
+    .bt {
+        background-color: #800000;
+        color: white;
+        margin-top: 100px;
+        width: 150px;
+        height: 50px;
+        border-radius: 10px;
+    }
 </style>
-<div style="width: 70%; margin: auto;">
+<div style="width: 70%;margin: 0px auto 100px auto;">
 <p class="head">
     <한국뉴욕주립대학교 총학생회>(이하 '학생회')은(는) 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다.
 학생회는 개인정보처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
@@ -121,6 +133,11 @@
 <p class="head">1. 개인정보 취급 직원의 최소화 및 교육</p>
 <p>개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.</p>
 </p>
+<% if(user!=null) { %>
+<div class="button">
+    <button class="bt">Unregister<br>my account</button>
+</div>
+<% } %>
 </div>
 
 

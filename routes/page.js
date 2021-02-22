@@ -62,6 +62,7 @@ router.get('/',async(req,res)=>{
     order:[
       ['createdAt','DESC'],
     ],
+    limit:15,
   });
   var announce_post = await Post.findAll({
     attributes:['post_title','post_content','category','subcategory','id'],
