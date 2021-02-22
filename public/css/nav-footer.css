@@ -830,7 +830,7 @@ margin-left: 2rem;
   min-height: 5.5rem;
 }
 .comment-text p{
-  padding: 1rem;
+  padding: 10px;
 }
 .reply-button-display{
   display: flex;

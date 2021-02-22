@@ -24,8 +24,18 @@
                     <% } %>
                 
             </div>
-            <div class="post-date">Date: <%= post.updatedAt %>
-            </div>
+            <div class="post-date">Date: <%= post.updatedAt %></div>
+            <% if(post.category=='petition') { %>
+            <% var postDate = post.createdAt.split('-');%>
+            <% var calculated = new Date(parseInt(postDate[0]),parseInt(postDate[1]),parseInt(postDate[2])); %>
+            <% calculated.setDate(calculated.getDate()+7); %>
+            <% if(calculated.getMonth() < 10){ %>
+             <div class="post-date">Petition Due: <%= '0'+calculated.getMonth()+'-'+calculated.getDate() %></div>
+            <% } else { %>
+            <div class="post-date">Petition Due: <%= calculated.getMonth()+'-'+calculated.getDate() %></div>
+            <% } %>
+            <% } %>
+            
                 <% if(post.anonymous==1) { %>
                     <div class="post-writer">
                     Anonymous

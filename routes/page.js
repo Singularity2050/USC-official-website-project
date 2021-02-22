@@ -116,7 +116,7 @@ router.get('/',async(req,res)=>{
         
         let post = await Post.findOne({
           attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','like','dislike','anonymous',
-          [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%m-%d/%h:%i'),'updatedAt'],'UserId','location','when'],
+          [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%m-%d/%h:%i'),'updatedAt'],[Sequelize.fn('date_format', Sequelize.col('createdAt'), '%y-%m-%d'),'createdAt'],'UserId','location','when'],
           where:{
             id: req.params.post_num
           }
