@@ -54,8 +54,8 @@ router.get('/',async(req,res)=>{
     limit:3,
   });
   var petition_post = await Post.findAll({
-    attributes:['post_title','post_content','category','subcategory','id','createdAt', 'like',
-    [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%d'),'createdAt']],
+    attributes:['post_title','post_content','category','subcategory','id','createdAt', 'like','number_of_comment',
+    [Sequelize.fn('date_format', Sequelize.col('createdAt'), '%y-%m-%d'),'createdAt']],
     where:{
       category:'petition'
     },
@@ -64,6 +64,17 @@ router.get('/',async(req,res)=>{
     ],
     limit:15,
   });
+   for(var i = 0; i < petition_post.length; i++){
+    var postDate = petition_post[i].createdAt.split('-');
+    var calculated = new Date(parseInt(postDate[0]),parseInt(postDate[1]),parseInt(postDate[2]));
+    calculated.setDate(calculated.getDate()+7);
+     if(new Date()>calculated && petition_post[i].number_of_comment==0){
+      let post = await petition_post[i].update({
+        subcategory: 'closed'});
+        petition_post[i].subcategory='closed';
+     }
+   }
+   
   var announce_post = await Post.findAll({
     attributes:['post_title','post_content','category','subcategory','id'],
     where:{
