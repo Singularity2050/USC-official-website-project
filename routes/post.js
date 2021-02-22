@@ -217,6 +217,11 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           res.redirect('back');  
         }
     });
+    router.get('/deleteAccount',async(req,res,next) =>{
+      const user = await User.findOne({where: {id: req.user.id}});
+      user.destroy();
+      res.redirect('back');
+    })
 
       
   module.exports = router;
