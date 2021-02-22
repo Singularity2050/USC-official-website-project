@@ -65,13 +65,13 @@ router.get('/',async(req,res)=>{
     limit:15,
   });
    for(var i = 0; i < petition_post.length; i++){
-     console.log(petition_post[i].createdAt);
+     //console.log(petition_post[i].createdAt);
     var postDate = petition_post[i].createdAt.split('-');
-    console.log(""+postDate[0]+postDate[1]+postDate[2]);
-    var calculated = new Date(parseInt(postDate[0])+2000,parseInt(postDate[1]),parseInt(postDate[2]));
+    
+    var calculated = new Date(parseInt(postDate[0])+2000,parseInt(postDate[1])-1,parseInt(postDate[2]));
+    
     calculated.setDate(calculated.getDate()+7);
-    console.log(calculated);
-    console.log(new Date());
+    
      if(new Date()>calculated && petition_post[i].number_of_comment==0){
       let post = await petition_post[i].update({
         subcategory: 'closed'});
