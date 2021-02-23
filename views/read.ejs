@@ -92,7 +92,13 @@
         <% if(post.category!='petition' || user.privileged > 5) { %>
         <div class="container my-comment-detail-contents">
             <div class="comment-profile">
+              <% if( user.univ == 'stonybrook.edu') { %>
                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                <% } else if(user.univ == 'sunykorea.ac.kr') { %>
+                  <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                  <%}else {%>
+                    <img src="/public/img/fit.png" style="margin-top: 2rem;">
+                  <% } %>
                 <p>
                     <%= user.user_name%>
                 </p>
@@ -120,7 +126,15 @@
             <div class="commentIndex">
                 <div class="container comment-detail-contents">
                     <div class="comment-profile">
+
+                      <% if( comments[i].User.univ == 'stonybrook.edu') { %>
                         <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                        <% } else if(comments[i].User.univ  == 'sunykorea.ac.kr') { %>
+                          <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                          <%}else {%>
+                            <img src="/public/img/fit.png" style="margin-top: 2rem;">
+                          <% } %>
+
                         <% if(comments[i].anonymous){ %>
                             <p>Anonymous</p>
                             <% }else { %>
@@ -149,7 +163,13 @@
                     <!-- My reply box -->
                     <div class="container my-comment-reply-contents">
                         <div class="comment-profile">
+                          <% if( user.univ == 'stonybrook.edu') { %>
                             <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                            <% } else if(user.univ == 'sunykorea.ac.kr') { %>
+                              <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                              <%}else {%>
+                                <img src="/public/img/fit.png" style="margin-top: 2rem;">
+                              <% } %>
                             <p><%= user.user_name%></p>
                         </div>
                         <div style="width: 100%;">
@@ -172,7 +192,13 @@
                     <% if (replies[j].group_id==comments[i].group_id) { %>
                         <div class="container comment-reply-contents">
                             <div class="comment-profile">
+                              <% if( replies[j].User.univ == 'stonybrook.edu') { %>
                                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
+                                <% } else if(replies[j].User.univ  == 'sunykorea.ac.kr') { %>
+                                  <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                                  <%}else {%>
+                                    <img src="/public/img/fit.png" style="margin-top: 2rem;">
+                                  <% } %>
                                 <% if(replies[j].anonymous){ %>
                                   <p>Anonymous</p>
                                   <% }else { %>

@@ -136,12 +136,18 @@ router.get('/',async(req,res)=>{
             id: req.params.post_num
           }
         })
+
         var rawComments = await COMMENT.findAll({
+          include:[{
+            model: User,
+            attributes:['univ']
+          }],
           attributes: ['id','writer','comment_content','PostId','anonymous','group_id','category','order_no','like','dislike','UserId'],
           where:{
             postId: req.params.post_num
           }
         })
+        
         var comments = new Array();
         var replies = new Array();
         for(var i = 0 ; i < rawComments.length; i++){
@@ -305,11 +311,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
           offset:((req.params.pagenum-1)*15),
           limit:15,
         });
-        const count = await Post.count({
-          where: {
-              category: type
-          }
-        });
+        const count = await Post.count({where: {category: type}});
         total = count;
 
       }else{
@@ -455,11 +457,11 @@ try{
       res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:"user", total:post.length, ctotal: comment.length, utotal: users.length});
     }
   })
-  router.get('/search',async(req,res)=>{
+  router.get('/search/:searchNum/:total',async(req,res)=>{
     let empty_data = require('../public/json/board.json');
     
     var lost_post;
-    
+    var total;
       if(req.query.subcategory && typeof req.query.text  != 'undefined'){
         lost_post = await Post.findAll({
           attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
@@ -468,9 +470,14 @@ try{
             subcategory:req.query.subcategory,
             post_title: {[Op.like]:"%"+req.query.text+"%"}
           },
-          //offset:((req.params.searchNum-1)*10),
-        limit : 10,
+          offset:((req.params.searchNum-1)*15),
+        limit : 15,
         })
+        if(req.params.total == 0){
+          total = await Post.count({where: {category: req.query.category,subcategory:req.query.subcategory,post_title: {[Op.like]:"%"+req.query.text+"%"}}});
+        }else{
+          total = req.params.total;
+        }
       }else if(req.query.subcategory){
         lost_post = await Post.findAll({
           attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
@@ -478,9 +485,14 @@ try{
             category:req.query.category,
             subcategory:req.query.subcategory,
           },
-          //offset:((req.params.searchNum-1)*10),
-        limit : 10,
+          offset:((req.params.searchNum-1)*15),
+        limit : 15,
         })
+        if(req.params.total == 0){
+          total = await Post.count({where: {category: req.query.category,subcategory:req.query.subcategory}});
+        }else{
+          total = req.params.total;
+        }
       }else{
         lost_post = await Post.findAll({
           attributes:['post_title','category','subcategory','id','number_of_comment','like','dislike'],
@@ -488,9 +500,14 @@ try{
             category:req.query.category,
             post_title: {[Op.like]:"%"+req.query.text+"%"}
           },
-          //offset:((req.params.searchNum-1)*10),
-        limit : 10,
-        })
+          offset:((req.params.searchNum-1)*15),
+        limit : 15,
+        });
+        if(req.params.total == 0){
+          total = await Post.count({where: {category:req.query.category,post_title: {[Op.like]:"%"+req.query.text+"%"}}});
+        }else{
+          total = req.params.total;
+        }
       }
       
       if(req.user){
@@ -499,9 +516,9 @@ try{
         var privileged = 0;
       }
       if(lost_post.push()){
-        res.render('board',{board:lost_post,category:req.query.category, user: req.user, privileged: privileged})   
+        res.render('board',{board:lost_post,category:req.query.category, user: req.user, privileged: privileged, total:total})   
       }else{
-        res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged});
+        res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged, total:total});
       }
   })
   

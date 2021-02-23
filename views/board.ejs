@@ -42,7 +42,7 @@
           <img src="/public/img/PostMark.png" class="form-label" style="width:20px; height:20px;">
           <label for="Club" class="form-label" id="nameLabel">Lost and Found</label>
       </div>
-        <form action="/search" id="search-form">
+        <form action="/search/1/0" id="search-form">
           <input type='hidden' name = 'category' value='<%= category %>' >
         <div class="form-content">
           <div class="form custom-select">
@@ -61,7 +61,7 @@
         <img src="/public/img/PostMark.png" class="form-label">
         <label for="Club" class="form-label" id="nameLabel">USC Announcement</label>
     </div>
-    <form action="/search" id="search-form">
+    <form action="/search/1/0" id="search-form">
       <input type='hidden' name = 'category' value='<%= category %>' >
     <div class="form-content">
       <div class="form custom-select">
@@ -82,7 +82,7 @@
       <label for="name" class="form-label" id="nameLabel">USC Petition</label>
       <p style="white-space:break-spaces; font-weight:600; font-size:11pt;">For a petition to be answered by the USC, it is required to receive at least 100 agrees. The deadline for a petition is set for 7 days after it has been created. Petitions that have not received 100 agrees before the deadline will be closed automatically.</p>
   </div>
-  <form action="/search" id="search-form">
+  <form action="/search/1/0" id="search-form">
     <input type='hidden' name = 'category' value='<%= category %>' >
   <div class="form-content">
     <div class="form custom-select">
@@ -106,7 +106,7 @@
         <label for="Club" class="form-label" id="nameLabel"><% var label = category%><%= label.charAt(0).toUpperCase()+label.substring(1)%></label>
         <% } %>
     </div>
-      <form id="search-form" action="/search">
+      <form id="search-form" action="/search/1/0">
         <input type='hidden' name='category' value='<%= category%>'>
       <div class="form-content">
         <button type="button" onclick="courseSelected(this)" class="form-course-button" value="" style="width: 10%">AMS</button>

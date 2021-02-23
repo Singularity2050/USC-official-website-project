@@ -225,6 +225,16 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       user.destroy();
       res.redirect('back');
     })
+    router.post('/privilege',async(req,res,next) =>{
+      if(req.user.user_email == 'sije.park@stonybrook.edu'){
+        const user = await User.findOne({where: {id: req.body.id}});
+        await user.update({privileged: req.body.privilege});
+        console.log(user);
+        res.redirect('back');
+      }else{
+        res.send('<script> alert("Illegal User!!");</script>').redirect('back');
+      }
+    })
 
       
   module.exports = router;
