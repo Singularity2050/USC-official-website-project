@@ -655,9 +655,12 @@ h4 h5 {
   width: 20px;
   height: 20px;
   border: 2px solid black;
-  color: black;
+  color: white;
+  border-radius: 3px;
+  background: #800000;
   text-decoration: none;
   text-align: center;
+  font-weight: bold;
   line-height: normal;
 }
 

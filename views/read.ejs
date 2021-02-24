@@ -68,10 +68,10 @@
             </div>
             <div style="display: flex; margin-bottom: 2rem;">
               <% if(post.category=='petition') {%>  
-                <button style="margin: auto; cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><img src="/public/img/Agree.png" style="width: 17px;height: 17px; margin-right: 5px; vertical-align: text-bottom;"><%= post.like %></button>
+                <button style="margin: auto; cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>/<%= post.UserId %>'"><img src="/public/img/Agree.png" style="width: 17px;height: 17px; margin-right: 5px; vertical-align: text-bottom;"><%= post.like %></button>
                 <% } else if(post.category=='course'||post.category=='event'||post.category=='tutoring') { %>
-                <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>'"><span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px; color: #3F9648; margin-right: 5px;"></span><%= post.like %></button>
-                <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>'"><span class="iconify" data-inline="false" data-icon="ant-design:dislike-outlined" style="font-size: 17px; color: #8B0000; margin-right: 5px;"></span><%= post.dislike %></button>
+                <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href ='/post/like/post/<%= post.id %>/<%= post.UserId %>'"><span class="iconify" data-inline="false" data-icon="ant-design:like-outlined" style="font-size: 17px; color: #3F9648; margin-right: 5px;"></span><%= post.like %></button>
+                <button style="cursor: pointer;" type="button" name='like' class="post-likes" onclick="location.href = '/post/dislike/post/<%= post.id %>/<%= post.UserId %>'"><span class="iconify" data-inline="false" data-icon="ant-design:dislike-outlined" style="font-size: 17px; color: #8B0000; margin-right: 5px;"></span><%= post.dislike %></button>
             <% } %>
         </div>
         </div>
@@ -105,7 +105,7 @@
             </div>
           
             <div style="width: 90%;">
-                <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>' id="comment-form"
+                <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>/<%= post.UserId%>' id="comment-form"
                     method="post">
                     <input type=hidden name='category' value='test'>
                     <textarea class="my-comment-text" name='text'

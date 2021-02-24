@@ -12,14 +12,14 @@
            <button type='submit'>Check</button>
           </form>
           <% } %>
-            <h3><span style='text-decoration:underline;'>"CAMPUS TOUR"</span> <span style="text-decoration:line-through;">With Undergraduate Student Council</span><br><br>
-              🌟🌟Welcome!! 2021 Spring Freshmen and Enjoy Your Campus Life 🌟🌟</h3>
+            <h3><span style='font-weight:bold;text-decoration:underline;'>"CAMPUS TOUR"</span> With Undergraduate Student Council<br><br>
+              🌟🌟Welcome 2021 Spring Freshmen!! and Enjoy Your Campus Life 🌟🌟</h3>
         </div>
     </div>
     <div class = "usc">
         <div class="uscHiddenSlide">
         <div class="content-container" style="width: 67.3rem;">
-         <a href="/announcement/1"><p class="tabs">USC</p></a>
+         <a href="/board/announcement/1/0"><p class="tabs">USC</p></a>
          <div style="display: flex;">
         <img src="/public/img/uscLogo2.png" style="height: 230px;">
         <div class="uscAnnouncements box-wrap">
@@ -43,7 +43,7 @@
         <div class="content-container box-wrap">
          <p class="tabs">Community</p>
         <div class="board communityBoard box">
-            <a href="/course/1" class="miniTabs" style="margin-left: 0; height: fit-content;"><h3 class="boardContent">Courses</h3></a>
+            <a href="/board/course/1/0" class="miniTabs" style="margin-left: 0; height: fit-content;"><h3 class="boardContent">Courses</h3></a>
             <% for(var i in courses) { %>
                 <%var str = toString(courses[i].post_title) %>
                 <% if (str.length > 40) {%>
@@ -116,7 +116,7 @@
 <div class = "Petitions">
     <div class="uscHiddenSlide">
       <div class="content-container petitionSlide" style="width: 67.5rem;">
-     <a href="/petition/1"><p class="tabs">Petitions</p></a>
+     <a href="/board/petition/1"><p class="tabs">Petitions</p></a>
      <div class="uscSlide box-wrap" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
       <% for (var i = 0; i < length; i++) { %>

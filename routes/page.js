@@ -1,16 +1,18 @@
 const express = require('express');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const Sequelize = require('sequelize');
-const { User,Post,COMMENT,Love}  = require('../models');
+const { User,Post,COMMENT,Love,Noti}  = require('../models');
 const { request } = require('http');
 
 
 const router = express.Router();
 const Op = Sequelize.Op;
 
+
 router.get('/',async(req,res)=>{
   let youtube = require('../public/json/youtube.json');
   let real_data = require('../public/json/clubsList.json');
+  
   var club_post = await Post.findAll({
     attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','updatedAt','UserId'],
     where:{
@@ -92,10 +94,15 @@ router.get('/',async(req,res)=>{
   if(announce_post.length<3){
     res.send('<script>alert("초기 홈페이지 개설을 위해 공지글을 3개이상 작성하십시요"); window.location.replace("/announcement/post")</script>');
   }else{
-    if(req.user){
-      res.render('home_page',{privileged:req.user.privileged, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      res.render('home_page',{privileged:req.user.privileged, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post,noti:flag } );
      }else{
-     res.render('home_page',{privileged:null, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post } );
+     res.render('home_page',{privileged:null, youtube: youtube,usc: announce_post, courses: course_post, events: events_post, tutoring: tutoring_post, club: real_data, user: req.user, club_post: club_post, petition_post: petition_post,noti:flag } );
      }
   }     
     });
@@ -110,10 +117,15 @@ router.get('/',async(req,res)=>{
           ['createdAt','DESC'],
         ]
       });
+      var flag = 'none';
       if(req.user){
-        res.render('club', {club: real_data, privileged: req.user.privileged, user: req.user, club_post: club_post});
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+        res.render('club', {club: real_data, privileged: req.user.privileged, user: req.user, club_post: club_post, noti:flag});
       }else{
-        res.render('club', {club: real_data, privileged: null,user: req.user, club_post: club_post});
+        res.render('club', {club: real_data, privileged: null,user: req.user, club_post: club_post, noti: flag});
       }
   });
 
@@ -130,7 +142,7 @@ router.get('/',async(req,res)=>{
         }
         
         let post = await Post.findOne({
-          attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','like','dislike','anonymous',
+          attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','subcategory','like','dislike','anonymous','UserId',
           [Sequelize.fn('date_format', Sequelize.col('updatedAt'), '%m-%d/%h:%i'),'updatedAt'],[Sequelize.fn('date_format', Sequelize.col('createdAt'), '%y-%m-%d'),'createdAt'],'UserId','location','when'],
           where:{
             id: req.params.post_num
@@ -157,7 +169,20 @@ router.get('/',async(req,res)=>{
             replies.push(rawComments[i]);
           }
         }
-        res.render('read', { post: post, comments: comments, user: req.user, replies: replies, back: req.headers.referer, real_data: real_data, like: post.like, dislike: post.dislike,mark:num } );
+        var flag = 'none';
+      
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+        var readMark = await Noti.findAll({where:{post_user_id:req.user.id,PostId:req.params.post_num}});
+        console.log(readMark);
+        if(readMark){
+          for( var i in readMark){
+           await readMark[i].destroy(); 
+          }
+        }
+        res.render('read', { post: post, comments: comments, user: req.user, replies: replies, back: req.headers.referer, real_data: real_data, like: post.like, dislike: post.dislike,mark:num,noti:flag } );
       }catch(err){
         console.error(err);
         next(err);
@@ -170,19 +195,45 @@ router.get('/',async(req,res)=>{
     
     res.redirect('/uploads/img/'+ req.params.id);
   });
-    router.route('/404').get(function(req,res){
-        res.render('404_page',{user: req.user});
+    router.get('/404',async(req,res)=>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+        res.render('404_page',{user: req.user,noti:flag});
     });
-    router.route('/TermsofService').get(function(req,res){
-      res.render('termsofService',{user: req.user});
+    router.get('/TermsofService',async(req,res)=>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+      res.render('termsofService',{user: req.user,noti:flag});
   });
-  router.route('/PrivacyPolicy').get(function(req,res){
-    res.render('privacyPolicy',{user: req.user});
+  router.get('/PrivacyPolicy',async(req,res)=>{
+    var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+    res.render('privacyPolicy',{user: req.user,noti:flag});
   });
     router.get('/about_us',async(req,res)=>{
       const uscInfo = require('../public/json/about.json')
+      var flag = 'none';
       if(req.user){
-        res.render('about_us',{user: req.user, privileged: req.user.privileged,uscInfo:uscInfo});
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+        res.render('about_us',{user: req.user, privileged: req.user.privileged,uscInfo:uscInfo,noti:flag});
       }else{
         res.render('about_us',{user: req.user, privileged: null ,uscInfo:uscInfo});
       }
@@ -195,11 +246,18 @@ router.get('/',async(req,res)=>{
 
       res.render('login');
     });
-    router.route('/locker').get(function(req,res){
-        res.render('application',{user: req.user});
+    router.get('/locker',async(req,res)=>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+        res.render('application',{user: req.user,noti:flag});
     });
 //contacts search
-router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
+router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
 
   let contacts = require('../public/json/contacts.json');
   let newData = Array();
@@ -209,52 +267,94 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
       newData.push(contacts[i]);
     }
   }
-  
-  if(req.user){
-    res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
+  var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+    res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum,noti:flag })
   }else{
-  res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum })
+  res.render( 'contacts',{user: req.user, privileged : req.user.privileged , contactData: newData, pageNum: req.params.pageNum,noti:'none' })
   }
 })
   //contacts
-  router.get('/contacts/:pageNum',isLoggedIn,(req,res)=>{
+  router.get('/contacts/:pageNum',isLoggedIn,async(req,res)=>{
     let contactData = require('../public/json/contacts.json');
-  if(req.user){
-    res.render('contacts',{user: req.user, privileged : req.user.privileged, contactData: contactData, pageNum:req.params.pageNum});
+    var flag = 'none';
+    if(req.user){
+      var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+      if(notification){
+        flag = notification;    
+      }
+    res.render('contacts',{user: req.user, privileged : req.user.privileged, contactData: contactData, pageNum:req.params.pageNum, noti:flag});
   }else{
-    res.render('contacts',{user: req.user, privileged : null, contactData: contactData, pageNum:req.params.pageNum});
+    res.render('contacts',{user: req.user, privileged : null, contactData: contactData, pageNum:req.params.pageNum, noti:'none'});
   }
   
 });
-    router.route('/history/:pageNum').get(function(req,res){
+    router.get('/history/:pageNum',async(req,res)=>{
       let historyData = require('../public/json/history.json');
+      var flag = 'none';
       if(req.user){
-        res.render('history',{user: req.user ,privileged: req.user.privileged,usc: historyData.usc, pageNum: req.params.pageNum});
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+        res.render('history',{user: req.user ,privileged: req.user.privileged,usc: historyData.usc, pageNum: req.params.pageNum,noti:flag});
       }else{
-        res.render('history',{user: req.user,privileged:null ,usc: historyData.usc, pageNum: req.params.pageNum});
+        res.render('history',{user: req.user,privileged:null ,usc: historyData.usc, pageNum: req.params.pageNum,noti:'none'});
       }
   });
-    router.route('/club_details').get(function(req,res){
-        res.render('club_details',{user: req.user});
+    router.get('/club_details',async(req,res)=>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+        res.render('club_details',{user: req.user,noti:flag});
     });
 
-    router.get('/ourTeam',(req,res) =>{
-      res.render('ourTeam',{user:req.user});
+    router.get('/ourTeam',async(req,res) =>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+      res.render('ourTeam',{user:req.user,noti:flag});
     })
-    router.route('/club_postDetails').get(function(req,res){
-      res.render('club_postDetails', {user: req.user});
+    router.get('/club_postDetails',async(req,res)=>{
+      var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+      res.render('club_postDetails', {user: req.user, noti:flag});
     });
     //-------------------------------------------------------- writing-------------------------------------------------------- 
 //announcement
  router.get('/:category/post',isLoggedIn,async(req,res)=>{
+  var flag = 'none';
+  if(req.user){
+    var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+    if(notification){
+      flag = notification;    
+    }
+  }
    if(req.params.category =="announcement"){
     if(req.user.privileged > 0){
-      res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
+      res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:"",noti:flag});
     }else{
       res.send('<script type="text/javascript">alert("작성권한이 없습니다!!.");window.location.replace("/")</script>')
     } 
    }else{
-    res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:""});
+    res.render('write',{user: req.user,type: "create", category: req.params.category, editTitle:"", editContent:"",noti:flag});
    }
 }); 
 
@@ -263,8 +363,14 @@ router.get('/contacts/search/:pageNum',isLoggedIn,(req,res,next) =>{
 //edit
 router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
   const edit = await Post.findOne({where: { id: req.params.id}});
-  
-    res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, post: edit});  
+  var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
+    res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, post: edit,noti:flag});  
 
 })
   //club
@@ -287,8 +393,15 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
         clubData = raw_data[i];
       }
     }
+    var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
     if(club_post){
-      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum});  
+      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum,noti:flag});  
     }else{
       res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/club/'+req.params.club_name+'/post")</script>');
     }
@@ -297,6 +410,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
 
 //course
     router.get('/board/:type/:pagenum/:total',async(req,res)=>{
+
       var type = req.params.type;
       var total;
       if(req.params.total == 0){
@@ -328,7 +442,14 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
         });
         total = req.params.total;
       }
+      
       if(req.user){
+        var flag = 'none';
+      
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
         var privileged = req.user.privileged;
       }else{
         var privileged = 0;
@@ -336,7 +457,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
       if(course_post.length<1){
         res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/course/post")</script>');
       }else{
-        res.render('board',{board: course_post,category:course_post[0].category, user: req.user ,privileged: privileged, total:total});  
+        res.render('board',{board: course_post,category:course_post[0].category, user: req.user ,privileged: privileged, total:total,noti:flag});  
       }
     });
 
@@ -347,8 +468,52 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
 
 router.get('/myAccount/:type/:pageNum/:total',isLoggedIn,async(req,res)=>{
 try{
-  if(req.params.type == 'post'){
-    let post = await Post.findAll({
+  var flag = 'none';
+  console.log(flag);      
+  var notification = await Noti.findAll({
+    include:[{
+            model: User,
+            attributes:['user_name']
+          },
+          {
+            model: Post,
+            attributes:['id','category','subcategory']
+          }
+        ]},
+    {where: {post_user_id :req.user.id},
+    offset:((req.params.pageNum-1)*9)});
+    
+    if(notification){
+      flag = notification;
+    }
+      if(req.params.type =='notice'){
+        let post = await Post.findAll({
+          where:{
+            UserId: req.user.id
+          },
+          offset:((req.params.pageNum-1)*9),
+        });
+        let comment = await COMMENT.findAll({
+          where:{
+            UserId: req.user.id 
+          },
+        });
+        var ntotal = req.params.total;
+      if(ntotal == 0){
+        ntotal = notification.length;
+      }
+      console.log(ntotal);
+        if(req.user.privileged==9){
+          let users = await User.findAll({
+            attributes:['user_email','privileged','id'],
+          })
+          res.render('myAccount',{post:post, users: users, user:req.user, comments: comment, type:req.params.type,total:post.length, ctotal: comment.length, utotal: users.length,noti:flag,ntotal:ntotal});
+        }else{
+          res.render('myAccount',{post:post, users: [], user:req.user, comments: comment, type:req.params.type,total:post.length, ctotal: comment.length, utotal: 0,noti:flag,ntotal:ntotal});
+        }
+      }
+      else if(req.params.type == 'post'){
+      let post = await Post.findAll({
       where:{
         UserId: req.user.id
       },
@@ -359,17 +524,14 @@ try{
         UserId: req.user.id 
       },
     });
-    var total = req.params.total;
-      if(total == 0){
         total = post.length;
-      }
     if(req.user.privileged == 9 ){
       let users = await User.findAll({
         attributes:['user_email','privileged','id'],
       })
-      res.render('myAccount',{post:post, users: users, user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal: users.length});
+      res.render('myAccount',{post:post, users: users, user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal: users.length,noti:flag,ntotal:flag.length});
     }else{
-      res.render('myAccount',{post:post, users: [], user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal:0});
+      res.render('myAccount',{post:post, users: [], user:req.user, comments: comment, type:req.params.type,total:total, ctotal: comment.length, utotal:0,noti:flag,ntotal:flag.length});
     }
   }else if(req.params.type =='comment'){
     let post = await Post.findAll({
@@ -389,9 +551,9 @@ try{
         attributes:['user_email','privileged','id'],
       })
       
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: req.params.total, utotal: users.length});
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: req.params.total, utotal: users.length,noti:flag,ntotal:flag.length});
     }else{
-      res.render('myAccount',{post:post, users: [], user:req.user, comments : comment, type:req.params.type, total:post.length,  ctotal: req.params.total, utotal: 0});
+      res.render('myAccount',{post:post, users: [], user:req.user, comments : comment, type:req.params.type, total:post.length,  ctotal: req.params.total, utotal: 0,noti:flag,ntotal:flag.length});
     }
   }else{
     let post = await Post.findAll({
@@ -408,17 +570,23 @@ try{
       attributes:['user_email','privileged','id'],
       offset:((req.params.pageNum-1)*9),
     })
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: comment.length, utotal: req.params.total});
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:req.params.type, total:post.length, ctotal: comment.length, utotal: req.params.total,noti:flag,ntotal:flag.length});
     }
   }catch(error){
-    res.error(error);
+    console.log(error);
   }
 });
 
 
 //-----------------------------------------------------search-------------------------------------------
   router.get('/mysearch',async(req,res) =>{
-    
+    var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
     if(req.query.type == 'post'){
       let post = await Post.findAll({
         where:{ post_title: {[Op.like]:"%"+req.query.text+"%"} }
@@ -428,7 +596,7 @@ try{
           UserId: req.user.id 
         },
       });
-      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"post", total:post.length, ctotal: comment.length, utotal: []});
+      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"post", total:post.length, ctotal: comment.length, utotal: [],noti:flag});
     }else if(req.query.type == 'comment'){
       let comment = await COMMENT.findAll({
         where:{ comment_content: {[Op.like]:"%"+req.query.text+"%"} }
@@ -439,7 +607,7 @@ try{
         },
       });
 
-      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"comment", total:post.length, ctotal: comment.length, utotal: []});
+      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"comment", total:post.length, ctotal: comment.length, utotal: [],noti:flag});
     }else{
       let post = await Post.findAll({
         where:{
@@ -454,12 +622,18 @@ try{
       let users = await User.findAll({
         where:{ user_name: {[Op.like]:"%"+req.query.text+"%"} }
       });
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:"user", total:post.length, ctotal: comment.length, utotal: users.length});
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:"user", total:post.length, ctotal: comment.length, utotal: users.length,noti:flag});
     }
   })
   router.get('/search/:searchNum/:total',async(req,res)=>{
     let empty_data = require('../public/json/board.json');
-    
+    var flag = 'none';
+      if(req.user){
+        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        if(notification){
+          flag = notification;    
+        }
+      }
     var lost_post;
     var total;
       if(req.query.subcategory && typeof req.query.text  != 'undefined'){
@@ -516,9 +690,9 @@ try{
         var privileged = 0;
       }
       if(lost_post.push()){
-        res.render('board',{board:lost_post,category:req.query.category, user: req.user, privileged: privileged, total:total})   
+        res.render('board',{board:lost_post,category:req.query.category, user: req.user, privileged: privileged, total:total,noti:flag})   
       }else{
-        res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged, total:total});
+        res.render('board',{board:empty_data,category:req.query.category,user:req.user,privileged: privileged, total:total,noti:flag});
       }
   })
   

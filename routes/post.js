@@ -4,7 +4,7 @@ const multer = require('multer');
 const fs = require('fs');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const sequelize = require('sequelize');
-const { User,Post,COMMENT,Love} = require('../models');
+const { User,Post,COMMENT,Love,Noti} = require('../models');
 const router = express.Router();
 const save = require('summernote-nodejs');
 const { formatWithOptions } = require('util');
@@ -28,7 +28,7 @@ router.post('/', async (req, res, next) => {
         const post = await Post.create({
             post_writer: req.user.user_name,
             post_title: req.body.title,
-            post_content: p1 ,
+            post_content: p1,
             category: req.body.category,
             subcategory: req.body.subcategory,
             when: req.body.when,
@@ -82,7 +82,7 @@ router.post('/json/youtube',(req,res,next) =>{
   });
   res.redirect('back');
 })
-router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
+router.post('/:dep/:depName/comment/:post_id/:writer_id',async (req,res,next) =>{
     try{
       let comment;
       comment = await COMMENT.create({
@@ -100,6 +100,7 @@ router.post('/:dep/:depName/comment/:post_id',async (req,res,next) =>{
         number_of_comment: sequelize.literal('number_of_comment + 1')},
         {where: {id: req.params.post_id}
       });
+      await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id, content_type:'comments',UserId:req.user.id});
       res.redirect('back');
     }catch(error){
       console.log(error);
@@ -166,7 +167,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       next(error);
     }
   })
-  router.get('/like/:type/:post_id',isLoggedIn,async(req,res,next) =>{
+  router.get('/like/:type/:post_id/:writer_id',isLoggedIn,async(req,res,next) =>{
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
@@ -180,20 +181,30 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           UserId: req.user.id
         })
         await Post.increment({ like: 1 },{where:{id: post_id}} );
+        if(req.params.writer_id != req.user.id){
+          await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'like',UserId:req.user.id});
+        }
+        
         res.redirect('back');  
       }else if(love.like > 0){
         await love.destroy();
         await Post.decrement({like: 1},{where:{id: req.params.post_id}})
+         if(req.params.writer_id != req.user.id){
+          await Noti.destroy({where: {post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'like',UserId:req.user.id }});
+        }
         res.redirect('back');
       }else{
           await Love.update({like: 1,},{where: {UserId: req.user.id}})
           await Post.increment({like: 1},{where:{id: req.params.post_id}})
           await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
+           if(req.params.writer_id != req.user.id){
+            await Noti.update({content_type:'like' },{where:{post_user_id:req.params.writer_id,UserId:req.user.id}});
+          }
           res.redirect('back');  
         }
     });
 
-    router.get('/dislike/:type/:post_id',isLoggedIn,async(req,res,next) =>{
+    router.get('/dislike/:type/:post_id/:writer_id',isLoggedIn,async(req,res,next) =>{
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
@@ -205,15 +216,26 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           UserId: req.user.id
         })
         await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
+         if(req.params.writer_id != req.user.id){
+          await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'dislike',UserId:req.user.id });
+        }
+        
         res.redirect('back');
       }else if(love.like<0){ // previous value is dislike, and user press dislike again
         await love.destroy();
         await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
+         if(req.params.writer_id != req.user.id){
+          await Noti.destroy({where: {post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'dislike',UserId:req.user.id }});
+        }
+        
         res.redirect('back');
       }else if(love.like > 0){ //previous value is like, and user press dislike
           await Love.update({like: -1},{where: {UserId: req.user.id}})
           await Post.decrement({like: 1},{where:{id: req.params.post_id}})
           await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
+           if(req.params.writer_id != req.user.id){
+            await Noti.update({content_type:'dislike' },{where:{post_user_id:req.params.writer_id,UserId:req.user.id}});
+          }
           res.redirect('back');  
         }
     });

@@ -10,10 +10,10 @@ module.exports = {
     dialect: "mysql"
     },
     production: {
-    username: "sunykorea",
-    password: "soonwechat36",
+    username: "root",
+    password: "Soonwe2020!",
     database: "usc",
-    host: "database-1.csicbi1sqrpx.ap-northeast-2.rds.amazonaws.com",
+    host: "127.0.0.1",
     dialect: "mysql"
     },
 };
