@@ -455,7 +455,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
         var privileged = 0;
       }
       if(course_post.length<1){
-        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/course/post")</script>');
+        res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/'+req.params.type+'/post")</script>');
       }else{
         res.render('board',{board: course_post,category:course_post[0].category, user: req.user ,privileged: privileged, total:total,noti:flag});  
       }
