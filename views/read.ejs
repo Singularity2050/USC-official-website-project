@@ -96,6 +96,8 @@
                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
                 <% } else if(user.univ == 'sunykorea.ac.kr') { %>
                   <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                  <% } else if(user.user_eamil == 'usc@sunykorea.ac.kr') { %>
+                    <img src="/public/img/usc.png" style="margin-top: 2rem; width: 80px; height: 80px;">
                   <%}else {%>
                     <img src="/public/img/fit.png" style="margin-top: 2rem;">
                   <% } %>
@@ -131,6 +133,8 @@
                         <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
                         <% } else if(comments[i].User.univ  == 'sunykorea.ac.kr') { %>
                           <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                          <% } else if(user.user_eamil == 'usc@sunykorea.ac.kr') { %>
+                            <img src="/public/img/usc.png" style="margin-top: 2rem; width: 80px; height: 80px;">
                           <%}else {%>
                             <img src="/public/img/fit.png" style="margin-top: 2rem;">
                           <% } %>
@@ -165,8 +169,10 @@
                         <div class="comment-profile">
                           <% if( user.univ == 'stonybrook.edu') { %>
                             <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
-                            <% } else if(user.univ == 'sunykorea.ac.kr') { %>
+                            <% } else if(user.univ == 'sunykorea') { %>
                               <img src="/public/img/usc.png" style="margin-top: 2rem; width: 80px; height: 80px;">
+                              <% } else if(user.user_eamil == 'usc@sunykorea.ac.kr') { %>
+                                <img src="/public/img/usc.png" style="margin-top: 2rem; width: 80px; height: 80px;">
                               <%}else {%>
                                 <img src="/public/img/fit.png" style="margin-top: 2rem; width: 80px; height: 80px;">
                               <% } %>
@@ -196,6 +202,8 @@
                                 <img src="/public/img/commentPhoto.png" style="margin-top: 2rem;">
                                 <% } else if(replies[j].User.univ  == 'sunykorea.ac.kr') { %>
                                   <img src="/public/img/usc.png" style="margin-top: 2rem;">
+                                  <% } else if(replies[j].User.user_eamil == 'usc@sunykorea.ac.kr') { %>
+                                    <img src="/public/img/usc.png" style="margin-top: 2rem; width: 80px; height: 80px;">
                                   <%}else {%>
                                     <img src="/public/img/fit.png" style="margin-top: 2rem;">
                                   <% } %>

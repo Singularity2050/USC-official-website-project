@@ -152,7 +152,7 @@ router.get('/',async(req,res)=>{
         var rawComments = await COMMENT.findAll({
           include:[{
             model: User,
-            attributes:['univ']
+            attributes:['univ','user_email']
           }],
           attributes: ['id','writer','comment_content','PostId','anonymous','group_id','category','order_no','like','dislike','UserId'],
           where:{
