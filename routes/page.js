@@ -73,7 +73,7 @@ router.get('/',async(req,res)=>{
     var calculated = new Date(parseInt(postDate[0])+2000,parseInt(postDate[1])-1,parseInt(postDate[2]));
     
     calculated.setDate(calculated.getDate()+7);
-    
+    // 조건부에 동의 갯수 추가.
      if(new Date()>calculated && petition_post[i].number_of_comment==0){
       let post = await petition_post[i].update({
         subcategory: 'closed'});

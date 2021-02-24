@@ -742,8 +742,12 @@ margin-left: 2rem;
   font-size: 5em;
   background-color: transparent;
   border: none;
+  text-decoration: none;
 }
-
+.post-detail-back-button:visited{
+  color: inherit;
+  text-decoration: none;
+}
 .post-detail-main {
   background-size: 100% 20rem;
   background-repeat: no-repeat;

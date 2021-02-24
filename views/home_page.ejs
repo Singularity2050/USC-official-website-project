@@ -137,7 +137,7 @@
                 petitionHTML = petitionHTML.replaceAll("<br>","");
                 document.getElementsByClassName("petitionContent")[parseInt("<%=i%>")].innerHTML = petitionHTML;
             </script>
-              <div class="petitionStatus"><img style="vertical-align: top; margin-left:auto; margin-right: 10px;"src="/public/img/Calender.png"><%='20'+petition_post[i].createdAt%> <img style="vertical-align: top;  margin-left: auto;margin-right: 10px;"src="/public/img/Agree.png"><%=petition_post[i].like%> </div>
+              <div class="petitionStatus"><span class="petitionTag" style="margin-right: auto;"><%=petition_post[i].subcategory.charAt(0).toUpperCase()+petition_post[i].subcategory.substring(1) %></span><img style="vertical-align: top; margin-left:auto; margin-right: 10px;"src="/public/img/Calender.png"><%='20'+petition_post[i].createdAt%> <img style="vertical-align: top;  margin-left: auto;margin-right: 10px;"src="/public/img/Agree.png"><%=petition_post[i].like%> </div>
         </div>  
     </div>
     <% } %>
