@@ -96,7 +96,7 @@ router.get('/',async(req,res)=>{
   }else{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -119,7 +119,7 @@ router.get('/',async(req,res)=>{
       });
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -171,7 +171,7 @@ router.get('/',async(req,res)=>{
         }
         var flag = 'none';
       
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -198,7 +198,7 @@ router.get('/',async(req,res)=>{
     router.get('/404',async(req,res)=>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -208,7 +208,7 @@ router.get('/',async(req,res)=>{
     router.get('/TermsofService',async(req,res)=>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -218,7 +218,7 @@ router.get('/',async(req,res)=>{
   router.get('/PrivacyPolicy',async(req,res)=>{
     var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -229,7 +229,7 @@ router.get('/',async(req,res)=>{
       const uscInfo = require('../public/json/about.json')
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -249,7 +249,7 @@ router.get('/',async(req,res)=>{
     router.get('/locker',async(req,res)=>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -269,7 +269,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
   }
   var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -283,7 +283,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
     let contactData = require('../public/json/contacts.json');
     var flag = 'none';
     if(req.user){
-      var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+      var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
       if(notification){
         flag = notification;    
       }
@@ -297,7 +297,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
       let historyData = require('../public/json/history.json');
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -309,7 +309,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
     router.get('/club_details',async(req,res)=>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -320,7 +320,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
     router.get('/ourTeam',async(req,res) =>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -330,7 +330,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
     router.get('/club_postDetails',async(req,res)=>{
       var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -342,7 +342,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
  router.get('/:category/post',isLoggedIn,async(req,res)=>{
   var flag = 'none';
   if(req.user){
-    var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+    var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
     if(notification){
       flag = notification;    
     }
@@ -365,7 +365,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
   const edit = await Post.findOne({where: { id: req.params.id}});
   var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -395,7 +395,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
     }
     var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -446,7 +446,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
       if(req.user){
         var flag = 'none';
       
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -582,7 +582,7 @@ try{
   router.get('/mysearch',async(req,res) =>{
     var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
@@ -629,7 +629,7 @@ try{
     let empty_data = require('../public/json/board.json');
     var flag = 'none';
       if(req.user){
-        var notification = await Noti.findOne({where: {post_user_id :req.user.id} });
+        var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
