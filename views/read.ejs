@@ -17,6 +17,11 @@
                     Place : <%= post.location%><br>
                     Time :  <%= post.when%><br>
                     </span>
+                    <% } else if(post.category == 'club') { %>
+                    <a class="post-detail-back-button" href="/club/<%=post.subcategory%>/1">&lt;</a>
+                    <span class="post-title">
+                        <%= post.post_title%>
+                    </span>   
                     <% } else { %>
                     <span class="post-title">
                     <%= post.post_title%>
