@@ -50,11 +50,11 @@
             <% if(typeof(user) == "undefined") { %> 
               <a href='/login'>&nbsp;<img id="login" src="/img/login.png" alt="Login"></a>
                  <%} else { %>
-                  <% if(noti != 'none'){ %>
-                      NewMassage
+                  <% if(noti != 'none'&& noti.length!=0 ){ %>
+                      <div class="userAlarm"><a style="width:20px; height: 40px;background: darkred; border-radius: 5px; border: 2px solid darkred; color: white !important; position: relative;
+                        z-index: 1;"><%= noti.length %></a></div>
                     <% } %>
                     <img id="profile" src="/img/profile.png" alt="My Profile">
-                    
             <div class="dropdown-content profile-dropdown">
                 <ul>
                     <li><a href="/myAccount/notice/1/0">My Account</a></li>

@@ -1099,3 +1099,13 @@ button:focus{
   margin-top: auto; 
   margin-bottom: auto;
 }
+.userAlarm{
+  padding-top: 0px;
+  position: absolute;
+  top: -20px;
+  margin-right: 5%;
+  right: 40px;
+  margin-top: 0;
+  width: 20px;
+  height: 20px;
+}

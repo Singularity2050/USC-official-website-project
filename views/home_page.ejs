@@ -56,10 +56,10 @@
                 <% } %>
                 <a href="/read/<%=courses[i].category%>/<%=courses[i].subcategory%>/<%=courses[i].id%>"><span style="color:red">[<%=courses[i].subcategory.toUpperCase()%>]</span> <%= courses[i].post_title %></a>
           <% } %>
-          <a href="/course/1" style="text-align: right;">more..</a>
+          <a href="/board/course/1/0" style="text-align: right;">more..</a>
         </div>
         <div class="board communityBoard box">
-            <a class="miniTabs" href="/event/1" style="margin-left: 0; height: fit-content;"> <h3 class="boardContent">Events</h3></a>
+            <a class="miniTabs" href="/board/event/1/0" style="margin-left: 0; height: fit-content;"> <h3 class="boardContent">Events</h3></a>
             <% for(var i in events) { %>
                 <%var str = toString(events[i].post_content); %>
                 <% if (str.length > 40) {%>
@@ -71,10 +71,10 @@
                     <span >&nbsp</span>
                 <% } %><a href="/read/<%=events[i].category%>/<%=events[i].subcategory%>/<%=events[i].id%>"><span style="color:blue">[<%=events[i].subcategory.toUpperCase()%>]</span> <%= events[i].post_title %></a>
           <% } %>
-          <a href="/event/1" style="text-align: right;">more..</a>
+          <a href="/board/event/1/0" style="text-align: right;">more..</a>
         </div>
         <div class="board communityBoard box">
-            <a class="miniTabs" href="/tutoring/1" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Study Group</h3></a>
+            <a class="miniTabs" href="/board/tutoring/1/0" style="overflow: visible; margin-left: 0; height: fit-content;"><h3 class="boardContent">Study Group</h3></a>
             <% for(var i in tutoring) { %>
                 <%var str = toString(tutoring[i].post_content); %>
                 <% if (str.length > 40) {%>
@@ -86,7 +86,7 @@
                     <span >&nbsp</span>
                 <% } %><a href="/read/<%=tutoring[i].category%>/<%=tutoring[i].subcategory%>/<%=tutoring[i].id%>"><span style="color:#19ce60">[<%=tutoring[i].subcategory.toUpperCase()%>]</span> <%= tutoring[i].post_title %></a>
           <% } %>
-          <a href="/tutoring/1" style="text-align: right;">more..</a>
+          <a href="/board/tutoring/1/0" style="text-align: right;">more..</a>
         </div>
         </div>
     </div>
