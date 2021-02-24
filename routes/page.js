@@ -475,8 +475,10 @@ router.get('/myAccount/:type/:pageNum/:total',isLoggedIn,async(req,res)=>{
 try{
   var flag = 'none';
   console.log(flag);      
-  var notification = await Noti.findAll({
-    include:[{
+  var notification = await Noti.findAll(
+    {where: {post_user_id :req.user.id},
+    offset:((req.params.pageNum-1)*9)},
+    {include:[{
             model: User,
             attributes:['user_name']
           },
@@ -485,12 +487,12 @@ try{
             attributes:['id','category','subcategory']
           }
         ]},
-    {where: {post_user_id :req.user.id},
-    offset:((req.params.pageNum-1)*9)});
+    );
     
     if(notification){
       flag = notification;
     }
+    
       if(req.params.type =='notice'){
         let post = await Post.findAll({
           where:{
@@ -507,7 +509,7 @@ try{
       if(ntotal == 0){
         ntotal = notification.length;
       }
-      console.log(ntotal);
+      
         if(req.user.privileged==9){
           let users = await User.findAll({
             attributes:['user_email','privileged','id'],
