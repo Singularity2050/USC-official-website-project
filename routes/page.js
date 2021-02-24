@@ -268,7 +268,7 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
   let newData = Array();
   
   for(var i in contacts){
-    if(contacts[i].facility.includes(req.query.text)){
+    if(contacts[i].facility.toLowerCase().includes(req.query.text.toLowerCase())){
       newData.push(contacts[i]);
     }
   }
