@@ -171,7 +171,8 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
-      
+      const likeCount = await Love.count({where:{PostId:req.params.post_id,like:1}});
+      const dislikeCount = await Love.count({where:{PostId:req.params.post_id,like:-1}});
       var post_id = req.params.post_id;
       if(!love){
         await Love.create({
@@ -180,7 +181,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           PostId: post_id,
           UserId: req.user.id
         })
-        await Post.increment({ like: 1 },{where:{id: post_id}} );
+        await Post.update({ like: likeCount+1 },{where:{id: post_id}} );
         if(req.params.writer_id != req.user.id){
           await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'like',UserId:req.user.id});
         }
@@ -188,15 +189,14 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         res.redirect('back');  
       }else if(love.like > 0){
         await love.destroy();
-        await Post.decrement({like: 1},{where:{id: req.params.post_id}})
+        await Post.update({like: likeCount-1},{where:{id: req.params.post_id}})
          if(req.params.writer_id != req.user.id){
           await Noti.destroy({where: {post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'like',UserId:req.user.id }});
         }
         res.redirect('back');
       }else{
           await Love.update({like: 1,},{where: {UserId: req.user.id}})
-          await Post.increment({like: 1},{where:{id: req.params.post_id}})
-          await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
+          await Post.update({like: likeCount+1, dislike: dislikeCount-1},{where:{id: req.params.post_id}})
            if(req.params.writer_id != req.user.id){
             await Noti.update({content_type:'like' },{where:{post_user_id:req.params.writer_id,UserId:req.user.id}});
           }
@@ -208,6 +208,8 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })
+      const likeCount = await Love.count({where:{PostId:req.params.post_id,like:1}});
+      const dislikeCount = await Love.count({where:{PostId:req.params.post_id,like:-1}});
       if(!love){ //no previous value, user click dislike
         await Love.create({
           user: req.user.user_name,
@@ -215,7 +217,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           PostId: req.params.post_id,
           UserId: req.user.id
         })
-        await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
+        await Post.update({dislike: dislikeCount+1},{where:{id: req.params.post_id}})
          if(req.params.writer_id != req.user.id){
           await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'dislike',UserId:req.user.id });
         }
@@ -223,7 +225,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         res.redirect('back');
       }else if(love.like<0){ // previous value is dislike, and user press dislike again
         await love.destroy();
-        await Post.decrement({dislike: 1},{where:{id: req.params.post_id}})
+        await Post.update({dislike: dislikeCount-1},{where:{id: req.params.post_id}})
          if(req.params.writer_id != req.user.id){
           await Noti.destroy({where: {post_user_id: req.params.writer_id, PostId: req.params.post_id,content_type:'dislike',UserId:req.user.id }});
         }
@@ -231,8 +233,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
         res.redirect('back');
       }else if(love.like > 0){ //previous value is like, and user press dislike
           await Love.update({like: -1},{where: {UserId: req.user.id}})
-          await Post.decrement({like: 1},{where:{id: req.params.post_id}})
-          await Post.increment({dislike: 1},{where:{id: req.params.post_id}})
+          await Post.update({like: likeCount-1,dislike: dislikeCount+1},{where:{id: req.params.post_id}})
            if(req.params.writer_id != req.user.id){
             await Noti.update({content_type:'dislike' },{where:{post_user_id:req.params.writer_id,UserId:req.user.id}});
           }
