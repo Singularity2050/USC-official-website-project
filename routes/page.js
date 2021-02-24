@@ -79,6 +79,11 @@ router.get('/',async(req,res)=>{
         subcategory: 'closed'});
         petition_post[i].subcategory='closed';
      }
+     if(petition_post[i].subcategory =='ongoing' && petition_post[i].number_of_comment>=1){
+      let post = await petition_post[i].update({
+        subcategory: 'responded'});
+        petition_post[i].subcategory='responded';
+     }
    }
    
   var announce_post = await Post.findAll({
