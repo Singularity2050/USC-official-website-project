@@ -100,7 +100,10 @@ router.post('/:dep/:depName/comment/:post_id/:writer_id',async (req,res,next) =>
         number_of_comment: sequelize.literal('number_of_comment + 1')},
         {where: {id: req.params.post_id}
       });
-      await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id, content_type:'comments',UserId:req.user.id});
+      if(req.params.writer_id != req.user.id ){
+        await Noti.create({post_user_id: req.params.writer_id, PostId: req.params.post_id, content_type:'comments',UserId:req.user.id});
+      }
+      
       res.redirect('back');
     }catch(error){
       console.log(error);

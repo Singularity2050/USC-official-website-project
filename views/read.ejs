@@ -184,7 +184,7 @@
                             <p><%= user.user_name%></p>
                         </div>
                         <div style="width: 100%;">
-                        <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>' id="reply-form<%=i%>" method="post">
+                        <form action='/post/<%=post.category%>/<%=post.subcategory%>/comment/<%=post.id%>/<%=comments[i].id%>' id="reply-form<%=i%>" method="post">
                                 <textarea class="my-comment-text" placeholder="Comments including swear words may be removed without notice."
                                     name="text"></textarea>
                                 <div class="reply-button-display">
