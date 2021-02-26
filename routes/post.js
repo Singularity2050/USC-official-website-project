@@ -171,6 +171,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
     }
   })
   router.get('/like/:type/:post_id/:writer_id',isLoggedIn,async(req,res,next) =>{
+    console.log('test');
       const love = await Love.findOne({
         where:{ UserId: req.user.id, PostId: req.params.post_id}
       })

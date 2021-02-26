@@ -553,7 +553,7 @@ h4 h5 {
   height: 100%;
   width: 100%;
   background-position: top;
-  background-size: 100% 20rem;
+  background-size: 100%;
   background-repeat: no-repeat;
   position: relative;
   font-family: Arial;

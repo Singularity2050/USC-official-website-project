@@ -379,7 +379,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
 
 })
   //club
-  router.get('/club/:club_name/:pageNum',async(req,res)=>{
+  router.get('/club/:club_name/:pageNum/:total',async(req,res)=>{
     let raw_data = require('../public/json/clubsList.json');
     var club_post = await Post.findAll({
       attributes: ['id','post_writer','post_title','post_content','number_of_comment','category','updatedAt','UserId'],
@@ -405,8 +405,15 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
           flag = notification;    
         }
       }
+      var total;
+      if(req.params.total == 0){
+        total = club_post.length;
+      }else{
+        total = req.params.total;
+      }
+      
     if(club_post){
-      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum,noti:flag});  
+      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum,noti:flag,total: total});  
     }else{
       res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/club/'+req.params.club_name+'/post")</script>');
     }
@@ -474,21 +481,22 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
 router.get('/myAccount/:type/:pageNum/:total',isLoggedIn,async(req,res)=>{
 try{
   var flag = 'none';
-  console.log(flag);      
-  var notification = await Noti.findAll(
-    {where: {post_user_id :req.user.id},
-    offset:((req.params.pageNum-1)*9)},
-    {include:[{
+     
+  var notification = await Noti.findAll({
+      include:[{
             model: User,
-            attributes:['user_name']
+            attributes:['user_name'],
           },
           {
             model: Post,
-            attributes:['id','category','subcategory']
+            attributes:['id','category','subcategory'],
           }
-        ]},
-    );
-    
+        ],
+        where: {post_user_id : req.user.id},
+        offset:((req.params.pageNum-1)*9),
+        limit:9,
+      });
+  
     if(notification){
       flag = notification;
     }

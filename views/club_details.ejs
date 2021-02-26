@@ -19,7 +19,7 @@
                 <%}%>
             </div>
             <div class="bottom-button" style="margin-right:10%; margin-left:10%">
-            <% var page_number = Math.ceil(club_post.length /10) %>
+            <% var page_number = Math.ceil(total /10) %>
             <% var i =1 %>
             <div class="page_numbers">
                 
@@ -28,6 +28,8 @@
                     <% link += club.name %>
                     <% link += "/" %>
                     <% link += i %>
+                    <% link += "/" %>
+                    <% link += total %>
                 <a href= "<%= link %>" class="page-item"><%= i %></a>
                     <% i ++%>
                 <% } %>
