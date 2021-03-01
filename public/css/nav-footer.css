@@ -739,10 +739,12 @@ margin-left: 2rem;
   z-index: 1;
   overflow-x: hidden;
   font-weight: 300;
-  font-size: 5em;
+  font-size: 4em;
   background-color: transparent;
   border: none;
   text-decoration: none;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .post-detail-back-button:visited{
   color: inherit;
