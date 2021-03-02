@@ -56,6 +56,10 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 app.use(express.static(path.join(__dirname,"public")));
+app.use(express.urlencoded({
+  limit:"50mb",
+  extended:false
+}));
 app.use(
     bodyParser.urlencoded({
       limit: "50mb",

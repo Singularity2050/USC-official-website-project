@@ -181,7 +181,7 @@ router.get('/',async(req,res)=>{
           flag = notification;    
         }
         var readMark = await Noti.findAll({where:{post_user_id:req.user.id,PostId:req.params.post_num}});
-        console.log(readMark);
+        
         if(readMark){
           for( var i in readMark){
            await readMark[i].destroy(); 

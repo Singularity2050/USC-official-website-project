@@ -262,6 +262,7 @@
      var text = "<%=post.post_content%>";
      var dom = new DOMParser().parseFromString(text,'text/html');
      var html = dom.body.childNodes[0].data;
+     console.log(html);
      document.getElementsByClassName("post-text")[0].innerHTML = html;
      var images = document.getElementsByClassName("post-text")[0].getElementsByTagName("img");
      for(var i = 0; i < images.length; i++){

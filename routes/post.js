@@ -23,12 +23,12 @@ router.post('/', async (req, res, next) => {
       
       let p = String(req.body.mainText).replace('<p>','');
       let p1 = String(p).replace('</p>','');
-      console.log(p1);
-      var outputHtml = save(req.body.mainText,'uploads/img');
+      var outputHtml = save(p1,'uploads/img');
+      console.log(outputHtml);
         const post = await Post.create({
             post_writer: req.user.user_name,
             post_title: req.body.title,
-            post_content: p1,
+            post_content: outputHtml,
             category: req.body.category,
             subcategory: req.body.subcategory,
             when: req.body.when,
@@ -48,7 +48,7 @@ var storage = multer.diskStorage({
     cb(null, 'public/json/')
   },
   filename: function (req, file, cb) {
-    console.log(file);
+    
     if(req.headers.referer.includes('club')){
       cb(null, 'clubsList.json')
     }else if(req.headers.referer.includes('history')){
