@@ -518,7 +518,7 @@ try{
         ntotal = notification.length;
       }
       
-        if(req.user.privileged==9){
+        if(req.user.privileged==1){
           let users = await User.findAll({
             attributes:['user_email','privileged','id'],
           })
