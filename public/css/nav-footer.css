@@ -283,6 +283,7 @@ h4 h5 {
   overflow: hidden;
   margin-top: 1rem;
   padding: 0;
+  white-space: nowrap;
 }
 
 .uscPostImage img{
@@ -481,13 +482,13 @@ h4 h5 {
 .footer {
   white-space: nowrap;
   overflow: hidden;
-  position: relative;
+  position:relative;
   left: 0;
   bottom: 0;
   right: 0;
   width: 100%;
   min-width: 1200px;
-  max-height: 320px;
+  height: 320px;
   background-color: #303030;
   text-align: center;
   color: white;
@@ -520,6 +521,7 @@ h4 h5 {
   font-size: 18px;
   line-height: 28px;
   text-align: left;
+  margin-top: 25px;
 }
 
 .footerDown {
@@ -573,6 +575,7 @@ h4 h5 {
 }
 
 .club-detail-back-button{
+  color: black;
   margin-top: 0.3em;
   margin-left: 0.5em;
   overflow-x: hidden;

@@ -26,7 +26,7 @@
         <% var length = usc.length %>
         <% if(length > 4){length = 4} %>
           <% for (var i = 0; i <= length; i++) { %>
-              <div class="board uscBoard box" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer; border:none">
+              <div class="board uscBoard box" onclick="location.href='/read/<%= usc[i].category %>/<%= usc[i].subcategory%>/<%=usc[i].id%>';" style="cursor: pointer; border:none; margin-left: 0; margin-right: 0;">
               <div>
               <h4 class="boardContent uscPostDescription" style="height: 10%;"><% if(usc[i].subcategory == 'important') { %> <span style=" color:#19ce60 "><% } else if( usc[i].subcategory == 'urgent') { %> <span style=" color:red"><% } else { %> <span style="color: black;"> <% } %> [<%=usc[i].subcategory.toUpperCase()%>]</span> <%= usc[i].post_title%></h4>
             </div>
