@@ -150,6 +150,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
 })
   router.post('/edit', isLoggedIn, async (req, res, next) => {
     try{
+      console.log(req.body);
       var outputHtml = save(req.body.mainText,'uploads/img');
       const post = await Post.findOne({where:{id: req.body.id}});
       if(post){
@@ -160,6 +161,7 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
           subcategory: req.body.subcategory,
           when: req.body.when,
           location: req.body.where,
+          anonymous: req.body.anonymous
         });
         res.redirect('/read/'+post.category+'/'+post.subcategory +'/' + post.id);
       }else{
