@@ -74,12 +74,12 @@ router.get('/',async(req,res)=>{
     
     calculated.setDate(calculated.getDate()+7);
     // 조건부에 동의 갯수 추가.
-     if(new Date()>calculated && petition_post[i].number_of_comment==0){
+     if(new Date()>calculated && petition_post[i].number_of_comment==0&&petition_post[i].like < 100){
       let post = await petition_post[i].update({
         subcategory: 'closed'});
         petition_post[i].subcategory='closed';
      }
-     if(petition_post[i].subcategory =='ongoing' && petition_post[i].number_of_comment>=1){
+     if(petition_post[i].subcategory =='ongoing' && petition_post[i].number_of_comment>=1 && petition_post[i].like >= 100){
       let post = await petition_post[i].update({
         subcategory: 'responded'});
         petition_post[i].subcategory='responded';
