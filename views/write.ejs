@@ -59,7 +59,7 @@
       </div>
         <% } else if(category == "lostandfound"){ %>
             <input type='hidden' name='category' value='lostandfound'>
-            <div class="content-container" style="width:120vh;">
+            <div class="content-container" style="width:80%; min-width: 1200px;">
                 <div class="form-content">
                     <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
                     <img src="/public/img/PostMark.png" class="form-label">
@@ -115,7 +115,7 @@
                   </script>
         <% } else if(category == 'course' || category == 'event' || category == 'tutoring') { %>
                
-          <div class="content-container" style="width:120vh;">
+          <div class="content-container" style="width:80%; min-width: 1200px;">
             <div class="form-content">
                 <a id="goBack"><img src="/public/img/SlideLeft.png" class="form-label"></a>
                 <img src="/public/img/PostMark.png" class="form-label">
@@ -162,7 +162,7 @@
               <input maxlength="100" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
             </div>
             <% }else if(category=="petition"){ %>
-              <div class="content-container" style="width:120vh;">
+              <div class="content-container" style="width:80%; min-width: 1200px;">
                 <input type="hidden" name='category' value='petition'>
                 <input type="hidden" name='subcategory' value='ongoing'>
                   <div class="form-content" style="margin-top: 3rem; margin-bottom: 0;">
