@@ -224,6 +224,7 @@
     var dom = new DOMParser().parseFromString("<%= text %>",'text/html');
   $('#summernote').summernote({
     height: 500,
+    maximumImageFileSize: 5000*1024,
     toolbar: [
                // [groupName, [list of button]]
                ['fontname', ['fontname']],
@@ -247,6 +248,7 @@
   $(document).ready(function() {
 $('#summernote').summernote({
   height: 500,
+  maximumImageFileSize: 5000*1024,
   toolbar: [
              // [groupName, [list of button]]
              ['fontname', ['fontname']],
