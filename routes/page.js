@@ -375,7 +375,7 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
           flag = notification;    
         }
       }
-    res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, post: edit,noti:flag});  
+    res.render('write',{category: req.params.category, user: req.user, type: "edit", num: req.params.id, editTitle: edit.post_title, editContent:edit.post_content, subcategory:edit.subcategory, anonymous:edit.anonymous, post: edit,noti:flag});  
 
 })
   //club
