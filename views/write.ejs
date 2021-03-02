@@ -55,7 +55,7 @@
                 <option value="urgent">Urgent</option>
             </select>
         </div>
-        <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align" style="width: 68%; margin-left: 2%;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+        <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align" style="width: 68%; margin-left: 2%; padding-left: 10px;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
       </div>
         <% } else if(category == "lostandfound"){ %>
             <input type='hidden' name='category' value='lostandfound'>
@@ -86,11 +86,15 @@
                   <% } else { %>
                 <input class="form form-align" placeholder="Please choose the type" type="text" id="where" name="where" style="width:22.5%; margin-left: 2.5%;"><input class="form form-align"  placeholder="Please choose the type" type="text" id="when" name="when" style="width:22.5%; margin-left: 2.5%;">
                   <% } %>
-                <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);">
+                  <% if(type=="edit"&&anonymous==true) { %>
+                    <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);" checked>
+                    <% } else { %>
+                    <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);">
+                    <% } %>
                   <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
                 </div>
                 <div class="form-content">
-                  <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button> 
+                  <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0; padding-left: 10px;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button> 
                 </div>
                 <script>
                   window.onload = function() {
@@ -128,14 +132,11 @@
             <div class="form-content">
             <div class="custom-select" style="width: 50%">
             <select id="category" name="category" required>
-              <% if(type=="edit") {%>
+              <% if(category=="tutoring") { %>
+                <option value="<%=category%>">Study Group</option>
+              <% } else { %>
                 <option value="<%=category%>"><%= category.charAt(0).toUpperCase()+category.substring(1) %></option>
-                <% } else { %>
-                <option value="">Select the Category</option>
-                <% } %>
-                <option value="course">Course</option>
-                <option value="event">Event</option>
-                <option value="tutoring">Study Group</option>
+              <% } %>
             </select>
             </div>
             <div class="custom-select" style="width:32.5%; margin-left: 2.5%;">
@@ -155,11 +156,15 @@
                   <option value="other">Other</option>
               </select>
               </div>
+              <% if(type=="edit"&&anonymous==true) { %>
+              <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);" checked>
+              <% } else { %>
               <input type="checkbox" id="anonymous" name="anonymous" value="true" style="margin-left: 2.5%; transform: scale(2);">
+              <% } %>
               <label for="anonymous" style="width: 10%; text-align:center; font-size: 18px;">Anonymous</label>
             </div>
             <div class="form-content">
-              <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
+              <input maxlength="300" type="text" id="title" name="title" value="<%= editTitle %>" class="form form-align"  style="width: 85%; margin-left: 0; padding-left: 10px;" required><button type="submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;">Write</button>
             </div>
             <% }else if(category=="petition"){ %>
               <div class="content-container" style="width:80%; min-width: 1200px;">
@@ -185,7 +190,7 @@
                         </p></div>
                           <div style="display: inline-block; margin-top: 10px;"><input type="checkbox" style="height: 20px; width: 20px;"required><label style="vertical-align: bottom; margin-left: 10px;">I understood and agree with the above terms.</label></div>
                       </div>
-                      <input maxlength="300" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>" required>
+                      <input maxlength="300" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%; padding-left: 10px;" value="<%= editTitle %>" required>
                       <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;" required></input>
                   </div>
         <% }else{ %>
@@ -206,7 +211,7 @@
                   <% } %>
               </div>
                 <div class="form-content">
-                  <input maxlength="300" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%;" value="<%= editTitle %>" required>
+                  <input maxlength="300" type="text" id="title" name="title" placeholder="Title" class="form form-align" style="width: 85%; padding-left: 10px;" value="<%= editTitle %>" required>
                   <input type="submit" value="Submit" class="form-align form-post-button write-button" style="width:12.5%; margin-left:2.5%;"></input>
               </div>
               
