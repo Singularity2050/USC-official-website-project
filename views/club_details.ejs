@@ -34,7 +34,9 @@
                     <% i ++%>
                 <% } %>
             </div>
+            <% if( user.privileged > 0) { %> 
             <a href= "/<%= club.name%>/post"><button class="bottom-right-button form-align form-post-button write-button" style=" height: 75%  ;"> + New</button></a>
+            <% } %>
         </div>
         </div>
     </div>

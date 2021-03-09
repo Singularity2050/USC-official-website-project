@@ -122,7 +122,7 @@ router.get('/delete/:id', isLoggedIn, async (req, res, next) => {
            await comments[i].destroy(); 
           }
         }
-        res.redirect('/');
+        res.redirect('/board/'+post.category+'/1/0');
       }else{
         res.status(404).send('no post');
       }
@@ -255,10 +255,9 @@ router.get('/delete/comment/:id', isLoggedIn, async (req, res, next) => {
       res.redirect('back');
     })
     router.post('/privilege',async(req,res,next) =>{
-      if(req.user.user_email == 'sije.park@stonybrook.edu'){
+      if(req.user.id == 1){
         const user = await User.findOne({where: {id: req.body.id}});
         await user.update({privileged: req.body.privilege});
-        console.log(user);
         res.redirect('back');
       }else{
         res.send('<script> alert("Illegal User!!");</script>').redirect('back');

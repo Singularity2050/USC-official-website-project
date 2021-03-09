@@ -168,10 +168,10 @@
           <% if(category=='petition') {%>
             <a href="/<%= board[0].category %>/post"><button class="bottom-right-button form-align form-post-button write-button"> + New</button></a>
           <% } else { %>
-            <% if(privileged==0) { %>
-            <a><button class="bottom-right-button form-align form-post-button write-button" data-toggle="modal" data-target="#myModal"> + New</button></a>
+            <% if(privileged== 2 || privileged == 1) { %>
+              <a href="/<%= board[0].category %>/post"><button class="bottom-right-button form-align form-post-button write-button"> + New</button></a>
             <% } else { %>
-           <a href="/<%= board[0].category %>/post"><button class="bottom-right-button form-align form-post-button write-button"> + New</button></a>
+              <a><button class="bottom-right-button form-align form-post-button write-button" data-toggle="modal" data-target="#myModal"> + New</button></a>
               <% } %>
           <% } %>    
           </div>

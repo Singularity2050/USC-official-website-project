@@ -90,7 +90,7 @@
             <% } %>
         </div>
         </div>
-        <% if(privileged > 1 ) { %>
+        <% if(privileged > 0 && privileged <= 3 ) { %>
           <div style="text-align: center; margin-bottom: 1%;">
           <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
             Only JSON File Accepted

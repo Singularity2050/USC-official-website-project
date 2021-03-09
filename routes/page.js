@@ -596,12 +596,11 @@ try{
 //-----------------------------------------------------search-------------------------------------------
   router.get('/mysearch',async(req,res) =>{
     var flag = 'none';
-      if(req.user){
+      
         var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
         if(notification){
           flag = notification;    
         }
-      }
     if(req.query.type == 'post'){
       let post = await Post.findAll({
         where:{ post_title: {[Op.like]:"%"+req.query.text+"%"} }
@@ -611,7 +610,7 @@ try{
           UserId: req.user.id 
         },
       });
-      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"post", total:post.length, ctotal: comment.length, utotal: [],noti:flag});
+      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"post", total:post.length, ctotal: comment.length, utotal: [],noti:flag, ntotal:flag.length});
     }else if(req.query.type == 'comment'){
       let comment = await COMMENT.findAll({
         where:{ comment_content: {[Op.like]:"%"+req.query.text+"%"} }
@@ -622,7 +621,7 @@ try{
         },
       });
 
-      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"comment", total:post.length, ctotal: comment.length, utotal: [],noti:flag});
+      res.render('myAccount',{post:post,users: [], user:req.user, comments : comment, type:"comment", total:post.length, ctotal: comment.length, utotal: [],noti:flag, ntotal:flag.length});
     }else{
       let post = await Post.findAll({
         where:{
@@ -637,7 +636,7 @@ try{
       let users = await User.findAll({
         where:{ user_name: {[Op.like]:"%"+req.query.text+"%"} }
       });
-      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:"user", total:post.length, ctotal: comment.length, utotal: users.length,noti:flag});
+      res.render('myAccount',{post:post, users: users, user:req.user, comments : comment, type:"user", total:post.length, ctotal: comment.length, utotal: users.length,noti:flag, ntotal:flag.length});
     }
   })
   router.get('/search/:searchNum/:total',async(req,res)=>{

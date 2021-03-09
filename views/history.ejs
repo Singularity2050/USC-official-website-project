@@ -64,7 +64,7 @@
         </dl>
           </li>  
 </ul>
-<% if(privileged > 1 ) { %>
+<% if(privileged > 0 && privileged <= 3 ) { %>
   <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
     Only JSON File Accepted
   <input type='file' name = 'file' accept="json/*">

@@ -77,7 +77,7 @@
         </div>
     </div>
     <div style='text-align: center;'>
-    <% if(user.privileged <= 3 ) { %>
+    <% if(user.privileged > 0 && user.privileged <= 3) { %>
       <form id="twit-form" action="/post/json" method="post" enctype="multipart/form-data">
         Only JSON File Accepted
       <input type='file' name = 'file' accept="json/*">
