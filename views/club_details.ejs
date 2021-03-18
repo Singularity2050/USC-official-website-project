@@ -4,7 +4,7 @@
         <div class="container club-detail-contents">
             <div class="club-explanation">
                 <div class="club-title"><%= club.name%></div>
-                <div class="club-description"><%= club.description %></div>
+                <div class="club-description"><%= club.descriptionDetail %></div>
             </div>
             <hr class="club-detail-hr">
             <div class="club-detail-context-group">
@@ -34,7 +34,7 @@
                     <% i ++%>
                 <% } %>
             </div>
-            <% if( user.privileged > 0) { %> 
+            <% if( privilege > 0) { %> 
             <a href= "/<%= club.name%>/post"><button class="bottom-right-button form-align form-post-button write-button" style=" height: 75%  ;"> + New</button></a>
             <% } %>
         </div>

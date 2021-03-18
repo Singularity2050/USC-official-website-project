@@ -116,7 +116,7 @@
 <div class = "Petitions">
     <div class="uscHiddenSlide">
       <div class="content-container petitionSlide" style="width: 67.5rem;">
-     <a href="/board/petition/1"><p class="tabs">Petitions</p></a>
+     <a href="/board/petition/1/0"><p class="tabs">Petitions</p></a>
      <div class="uscSlide box-wrap" style="transform: translate(0rem);">
     <% var length = petition_post.length %>
       <% for (var i = 0; i < length; i++) { %>
@@ -229,11 +229,11 @@ var player;
         event.target.playVideo();
         event.target.setVolume(0);
       }
-$(document).on('mouseover', '#player', function() {
-  player.setVolume(70);
-});
-$(document).on('mouseout', '#player', function() {
-    player.setVolume(0);
-});
+// $(document).on('mouseover', '#player', function() {
+//   player.setVolume(70);
+// });
+// $(document).on('mouseout', '#player', function() {
+//     player.setVolume(0);
+// });
 </script>
 <%- include('footer.ejs') %>

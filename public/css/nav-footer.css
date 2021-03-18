@@ -600,6 +600,9 @@ h4 h5 {
 .club-description{
   margin-top: 0.8em;
   font-weight: 400;
+  padding-right : 150px;
+  padding-left : 150px;
+  line-height:20px;
 }
 
 .club-detail-hr{

@@ -62,10 +62,22 @@ var storage = multer.diskStorage({
     }
   }
 })
- 
+var image = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/img/club/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
 var upload = multer({ storage: storage })
+var upload2 = multer({ storage: image })
 
 router.post('/json',upload.single('file'),(req,res,next)=>{
+  res.redirect('back');
+})
+router.post('/image',upload2.single('file'),(req,res,next)=>{
   res.redirect('back');
 })
 router.post('/json/youtube',(req,res,next) =>{

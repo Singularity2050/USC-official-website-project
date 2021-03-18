@@ -313,13 +313,15 @@ router.get('/contacts/search/:pageNum',isLoggedIn,async(req,res,next) =>{
   });
     router.get('/club_details',async(req,res)=>{
       var flag = 'none';
+      var privilege = -1;
       if(req.user){
         var notification = await Noti.findAll({where: {post_user_id :req.user.id} });
+        privilege = req.user.privileged
         if(notification){
           flag = notification;    
         }
       }
-        res.render('club_details',{user: req.user,noti:flag});
+        res.render('club_details',{privilege :privilege,user: req.user,noti:flag});
     });
 
     router.get('/ourTeam',async(req,res) =>{
@@ -411,9 +413,12 @@ router.get('/edit/:category/:id',isLoggedIn,async(req,res)=>{
       }else{
         total = req.params.total;
       }
-      
+      var privilege = -1;
+      if(req.user){
+        privilege = req.user.privileged
+      }
     if(club_post){
-      res.render('club_details',{club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum,noti:flag,total: total});  
+      res.render('club_details',{privilege : privilege,club: clubData,club_post: club_post, user: req.user, pageNum:req.params.pageNum,noti:flag,total: total});  
     }else{
       res.send('<script>alert("게시글을 먼저 작성하세요"); window.location.replace("/club/'+req.params.club_name+'/post")</script>');
     }
