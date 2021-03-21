@@ -1,7 +1,10 @@
 <%- include('header.ejs') %>
 <link rel="stylesheet" href="/public/css/announcement.css" type="text/css" media="all" />
-    <div class="club-detail-main" style="background-image:url(<%=club.pic_url%>);">
+    <div class="club-detail-main">
         <div class="container club-detail-contents">
+            <div class="club-banner" style="background-image:url(<%=club.pic_url%>);">
+
+            </div>
             <div class="club-explanation">
                 <div class="club-title"><%= club.name%></div>
                 <div class="club-description"><%= club.descriptionDetail %></div>
