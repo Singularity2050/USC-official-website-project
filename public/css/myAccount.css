@@ -61,7 +61,6 @@ button {
     padding-top: 24px;
     padding-left: 20px;
     position: relative;
-    display: grid;
 }
 
 .bottom-button {
