@@ -181,7 +181,8 @@ router.get('/',async(req,res)=>{
           flag = notification;    
         }
         var readMark = await Noti.findAll({where:{post_user_id:req.user.id,PostId:req.params.post_num}});
-        
+        post.post_content = post.post_content.replace(/\r\n/g,'');
+        console.log(typeof post.post_content);
         if(readMark){
           for( var i in readMark){
            await readMark[i].destroy(); 
@@ -197,8 +198,9 @@ router.get('/',async(req,res)=>{
     //----------------------------------------------------------else ----------------------------------------------------
 
   router.get('/read/:category/:subcategory/uploads/img/:id',(req,res)=>{
-    
+  
     res.redirect('/uploads/img/'+ req.params.id);
+    
   });
     router.get('/404',async(req,res)=>{
       var flag = 'none';

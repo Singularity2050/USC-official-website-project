@@ -141,7 +141,7 @@
               <img src="/public/img/Agree.png" style="height: 17px; width: 17px;">
             <div class="count"><%= board[i].like %></div>
             <% } else if(category=='course'||category=='event'||category=='tutoring') { %>
-              <div class="list"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
+              <div class="list" style="padding-left:0px;"><a href='/read/<%= category %>/<%= board[i].subcategory%>/<%=board[i].id%>'>[<%= board[i].subcategory.toUpperCase()%>] <%= board[i].post_title%></a>
               <div class="postAttribute">  
               <span class="iconify" data-inline="false" data-icon="bx:bx-comment" style="font-size: 17px;"></span>
               <div class="count"><%= board[i].number_of_comment %></div>

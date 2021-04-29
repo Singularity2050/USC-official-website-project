@@ -20,11 +20,16 @@ try {
 
 router.post('/', async (req, res, next) => {
     try {
-      
-      let p = String(req.body.mainText).replace('<p>','');
+      console.log(req.body.mainText);
+      let p = String(req.body.mainText).replace('<p></p>','<p><br></p>');
       let p1 = String(p).replace('</p>','');
+     p1 = String(p1).replace('<p>','');
+    //   p1 = String(p1).replace('%0A','');
+  //   console.log(p1);
+      
+      console.log(p1);
       var outputHtml = save(p1,'uploads/img');
-      console.log(outputHtml);
+      
         const post = await Post.create({
             post_writer: req.user.user_name,
             post_title: req.body.title,
